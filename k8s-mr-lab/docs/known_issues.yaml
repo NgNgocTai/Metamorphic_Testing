@@ -1,0 +1,13 @@
+# Public upstream issues used ONLY to label alerts as known/new. They are never used as an oracle.
+issues:
+  - id: kubescape#2579
+    scanner: kubescape
+    url: https://github.com/kubescape/kubescape/issues/2579
+    state_checked: "closed (created 2026-07-29), checked via the GitHub API on 2026-10-29"
+    summary: "AggregateResourcesBySubjects pairs binding and role on roleRef.kind+name without comparing namespaces"
+    mrs: [MR-02]
+    controls: [C-0267, C-0272]
+    note: >
+      Same class of defect (name-only roleRef join) but the issue names the aggregator; C-0267's own rego also joins
+      on roleRef.name == role.metadata.name. Whether the pinned v4.0.15 behaviour is the issue's root cause or a
+      separate rule-level join must be checked by a human before calling it known/new.
