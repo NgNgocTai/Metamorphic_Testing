@@ -27,6 +27,26 @@ ENVIRONMENT_MISMATCH`; `VIOLATION` chỉ là alert, chưa là bug.
 
 ## 3. Những gì đã triển khai
 
+**Sơ đồ kiến trúc** (mỗi khối tương ứng một module trong `src/k8s_mr_lab/`; không có oracle độc lập hay cluster trong pipeline):
+
+```mermaid
+flowchart LR
+    SEED["Seed: bộ YAML<br/>SA, Role, RoleBinding, workload"] --> LOAD["Bundle Loader<br/>bundles.py<br/>kiểm cấu trúc, từ chối key trùng"]
+    LOAD --> REG["MR Registry<br/>registry.py<br/>tiền điều kiện + phạm vi control"]
+    REG --> TRANS["Transformation<br/>transforms/<br/>C2 = T(C1)"]
+    TRANS --> VAL["Pair Validator<br/>kiểm diff đúng như MR"]
+    VAL --> S1["Scanner thật trên C1<br/>Trivy / Kubescape"]
+    VAL --> S2["Scanner thật trên C2<br/>cùng phiên bản và policy"]
+    S1 --> NORM["Normalizer<br/>normalize/<br/>PASS / FAIL / NOT_EVALUATED"]
+    S2 --> NORM
+    NORM --> CHK["MR Checker<br/>checker.py<br/>PASS / PARTIAL / VIOLATION / INCONCLUSIVE"]
+    CHK --> TRI["Triage + Evidence<br/>triage.py<br/>chạy lại, reproducer, ablation"]
+    CAT[("mrs/catalog.yaml<br/>config/policy-mapping.yaml")] --> REG
+    CAT --> CHK
+```
+
+MR vừa là khối **Transformation** (sinh C2) vừa là quan hệ mà **MR Checker** kiểm tra; không có khối nào tự dự đoán kết quả đúng.
+
 * Repo `k8s-mr-lab/`: loader YAML chặt (từ chối key trùng), 5 MR (`mrs/catalog.yaml`), validator cấu trúc, adapter gọi **Trivy 0.75.0 và Kubescape v4.0.15 thật** (quét manifest, offline, pin version + digest policy),
   hai normalizer, checker (`equal`/`pass_to_fail`/`fail_to_pass`), runner có provenance, triage (chạy lại, reproducer), report với mẫu số rõ.
 * 83 test (unit, golden từ raw JSON thật, integration chạy binary thật) đều pass trên máy chạy thực nghiệm; trên máy không có đúng binary đã pin thì 3 test integration bị skip (chỉ 80 chạy).

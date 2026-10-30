@@ -46,6 +46,8 @@ OWASP dùng để *chọn thuộc tính cần kiểm thử*, không dùng để 
 
 ## 4. Kịch bản nói (khoảng 7 phút)
 
+**Báo cáo theo 5 phần (cũng là 5 slide chính):** (1) bài toán, (2) lý do chọn Metamorphic Testing, (3) kiến trúc PoC (sơ đồ ở mục 3 của `POC_REPORT_FOR_ADVISOR.md` + bảng 5 MR), (4) kết quả thực nghiệm (demo + hai bảng ở mục 3 ở trên), (5) hướng nghiên cứu tiếp theo và câu hỏi cho thầy. Bảng dưới là cùng nội dung chia theo phút.
+
 | Phút | Nội dung | Gợi ý |
 |---|---|---|
 | 1 | Bài toán: scanner cũng có thể sai, khó có đáp án đúng để so | Nêu ví dụ Role trùng tên khác namespace |

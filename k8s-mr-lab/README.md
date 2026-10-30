@@ -80,4 +80,4 @@ Reading order for `docs/`:
 1. `POC_REPORT_FOR_ADVISOR.md` — the report (problem, method, results, limits, next steps).
 2. `DEFECT_TRIAGE_RESULTS.md` — the two defect candidates with evidence (adjudication is yours).
 3. `HUONG_DAN_TU_KIEM_TRA.md` — step-by-step to redo the checks yourself.
-4. Reference: `DEFECT_TRIAGE.md` (triage protocol), `SCANNER_VERSIONS.md` (pins and verified CLI/rule facts), `known_issues.yaml`, `evidence/`.
+4. Reference: `SCANNER_VERSIONS.md` (pins and verified CLI/rule facts), `known_issues.yaml`, `evidence/`.

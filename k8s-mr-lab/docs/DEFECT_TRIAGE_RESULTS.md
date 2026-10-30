@@ -2,7 +2,9 @@
 
 Trạng thái cả hai: **`READY_FOR_HUMAN_ADJUDICATION`**. Không có mục nào được đánh `CONFIRMED` hay `NEW DEFECT`.
 Môi trường: Trivy 0.75.0 (checks bundle `sha256:b591e919…`), Kubescape v4.0.15 (artifacts digest `8cfb2323…`), cả hai local-file mode.
-Bằng chứng gốc: `runs/{kubescape,trivy}/reproducers/*`, `runs/*/cases/*`, `docs/evidence/*.json` (ablation do `scripts/triage_probe.py` sinh ra).
+Bằng chứng gốc: `runs/{kubescape,trivy}/reproducers/*` (mỗi gói tự chứa source, follow-up, diff, raw JSON, `reproduce.sh`), `docs/evidence/*.json` (ablation do `scripts/triage_probe.py` sinh ra) và `runs/evidence-pack.zip`. Thư mục `runs/*/cases/` (artifact từng case) đã được dọn; chạy lại `scripts/demo.sh` sẽ sinh lại chúng.
+
+Quy trình triage: chạy lại cặp trên cùng phiên bản (`k8s_mr_lab triage`), tạo gói reproducer, ghi bằng chứng rule và ablation; **không bao giờ tự gắn `CONFIRMED`**. Kết luận cuối do người nghiên cứu đọc bằng chứng và quyết định (xem `HUONG_DAN_TU_KIEM_TRA.md`).
 
 ## 0. Phân biệt ba mức kết luận
 
