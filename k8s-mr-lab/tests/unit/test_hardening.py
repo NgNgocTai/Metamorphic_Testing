@@ -20,7 +20,7 @@ def _role(name, ns, rules):
 
 def _binding(name, ns, role, sa, kind="Role", bkind="RoleBinding"):
     meta = {"name": name, **({"namespace": ns} if bkind == "RoleBinding" else {})}
-    return {"apiVersion": RB, "kind": bkind, "metadata": meta, "roleRef": {"apiGroup": RB, "kind": kind, "name": role},
+    return {"apiVersion": RB, "kind": bkind, "metadata": meta, "roleRef": {"apiGroup": "rbac.authorization.k8s.io", "kind": kind, "name": role},
             "subjects": [{"kind": "ServiceAccount", "name": sa, "namespace": "lab-c"}]}
 
 
@@ -72,6 +72,30 @@ def test_mr05_binding_to_unknown_builtin_clusterrole_is_treated_as_unsafe(catalo
     src.objects.append(_binding("edit-b", "lab-c", "edit", "reader", kind="ClusterRole"))   # `edit` is not in the bundle
     mr = catalog["MR-05"]
     assert "workload" not in mr.targets(src, mr.generate_parameters(src, 1)[0])
+
+
+def _extra_subject_binding(subject):
+    return {"apiVersion": RB, "kind": "RoleBinding", "metadata": {"name": "grp-b", "namespace": "lab-c"},
+            "subjects": [subject], "roleRef": {"apiGroup": "rbac.authorization.k8s.io", "kind": "Role", "name": "other"}}
+
+
+def test_mr05_secret_read_via_service_account_group_or_user_form_drops_targets(catalog, seed):
+    for subject in ({"kind": "Group", "name": "system:serviceaccounts:lab-c"},
+                    {"kind": "User", "name": "system:serviceaccount:lab-c:reader"},
+                    {"kind": "Group", "name": "system:authenticated"}):
+        src = seed("rbac-secrets-reader")
+        src.objects += [_role("other", "lab-c", SECRETS_GET), _extra_subject_binding(subject)]
+        mr = catalog["MR-05"]
+        p = [x for x in mr.generate_parameters(src, 9) if x["role"][3] == "reader-role"][0]
+        assert "workload" not in mr.targets(src, p), subject
+
+
+def test_mr05_group_of_another_namespace_does_not_count(catalog, seed):
+    src = seed("rbac-secrets-reader")
+    src.objects += [_role("other", "lab-c", SECRETS_GET), _extra_subject_binding({"kind": "Group", "name": "system:serviceaccounts:elsewhere"})]
+    mr = catalog["MR-05"]
+    p = [x for x in mr.generate_parameters(src, 9) if x["role"][3] == "reader-role"][0]
+    assert mr.targets(src, p)["workload"]
 
 
 def test_mr05_harmless_extra_role_keeps_workload_targets(catalog, seed):

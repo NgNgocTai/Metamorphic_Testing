@@ -1,0 +1,117 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: a
+  namespace: lab-m
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: b
+  namespace: lab-m
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: benign
+  namespace: lab-m
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - configmaps
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: secretsrole
+  namespace: lab-m
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: a-benign
+  namespace: lab-m
+subjects:
+- kind: ServiceAccount
+  name: a
+  namespace: lab-m
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: benign
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: a-secrets
+  namespace: lab-m
+subjects:
+- kind: ServiceAccount
+  name: a
+  namespace: lab-m
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: secretsrole
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: b-benign
+  namespace: lab-m
+subjects:
+- kind: ServiceAccount
+  name: b
+  namespace: lab-m
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: benign
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wa
+  namespace: lab-m
+spec:
+  selector:
+    matchLabels:
+      a: wa
+  template:
+    metadata:
+      labels:
+        a: wa
+    spec:
+      serviceAccountName: a
+      containers:
+      - name: c
+        image: nginx:1.27
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wb
+  namespace: lab-m
+spec:
+  selector:
+    matchLabels:
+      a: wb
+  template:
+    metadata:
+      labels:
+        a: wb
+    spec:
+      serviceAccountName: b
+      containers:
+      - name: c
+        image: nginx:1.27

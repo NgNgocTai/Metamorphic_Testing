@@ -29,7 +29,7 @@ ENVIRONMENT_MISMATCH`; `VIOLATION` chỉ là alert, chưa là bug.
 
 * Repo `k8s-mr-lab/`: loader YAML chặt (từ chối key trùng), 5 MR (`mrs/catalog.yaml`), validator cấu trúc, adapter gọi **Trivy 0.75.0 và Kubescape v4.0.15 thật** (quét manifest, offline, pin version + digest policy),
   hai normalizer, checker (`equal`/`pass_to_fail`/`fail_to_pass`), runner có provenance, triage (chạy lại, reproducer), report với mẫu số rõ.
-* 80 test (unit, golden từ raw JSON thật, integration chạy binary thật) đều pass trên máy chạy thực nghiệm; trên máy không có đúng binary đã pin thì 3 test integration bị skip (chỉ 77 chạy).
+* 83 test (unit, golden từ raw JSON thật, integration chạy binary thật) đều pass trên máy chạy thực nghiệm; trên máy không có đúng binary đã pin thì 3 test integration bị skip (chỉ 80 chạy).
 * Sau một đợt review độc lập (30/10/2026) đã siết: kết quả `PARTIAL` thay cho `PASS` khi một phần scope không có verdict; MR-05 không áp dụng control cấp subject/workload khi quyền đọc Secrets còn được cấp bằng đường khác;
   validator MR-04 kiểm đúng container; scanner có mã thoát khác 0 hoặc thiếu policy digest bị báo `SCAN_ERROR`. Các thay đổi này không làm đổi số liệu đã báo cáo (xem mục 5).
 * Hạn chế PASS của Trivy đã kiểm chứng và xử lý: entry `PASS` không gắn resource; FAIL được gắn bằng ánh xạ dòng, PASS chỉ là suy luận có nhãn `pass_inferred`.
@@ -55,7 +55,7 @@ Miền bao phủ: RBAC (MR-02/03/05) và một phần Pod Security (MR-04); chư
 
 Bảy thư mục seed (6 hợp lệ, 1 cố ý sai để kiểm `INVALID_SOURCE`), trong đó `K1-role-namespace` là seed lịch sử trùng nội dung với `rbac-workload`. Mỗi cặp chạy trên cả hai scanner
 cùng version/mode/policy; nguồn được cache theo hash văn bản. Bằng chứng ở mức **DEV/REG (có định hướng)**: MR-02 và MR-05 được viết sau khi biết lớp lỗi K1/N2.
-Không chạy BLIND/held-out. Local-file mode cho cả hai scanner (live-cluster chưa dùng, không cần cho hai ứng viên). Kết quả giống hệt qua nhiều lần chạy lại từ đầu.
+Ngoài ra có một lượt **chạy độc lập sau khi đóng băng catalog** trên manifest của bên thứ ba (mục 5b). Local-file mode cho cả hai scanner (live-cluster chưa dùng, không cần cho hai ứng viên). Kết quả giống hệt qua nhiều lần chạy lại từ đầu.
 
 ## 5. Kết quả thực tế
 
@@ -85,6 +85,31 @@ Phạm vi control: 6 check Trivy và 7 control Kubescape có mapping đã đọc
 26 lần quét được tiết kiệm nhờ cache nguồn; tỉ lệ cặp có kết luận theo quy tắc của framework (PASS+VIOLATION trên cặp đã tới scanner): Trivy 26/26, Kubescape 25/26. Khối lượng triage thủ công: 6 alert → 4 input → 2 họ.
 Thời gian người nghiên cứu bỏ ra để triage chưa được ghi nên không báo. Demo ngắn: `scripts/demo_mr02.sh` (~15 s, Kubescape thật); demo phụ `scripts/demo_mr02.sh --scanner trivy --mr MR-05 --out runs/demo_mr05`.
 
+## 5b. Lượt chạy độc lập trên manifest của bên thứ ba (đóng băng catalog)
+
+**Thiết lập (quyết định trước khi chạy):** Kalm-Benchmark (Dynatrace, commit `dac3df5`), do người khác viết, chưa từng dùng để thiết kế hay chỉnh MR (trước đó chỉ đếm xem MR có áp dụng được không, chưa xem kết quả scanner).
+Digest của catalog, mapping, config và toàn bộ code MR được ghi vào `runs/heldout/freeze.json` trước khi chạy và **còn nguyên sau khi chạy** (`FREEZE INTACT`).
+Chọn 65 file theo quy tắc cố định: bỏ file bắt đầu bằng `_`, lấy mỗi file thứ 4, cộng mọi file mà MR-02/03/05 áp dụng được (8 file). Cả hai scanner thật, cùng phiên bản và policy như trên.
+
+| Mỗi scanner | Trivy 0.75.0 | Kubescape v4.0.15 |
+|---|---|---|
+| Seed / follow-up sinh ra (đều khác nhau về nội dung) | 65 / 141 | 65 / 141 |
+| PASS / VIOLATION / INCONCLUSIVE | 131 / 3 / 5 | 110 / 0 / 29 |
+| Tỉ lệ cặp có kết luận (PASS+VIOLATION) | 134/139 = 96% | 110/139 = 79% |
+| Phép so sánh có kết luận dựa vào PASS suy luận | 247/339 = 73% | 0/693 |
+| Thời gian quét trung bình mỗi lượt gọi / tổng | ≈ 1,2 s / 233 s | ≈ 4,2 s / 840 s |
+
+**Đọc kết quả thế nào:**
+* **Không có cảnh báo giả từ MR-01 và MR-04.** MR-01 (95 cặp) và MR-04 (33 cặp) không sinh violation nào ở cả hai scanner trên manifest lạ: các MR này không bị tinh chỉnh cho riêng seed của đề tài.
+* **N2 của Trivy tái hiện trên seed độc lập:** 3 violation MR-05 trên `rbac-002-1/2/3` của Kalm (Role chỉ cấp `secrets` ở core group; đổi sang `apps` thì `KSV-0113` vẫn FAIL). Đây là ba biến thể của cùng một kịch bản, nên vẫn **một họ**, không phải ba lỗi. Nó cho thấy N2 không phải sản phẩm của seed tự viết, nhưng MR-05 vốn được viết sau khi biết N2.
+* **K1 của Kubescape không xuất hiện ở đây.** K1 cần ServiceAccount + RoleBinding + workload dùng SA đó; manifest Kalm gần như không có tổ hợp này (MR-02 chỉ áp dụng 3 file, đều cho PASS). Đây là hạn chế về seed, không phải bằng chứng rằng lỗi hiếm.
+* **Áp dụng:** 105/320 = 33% (seed, MR). Số seed áp dụng được trên 65: MR-01 62 (95 cặp), MR-04 33, MR-02 3, MR-03 2, MR-05 3. MR RBAC cần seed có nhiều resource liên kết, mà benchmark đơn-lỗi không cung cấp.
+* **INCONCLUSIVE (Trivy 5, Kubescape 29) là trung thực, không phải lỗi:** Trivy: 5 cặp có FAIL không có số dòng (`StartLine` trống) nên không gắn được resource, framework từ chối kết luận.
+  Kubescape: cả 29 đều là file RBAC chỉ có một Role hoặc ClusterRole đứng riêng, không có binding hay ServiceAccount (24 ở MR-01, 5 ở MR-03/MR-05). Các control RBAC của Kubescape đánh giá theo subject nên không phát verdict nào cho Role không được bind, framework không có gì để so và báo INCONCLUSIVE thay vì PASS. Nút thắt khi mở rộng seed là **seed có đủ liên kết RBAC** và **độ phủ control của mapping**, không phải thiết kế MR.
+* **Chi phí:** 205 lượt quét mỗi scanner, 77 lượt tiết kiệm nhờ cache; tổng sinh cặp ≈ 14 s; 0 `SCAN_ERROR`.
+
+**Giới hạn:** một benchmark duy nhất, chỉ mẫu 65/238 file, chưa có adjudication thủ công, và 73% số so sánh có kết luận của Trivy dựa vào PASS suy luận. Không dùng kết quả này làm tỉ lệ phát hiện lỗi.
+
 ## 6. Phân tích hai ứng viên lỗi
 
 Chi tiết, ablation và các khả năng đã loại trừ: `docs/DEFECT_TRIAGE_RESULTS.md` (trạng thái `READY_FOR_HUMAN_ADJUDICATION`).
@@ -99,10 +124,10 @@ Cả hai là lớp lỗi đã được biết trước (guided), không gọi l�
 
 ## 7. Những giới hạn
 
-* DEV/REG có định hướng; chưa có held-out hay BLIND; số seed nhỏ và có seed trùng nội dung (đã khử trùng).
+* Phần DEV/REG là có định hướng và số seed nhỏ (có seed trùng nội dung, đã khử trùng). Lượt độc lập (mục 5b) chỉ là một mẫu 65 file của một benchmark duy nhất, các MR RBAC hầu như không áp dụng được ở đó, và chưa có adjudication thủ công.
 * Chưa có adjudication thủ công: 0 defect confirmed; không báo alert precision/specificity.
 * MR bất biến bỏ sót lỗi sai nhất quán; Trivy PASS là suy luận (không dùng làm bằng chứng chính): 100 trên 256 phép so sánh có kết luận của Trivy (khoảng 39%) dựa vào PASS suy luận, nên với Trivy phần lớn kết quả "PASS" nghĩa là "tập FAIL không đổi"; Kubescape thì 0/382 vì verdict của nó tường minh.
-* Kubescape gộp verdict RBAC theo subject (ServiceAccount + Role + RoleBinding) rồi gán cho từng thành viên, lấy trạng thái xấu nhất; một Role nằm trong nhiều đường liên kết có thể mất ngữ cảnh. Bằng chứng K1 không bị ảnh hưởng vì nó nằm trực tiếp trên Deployment.
+* Kubescape báo kết quả RBAC theo từng bộ ba (subject, Role, RoleBinding); normalizer gán verdict đó cho từng thành viên và lấy trạng thái xấu nhất khi một đối tượng xuất hiện nhiều lần. Đã kiểm bằng ca đối kháng thật (một SA có Role vô hại và Role Secrets, SA thứ hai chỉ dùng Role vô hại): verdict của từng Role và từng SA đúng, không bị lẫn. Chưa kiểm các cấu hình phức tạp hơn (ClusterRole, nhiều subject trong một binding, group).
 * Validator nguồn chỉ kiểm cấu trúc (khóa trùng, định danh, RoleBinding tham chiếu Role cùng namespace), chưa kiểm schema Kubernetes; kết luận chỉ hợp lệ ở chế độ quét manifest cục bộ.
 * Gom họ lỗi (`family`) là heuristic theo scanner + MR + kiểu đổi verdict; việc tách/gộp theo nguyên nhân gốc thật là của người adjudicate.
 * Mapping control→MR mới 6 check Trivy + 7 control Kubescape; chưa bao phủ token (không có MR), init container, securityContext override.
@@ -119,7 +144,7 @@ hai họ ứng viên lỗi đã được tái hiện và phân tích nguyên nh�
 | Ưu tiên | Việc | Mục đích |
 |---|---|---|
 | 1 | Người nghiên cứu adjudicate hai ứng viên; tra issue/PR upstream; thử Kubescape 4.0.16 và Trivy 0.76.1 | Chuyển candidate → confirmed/không; biết lỗi còn ở bản mới không |
-| 2 | Đóng băng catalog v1, chạy held-out trên seed chưa dùng để thiết kế MR | RQ2 ngoài tập phát triển; báo cả khi không có violation |
+| 2 | Mở rộng lượt độc lập: thêm seed có đủ ServiceAccount–Role–RoleBinding–workload (Kalm hầu như không có), chạy nốt phần chưa chọn của Kalm (173 file) cho các MR mới | RQ2 ngoài tập phát triển; báo cả khi không có violation |
 | 3 | Hệ thống hóa RQ1 theo OWASP K8s Top 10 2025: duyệt K01–K10, với mỗi nhóm thử dẫn xuất MR từ tài liệu Kubernetes và ghi lý do khi không viết được (như bài Web làm với CWE); trước mắt thêm MR cho ServiceAccount token và Pod Security (securityContext override, init container) có precondition + counterexample | Chứng minh phương pháp không chỉ RBAC và có căn cứ chọn MR (RQ1) |
 | 4 | Ghi thời gian triage thủ công; mở rộng mapping control | RQ3 đầy đủ hơn |
 | Sau | Live-cluster scanning; so sánh random/schema-aware (Phụ lục E.6); Semantic Oracle độc lập | Future Work, không bắt buộc cho RQ1–RQ3 |

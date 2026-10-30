@@ -91,3 +91,4 @@ mrs:
     counterexample: with a second rule granting secrets (or a wildcard) the permission survives the change, so the Role is not eligible
     limits:
       - valid only for controls whose documentation covers core Secrets; unrelated controls are not mapped
+      - closed-bundle premise: only bindings present in the bundle are examined for other paths to the same permission (local-file mode); not valid for a live cluster unless the bundle is known to be complete for the subject

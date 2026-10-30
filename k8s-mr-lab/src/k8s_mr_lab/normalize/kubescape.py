@@ -3,7 +3,8 @@
 Facts verified on the pinned version (tests/golden):
   * `results[].controls[]` carries an explicit passed/failed/skipped status per control, and a control is listed on a
     resource only when it is relevant to it, so presence is coverage evidence;
-  * RBAC results are aggregated per subject: one resourceID concatenates ServiceAccount/Role/RoleBinding, e.g.
+  * RBAC results are aggregated per (subject, Role, RoleBinding) triple (checked with a two-subject, two-Role real report in
+    tests/golden/*rbac-multi-subject*): one resourceID concatenates ServiceAccount/Role/RoleBinding, e.g.
     '/lab-a/ServiceAccount/app/path=1/api=rbac.authorization.k8s.io/v1/lab-a/Role/app-role/path=2/...'. Every member
     object receives the verdict; worst status wins when an object appears in several results.
 """

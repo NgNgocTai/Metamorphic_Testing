@@ -58,3 +58,6 @@ Desktop.ini
 *.backup
 *.BACKUP_*
 /2208.09505v2.pdf
+
+# Local project archive for review.
+/project-review.zip

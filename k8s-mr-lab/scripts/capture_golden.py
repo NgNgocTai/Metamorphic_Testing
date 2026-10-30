@@ -43,6 +43,33 @@ def variants():
     mr01 = YamlKeyOrder()
     src = seeds["rbac-workload"]
     yield "rbac-workload__mr01-reverse", mr01.transform(src, {"mode": "reverse"})[0]
+    yield "rbac-multi-subject__source", multi_subject_bundle()
+
+
+def multi_subject_bundle():
+    """Adversarial RBAC case for the normalizer: SA a has a benign Role AND a Secrets Role, SA b shares only the benign Role."""
+    from k8s_mr_lab.bundles import ConfigBundle
+    rbac = "rbac.authorization.k8s.io"
+
+    def role(n, res):
+        return {"apiVersion": f"{rbac}/v1", "kind": "Role", "metadata": {"name": n, "namespace": "lab-m"},
+                "rules": [{"apiGroups": [""], "resources": [res], "verbs": ["get"]}]}
+
+    def bind(n, r, s):
+        return {"apiVersion": f"{rbac}/v1", "kind": "RoleBinding", "metadata": {"name": n, "namespace": "lab-m"},
+                "subjects": [{"kind": "ServiceAccount", "name": s, "namespace": "lab-m"}],
+                "roleRef": {"apiGroup": rbac, "kind": "Role", "name": r}}   # apiGroup has NO /v1; with /v1 Kubescape ignores the link
+
+    def sa(n):
+        return {"apiVersion": "v1", "kind": "ServiceAccount", "metadata": {"name": n, "namespace": "lab-m"}}
+
+    def dep(n, s):
+        return {"apiVersion": "apps/v1", "kind": "Deployment", "metadata": {"name": n, "namespace": "lab-m"},
+                "spec": {"selector": {"matchLabels": {"a": n}}, "template": {"metadata": {"labels": {"a": n}},
+                         "spec": {"serviceAccountName": s, "containers": [{"name": "c", "image": "nginx:1.27"}]}}}}
+    return ConfigBundle([sa("a"), sa("b"), role("benign", "configmaps"), role("secretsrole", "secrets"),
+                         bind("a-benign", "benign", "a"), bind("a-secrets", "secretsrole", "a"), bind("b-benign", "benign", "b"),
+                         dep("wa", "a"), dep("wb", "b")], "", "rbac-multi-subject")
 
 
 def main() -> int:

@@ -121,6 +121,18 @@ def test_ut09_kubescape_missing_control_is_not_evaluated(golden):
     assert ks_report(golden, "rbac-workload__source", cut).get("C-0267", DEPLOY_WEB).status == NOT_EVALUATED
 
 
+def test_kubescape_two_subjects_sharing_a_role_keep_their_own_verdicts(golden):
+    """Review P2-2 adversarial case, real report. SA a = benign Role + Secrets Role; SA b = benign Role only.
+    Kubescape emits one aggregated result per (subject, role, binding), so a Role is not contaminated by a sibling Role."""
+    rep = ks_report(golden, "rbac-multi-subject__source")
+    role = lambda n: ("rbac.authorization.k8s.io", "Role", "lab-m", n)
+    sa = lambda n: ("", "ServiceAccount", "lab-m", n)
+    assert rep.get("C-0015", role("benign")).status == PASS          # shared by a and b, never worse than its own rules
+    assert rep.get("C-0015", role("secretsrole")).status == FAIL
+    assert rep.get("C-0015", sa("a")).status == FAIL                  # a can read Secrets through secretsrole
+    assert rep.get("C-0015", sa("b")).status == PASS
+
+
 def test_kubescape_report_without_results_does_not_crash(golden):
     raw, bundle, _ = golden("kubescape", "rbac-no-binding__source")
     assert ks.normalize({}, bundle).verdicts == {}

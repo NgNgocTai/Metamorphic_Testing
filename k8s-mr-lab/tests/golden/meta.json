@@ -14,8 +14,8 @@
       "--cache-dir",
       "/home/ngoctai/.cache/trivy",
       "--output",
-      "/tmp/tmp8a7w1eke/report.json",
-      "/tmp/tmp8a7w1eke/in"
+      "/tmp/tmp2bibz07e/report.json",
+      "/tmp/tmp2bibz07e/in"
     ]
   },
   "kubescape": {
@@ -32,10 +32,10 @@
       "--format",
       "json",
       "--output",
-      "/tmp/tmpx22swhjn/report.json",
+      "/tmp/tmptj_op2l9/report.json",
       "--use-artifacts-from",
       "/home/ngoctai/.kubescape",
-      "/tmp/tmpx22swhjn/in"
+      "/tmp/tmptj_op2l9/in"
     ]
   }
 }

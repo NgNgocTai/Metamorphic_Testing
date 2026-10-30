@@ -24,7 +24,7 @@ cd /mnt/d/Code/KLTN/Metarmophic_testing/k8s-mr-lab
 PY=~/mrlab-venv/bin/python
 
 $PY -m k8s_mr_lab versions                                   # check the pins
-$PY -m pytest -q                                              # 80 tests; 3 integration ones use the real binaries and skip if absent
+$PY -m pytest -q                                              # 83 tests; 3 integration ones use the real binaries and skip if absent
 $PY -m k8s_mr_lab generate --seeds seeds/synthetic seeds/historical --out runs/generated
 $PY -m k8s_mr_lab run --scanner trivy     --seeds seeds/synthetic seeds/historical --out runs/trivy
 $PY -m k8s_mr_lab run --scanner kubescape --seeds seeds/synthetic seeds/historical --out runs/kubescape   # ~3 min
@@ -37,6 +37,8 @@ $PY -m k8s_mr_lab report --runs runs/trivy runs/kubescape --out runs/summary
 
 Advisor demo (about 15 s, real Kubescape): `scripts/demo_mr02.sh`; secondary: `scripts/demo_mr02.sh --scanner trivy --mr MR-05 --out runs/demo_mr05`.
 `scripts/triage_probe.py` runs the one-change-at-a-time ablations behind `docs/DEFECT_TRIAGE_RESULTS.md` (`docs/evidence/*.json`).
+Independent run on third-party manifests (Kalm-Benchmark) with the catalog frozen first: `python scripts/heldout_prepare.py`
+(writes `runs/heldout/freeze.json` + staging), then `bash scripts/heldout_run.sh` (both scanners, triage, report, freeze re-check, ~20 min).
 Research questions: RQ1 Applicability, RQ2 Effectiveness, RQ3 Efficiency & Practicality (no random baseline in scope).
 
 ## The 5 MRs (`mrs/catalog.yaml`)
@@ -63,7 +65,7 @@ A missing finding is never PASS. Verdicts are `PASS | FAIL | NOT_EVALUATED | UNK
   entry). A Trivy PASS is therefore an *inference* (kind in the check's `kinds`, check has a PASS entry, no FAIL
   attributed to the resource) and is labelled `pass_inferred` in the evidence. FAILs are attributed by mapping `StartLine`
   onto the exact scanned file.
-* Kubescape reports an explicit `passed/failed` per control per resource; RBAC results are aggregated per subject
+* Kubescape reports an explicit `passed/failed` per control per resource; RBAC results are aggregated per (subject, Role, RoleBinding) triple
   (ServiceAccount+Role+RoleBinding) and the verdict is given to every member.
 * `triage` re-runs the pair, groups alerts into *provisional* families and writes a reproducer; it never sets `CONFIRMED`.
 

@@ -35,11 +35,12 @@ OWASP dùng để *chọn thuộc tính cần kiểm thử*, không dùng để 
 
 ## 3. Kết quả — nói đúng những con số này
 
-- 5 MR chạy trên **2 scanner thật** (Trivy 0.75.0, Kubescape v4.0.15), 80 test tự động đều pass (3 test integration cần đúng binary scanner).
+- 5 MR chạy trên **2 scanner thật** (Trivy 0.75.0, Kubescape v4.0.15), 83 test tự động đều pass (3 test integration cần đúng binary scanner).
 - Mỗi scanner: **26 cặp** kiểm thử hợp lệ (21 cặp khác nhau về nội dung).
 - **6 cảnh báo vi phạm MR = 4 cặp input khác nhau = 2 họ ứng viên lỗi.** (Không nói "6 lỗi".)
   - Kubescape: `C-0267/C-0272` ghép Role theo tên, bỏ qua namespace (MR-02).
   - Trivy: `KSV-0113` bỏ qua `apiGroups`: Role chỉ có quyền secrets ở group `apps` vẫn bị báo (MR-05).
+- **Lượt chạy độc lập** (catalog đóng băng, 65 manifest của Kalm-Benchmark do bên thứ ba viết): MR-01 và MR-04 không sinh cảnh báo giả nào (95 và 33 cặp); N2 của Trivy tái hiện trên 3 biến thể của một kịch bản Kalm (vẫn một họ); Kubescape 0 violation. MR RBAC chỉ áp dụng được 2–3 seed vì Kalm thiếu liên kết RBAC. Đây là một mẫu nhỏ, không phải tỉ lệ phát hiện lỗi.
 - Hai ứng viên đều **tái hiện được** và có bằng chứng (raw JSON, rule, thí nghiệm đổi từng yếu tố). **Chưa xác nhận chính thức là lỗi.**
 - Đây là kiểm thử **có định hướng**: hai lớp lỗi này đã biết từ trước rồi mới viết MR. **Không phải phát hiện lỗi mới.**
 
@@ -83,6 +84,7 @@ Nên **chạy thử trước một lần** để biết output trông thế nào
 | Bài Web đo bằng CVE (sensitivity), em đo thế nào? | Ở RQ4 bài Web lấy các lỗ hổng đã có CVE của Jenkins 2.121.1 và Joomla 3.8.7 làm "đáp án", chọn trong đó nhóm mà catalog MR của họ chạm tới và tái hiện được bằng tay (OWASP/CWE thì chỉ là danh mục điểm yếu để họ viết MR ở RQ1/RQ2, không phải đáp án). Lỗi của scanner không có CVE nên em không tính tỉ lệ kiểu đó. Thứ gần nhất là các issue công khai trên GitHub của scanner (như kubescape#2579) và các lớp lỗi lịch sử K1/N2; em báo "tái hiện được hai lớp lỗi đã chọn trước" và phân loại theo họ nguyên nhân, không gọi là tỉ lệ phát hiện. |
 | Bài Web có RQ về oracle problem, em có không? | Oracle problem là **động cơ** của đề tài: không có sẵn danh sách finding đúng cho mọi cấu hình. Em **không đặt RQ riêng** để đo "MT giải quyết oracle problem đến đâu". MR chỉ là oracle quan hệ một phần: nó phát hiện vi phạm quan hệ, còn kết luận lỗi vẫn cần người đọc rule và bằng chứng; MR bất biến bỏ sót lỗi mà scanner sai giống nhau ở cả hai đầu vào. RQ1 của em (Applicability) tương ứng gần với RQ3 và RQ2 của bài Web về điều kiện áp dụng và phạm vi. |
 | Violation có chắc là bug không? | Không. Có thể do MR sai, do chuẩn hóa sai hoặc do control ngoài phạm vi. Vì vậy có bước triage và các thí nghiệm đổi từng yếu tố (ví dụ: Role decoy khác tên thì không báo, Role local cấp quyền thật thì báo đúng). |
+| Phương pháp có scale không / có chỉ chạy trên seed em tự viết không? | Em có chạy thêm một lượt sau khi đóng băng catalog trên 65 manifest của Kalm-Benchmark (bên thứ ba): 141 cặp, 205 lượt quét mỗi scanner, 0 lỗi chạy, tổng khoảng 4 phút (Trivy) và 14 phút (Kubescape). MR-01 và MR-04 áp dụng rộng và không sinh cảnh báo giả. Hạn chế: MR RBAC gần như không áp dụng được vì seed thiếu liên kết RBAC, và độ phủ control của mapping còn nhỏ. |
 | Số liệu có ít quá không? | Đúng, quy mô PoC (26 cặp/scanner, 7 seed). Mục tiêu giai đoạn này là chứng minh khả thi, chưa phải tỉ lệ tổng quát. |
 | Sao có 6 cảnh báo mà chỉ nói 2 lỗi? | Nhiều cảnh báo cùng một nguyên nhân và có seed trùng nội dung. 6 cảnh báo = 4 input khác nhau = 2 họ nguyên nhân giả định. |
 | Trivy báo PASS có đáng tin không? | Trivy không gắn PASS vào từng resource, nên em coi đó chỉ là "không thấy FAIL". Kết luận về Trivy dựa trên **FAIL có gắn resource** (MR-05). |
