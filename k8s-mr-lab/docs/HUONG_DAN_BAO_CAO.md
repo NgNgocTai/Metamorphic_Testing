@@ -35,7 +35,7 @@ OWASP dùng để *chọn thuộc tính cần kiểm thử*, không dùng để 
 
 ## 3. Kết quả — nói đúng những con số này
 
-- 5 MR chạy trên **2 scanner thật** (Trivy 0.75.0, Kubescape v4.0.15), 65 test tự động đều pass.
+- 5 MR chạy trên **2 scanner thật** (Trivy 0.75.0, Kubescape v4.0.15), 80 test tự động đều pass (3 test integration cần đúng binary scanner).
 - Mỗi scanner: **26 cặp** kiểm thử hợp lệ (21 cặp khác nhau về nội dung).
 - **6 cảnh báo vi phạm MR = 4 cặp input khác nhau = 2 họ ứng viên lỗi.** (Không nói "6 lỗi".)
   - Kubescape: `C-0267/C-0272` ghép Role theo tên, bỏ qua namespace (MR-02).

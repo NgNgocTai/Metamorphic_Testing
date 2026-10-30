@@ -45,10 +45,17 @@ class PrivilegedFlip(MetamorphicRelation):
         if len(d) != 1:
             return "INVALID_PAIR", f"expected_exactly_one_change_got_{len(d)}"
         c = d[0]
-        if (c["op"], c["old"], c["new"]) != ("change", False, True) or not c["path"].endswith("securityContext.privileged"):
-            return "INVALID_PAIR", "change_is_not_privileged_false_to_true"
         if c["object"] != fmt_key(key):
             return "INVALID_PAIR", "change_on_wrong_object"
+        ps = pod_spec(source.index()[key])
+        if ps is None:
+            return "INVALID_PAIR", "target_is_not_a_workload"
+        # the exact container named by the parameters, not merely "some container of that workload"
+        expected = ".".join(ps[0]) + f".containers[{params['container_index']}].securityContext.privileged"
+        if c["path"] != expected:
+            return "INVALID_PAIR", f"change_on_{c['path']}_expected_{expected}"
+        if (c["op"], c["old"], c["new"]) != ("change", False, True):
+            return "INVALID_PAIR", "change_is_not_privileged_false_to_true"
         return VALID_PAIR, ""
 
     def targets(self, source: ConfigBundle, params: dict) -> dict[str, list[ResKey]]:

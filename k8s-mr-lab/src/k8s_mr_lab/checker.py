@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 from .bundles import ConfigBundle, obj_key
-from .model import (CONCLUSIVE, EQUAL, FAIL, FAIL_TO_PASS, PASS, PASS_TO_FAIL, R_INCONCLUSIVE, R_PASS, R_SKIP,
-                    R_VIOLATION, Assessment, KeyResult, NormalizedReport, ResKey)
+from .model import (CONCLUSIVE, EQUAL, FAIL, FAIL_TO_PASS, PASS, PASS_TO_FAIL, R_INCONCLUSIVE, R_PARTIAL, R_PASS,
+                    R_SKIP, R_VIOLATION, Assessment, KeyResult, NormalizedReport, ResKey)
 from .registry import MappingEntry
 from .transforms.base import MetamorphicRelation
 
@@ -59,13 +59,17 @@ def check(mr: MetamorphicRelation, keys: list[Key], r1: NormalizedReport, r2: No
     for control, rk in keys:
         v1, v2 = r1.get(control, rk), r2.get(control, rk)
         outcome, reason = _compare(mr.relation, v1.status, v2.status)
-        res.key_results.append(KeyResult(control, rk, v1.status, v2.status, outcome, reason))
+        inferred = any(str(e).startswith("pass_inferred") for v in (v1, v2) for e in v.evidence)
+        res.key_results.append(KeyResult(control, rk, v1.status, v2.status, outcome, reason, inferred))
     c = res.counts()
     if c["violation"]:
         res.result, res.reason = R_VIOLATION, f"{c['violation']} comparison(s) violate relation '{mr.relation}'"
+    elif c["ok"] and not c["inconclusive"]:
+        res.result, res.reason = R_PASS, f"all {c['ok']} comparison(s) satisfy '{mr.relation}'"
     elif c["ok"]:
-        res.result, res.reason = R_PASS, f"{c['ok']} conclusive comparison(s) satisfy '{mr.relation}'" + (
-            f"; {c['inconclusive']} inconclusive" if c["inconclusive"] else "")
+        # Never a full PASS while part of the scope had no usable verdict.
+        res.result, res.reason = R_PARTIAL, (f"{c['ok']} comparison(s) satisfy '{mr.relation}' but "
+                                             f"{c['inconclusive']} had no usable verdict")
     else:
         res.result, res.reason = R_INCONCLUSIVE, "no conclusive comparison (all verdicts missing or baseline unmet)"
     return res

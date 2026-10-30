@@ -55,6 +55,11 @@ class SplitRuleVerbs(MetamorphicRelation):
             return bad, "permission_tuples_changed"
         if len(f["rules"]) <= len(s["rules"]):
             return bad, "rule_count_did_not_increase"
+        # exactly the requested split: rule i became one rule per verb, every other rule is untouched
+        i, verbs = params["rule_index"], s["rules"][params["rule_index"]]["verbs"]
+        expected = [{**s["rules"][i], "verbs": [v]} for v in verbs]
+        if f["rules"][:i] != s["rules"][:i] or f["rules"][i:i + len(verbs)] != expected or f["rules"][i + len(verbs):] != s["rules"][i + 1:]:
+            return bad, "not_exactly_the_requested_split"
         if any(d.get("object") != fmt_key(key) or not d["path"].startswith("rules") for d in diff_bundles(source, followup)):
             return bad, "change_outside_target_role_rules"
         return VALID_PAIR, ""

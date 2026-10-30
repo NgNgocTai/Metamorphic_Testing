@@ -138,7 +138,11 @@ def analysis(rows: list[dict], triage: dict | None = None) -> dict:
     reasons = Counter(r["inconclusive_reason"] for r in rows if r["mr_result"] == "INCONCLUSIVE")
     skips = Counter(r["skip_reason"] for r in rows if r["mr_result"] == R_SKIP)
     fam = {c["family"] for c in (triage or {}).get("cases", {}).values()}
+    comps = [c for r in scanned for c in ((r.get("assessment") or {}).get("comparisons") or []) if c["outcome"] != "inconclusive"]
+    inferred = sum(1 for c in comps if c.get("basis") == "inferred_pass")
     return {
+        "evidence_basis": {"conclusive_comparisons": len(comps), "relying_on_inferred_pass (Trivy)": inferred,
+                           "cases_PARTIAL (some scope had no verdict)": sum(1 for r in rows if r["mr_result"] == "PARTIAL")},
         "dedup": {
             "seed_configurations (all dirs, incl. invalid)": len(seeds), "invalid_sources": len(invalid_seeds),
             "unique_valid_source_texts": len({r["source_sha256"] for r in pairs}),
@@ -175,7 +179,7 @@ def markdown_report(summaries: list[dict], triage_by_scanner: dict[str, dict]) -
         a = s.get("analysis")
         if a:
             L += ["### Deduplicated counts (RQ2)", ""] + [f"- {k}: {v}" for k, v in a["dedup"].items()]
-            L += [f"- rows not executed: {a['rows_not_executed']}", f"- inconclusive reasons: {a['inconclusive_reasons']}", "",
+            L += [f"- evidence basis: {a['evidence_basis']}", f"- rows not executed: {a['rows_not_executed']}", f"- inconclusive reasons: {a['inconclusive_reasons']}", "",
                   "### Cost (RQ3)", ""]
             e = a["efficiency"]
             L += [f"- {k}: {v}" for k, v in e.items() if k != "per_mr"]

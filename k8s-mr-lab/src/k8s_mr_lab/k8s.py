@@ -91,6 +91,45 @@ def bound_service_accounts(bundle: ConfigBundle, role: dict) -> list[ResKey]:
     return out
 
 
+def grants_core_secret_read(role: dict) -> bool:
+    """True if any rule of the Role/ClusterRole can read core-group Secrets (wildcards included)."""
+    for rule in role.get("rules") or []:
+        if (set(rule.get("apiGroups") or []) & {"", "*"} and set(rule.get("resources") or []) & {"secrets", "*"}
+                and set(rule.get("verbs") or []) & (READ_VERBS | {"*"})):
+            return True
+    return False
+
+
+def secret_read_granted_elsewhere(bundle: ConfigBundle, role: dict, sas: list[ResKey]) -> bool:
+    """Could a ServiceAccount in `sas` still read core Secrets after `role` stops granting it?
+
+    Looks at every other RoleBinding/ClusterRoleBinding that names the SA (directly, as the equivalent User, or through
+    the SA groups). Conservative: a referenced ClusterRole that is not in the bundle (e.g. built-in `edit`) counts as
+    'yes', because we cannot show it grants nothing."""
+    if not sas:
+        return False
+    ids = {(k[2], k[3]) for k in sas}
+    users = {f"system:serviceaccount:{ns}:{n}" for ns, n in ids}
+    groups = {"system:serviceaccounts", "system:authenticated"} | {f"system:serviceaccounts:{ns}" for ns, _ in ids}
+    own = obj_key(role)
+    for b in bundle.of_kind("RoleBinding", "ClusterRoleBinding"):
+        bns = obj_key(b)[2]
+        names_sa = any((s.get("kind") == "ServiceAccount" and ((s.get("namespace") or bns), s.get("name")) in ids)
+                       or (s.get("kind") == "User" and s.get("name") in users)
+                       or (s.get("kind") == "Group" and s.get("name") in groups)
+                       for s in b.get("subjects") or [])
+        if not names_sa:
+            continue
+        ref = b.get("roleRef") or {}
+        target = (bundle.find("Role", bns, ref.get("name", "")) if ref.get("kind") == "Role"
+                  else bundle.find("ClusterRole", "", ref.get("name", "")))
+        if target is None:
+            return True                      # cannot prove it grants nothing
+        if obj_key(target) != own and grants_core_secret_read(target):
+            return True
+    return False
+
+
 def permission_tuples(role: dict) -> set[tuple]:
     """Expanded (apiGroup, resource, resourceName, nonResourceURL, verb) tuples granted by a Role/ClusterRole."""
     out: set[tuple] = set()

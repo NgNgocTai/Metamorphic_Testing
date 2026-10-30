@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..bundles import ConfigBundle, obj_key
-from ..k8s import READ_VERBS, bound_service_accounts, workloads_using_sa
+from ..k8s import READ_VERBS, bound_service_accounts, secret_read_granted_elsewhere, workloads_using_sa
 from ..model import ResKey, VALID_PAIR, fmt_key
 from ..validation import diff_bundles
 from .base import MetamorphicRelation, key_to_list, list_to_key
@@ -51,6 +51,10 @@ class ApiGroupSwitch(MetamorphicRelation):
 
     def targets(self, source: ConfigBundle, params: dict) -> dict[str, list[ResKey]]:
         key = list_to_key(params["role"])
-        sas = bound_service_accounts(source, source.index()[key])
+        role = source.index()[key]
+        sas = bound_service_accounts(source, role)
         wl = [w for (_, _, ns, n) in sas for w in workloads_using_sa(source, ns, n)]
-        return {"bound_role": [key], "subject_sa": sas, "workload": wl}
+        out = {"role_direct": [key]}          # controls that judge this Role itself (e.g. Trivy KSV-0113)
+        if secret_read_granted_elsewhere(source, role, sas):
+            return out                        # subject/workload-level controls would be judged on the wrong premise
+        return {**out, "bound_role": [key], "subject_sa": sas, "workload": wl}

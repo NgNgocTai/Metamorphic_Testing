@@ -26,10 +26,13 @@ def expand(path: str) -> Path:
 
 
 def sha256_files(paths: list[Path]) -> str:
+    """Digest of the policy files; 'unknown' if any is missing (never hash a placeholder as if it were data)."""
+    if not all(p.exists() for p in paths):
+        return "unknown"
     h = hashlib.sha256()
     for p in paths:
         h.update(p.name.encode())
-        h.update(p.read_bytes() if p.exists() else b"<missing>")
+        h.update(p.read_bytes())
     return h.hexdigest()
 
 
@@ -81,6 +84,15 @@ class Scanner:
             inv.error = f"timeout after {self.timeout}s"
         inv.elapsed_ms = int((time.monotonic() - t0) * 1000)
         if inv.error:
+            return inv
+        # Verified on the pinned versions: both scanners exit 0 even when they report failures, so any other code is an
+        # error of the run itself, whatever the JSON on disk looks like.
+        accepted = [int(c) for c in self.cfg.get("accepted_exit_codes", [0])]
+        if inv.exit_code not in accepted:
+            inv.error = f"exit code {inv.exit_code} not in accepted {accepted}: {inv.stderr[-300:]}"
+            return inv
+        if inv.policy_digest in ("", "unknown"):
+            inv.error = "policy digest unavailable: refusing to score against an unidentified policy set"
             return inv
         if not out_json.exists() or out_json.stat().st_size == 0:
             inv.error = f"no JSON report produced (exit {inv.exit_code}): {inv.stderr[-300:]}"

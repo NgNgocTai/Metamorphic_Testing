@@ -72,9 +72,11 @@ mrs:
       - {control: KSV-0017, target: workload}
     kubescape:
       - {control: C-0057, target: workload}
-  MR-05:   # controls that claim to detect core-Secrets read access
+  MR-05:   # controls that claim to detect core-Secrets read access.
+           # role_direct = judges the Role itself; bound_role/workload = judge the bound subject's effective rights and
+           # are dropped when another binding may still grant the same read access.
     trivy:
-      - {control: KSV-0113, target: bound_role}
+      - {control: KSV-0113, target: role_direct}
     kubescape:
       - {control: C-0015, target: bound_role}
       - {control: C-0267, target: workload}

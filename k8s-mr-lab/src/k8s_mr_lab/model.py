@@ -15,7 +15,9 @@ CONCLUSIVE = (PASS, FAIL)
 R_PASS, R_VIOLATION, R_SKIP = "PASS", "VIOLATION", "SKIP"
 R_INVALID_SOURCE, R_INVALID_PAIR = "INVALID_SOURCE", "INVALID_PAIR"
 R_INCONCLUSIVE, R_SCAN_ERROR, R_ENV_MISMATCH = "INCONCLUSIVE", "SCAN_ERROR", "ENVIRONMENT_MISMATCH"
-RESULT_STATUSES = (R_PASS, R_VIOLATION, R_SKIP, R_INVALID_SOURCE, R_INVALID_PAIR,
+# Some comparisons held, others had no usable verdict: never reported as a full PASS.
+R_PARTIAL = "PARTIAL"
+RESULT_STATUSES = (R_PASS, R_PARTIAL, R_VIOLATION, R_SKIP, R_INVALID_SOURCE, R_INVALID_PAIR,
                    R_INCONCLUSIVE, R_SCAN_ERROR, R_ENV_MISMATCH)
 
 VALID_PAIR = "VALID_PAIR"
@@ -101,6 +103,7 @@ class KeyResult:
     followup: str
     outcome: str  # ok | violation | inconclusive
     reason: str = ""
+    inferred: bool = False  # a verdict used here is an inferred PASS (Trivy), not an explicit one
 
 
 @dataclass
@@ -119,5 +122,6 @@ class Assessment:
     def to_json(self) -> dict[str, Any]:
         return {"result": self.result, "relation": self.relation, "reason": self.reason, "counts": self.counts(),
                 "comparisons": [{"control": k.control, "resource": fmt_key(k.resource), "source": k.source,
-                                 "followup": k.followup, "outcome": k.outcome, "reason": k.reason}
+                                 "followup": k.followup, "outcome": k.outcome, "reason": k.reason,
+                                 "basis": "inferred_pass" if k.inferred else "explicit"}
                                 for k in self.key_results]}

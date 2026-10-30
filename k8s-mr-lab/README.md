@@ -24,7 +24,7 @@ cd /mnt/d/Code/KLTN/Metarmophic_testing/k8s-mr-lab
 PY=~/mrlab-venv/bin/python
 
 $PY -m k8s_mr_lab versions                                   # check the pins
-$PY -m pytest -q                                              # 65 tests; integration ones use the real binaries
+$PY -m pytest -q                                              # 80 tests; 3 integration ones use the real binaries and skip if absent
 $PY -m k8s_mr_lab generate --seeds seeds/synthetic seeds/historical --out runs/generated
 $PY -m k8s_mr_lab run --scanner trivy     --seeds seeds/synthetic seeds/historical --out runs/trivy
 $PY -m k8s_mr_lab run --scanner kubescape --seeds seeds/synthetic seeds/historical --out runs/kubescape   # ~3 min
@@ -51,7 +51,8 @@ Research questions: RQ1 Applicability, RQ2 Effectiveness, RQ3 Efficiency & Pract
 
 ## Result statuses
 
-`PASS` relation held · `VIOLATION` relation broken (an *alert*, not a confirmed defect) · `SKIP` precondition/scope not
+`PASS` relation held on **every** compared control · `PARTIAL` it held where a verdict existed but part of the scope had none
+(never reported as PASS) · `VIOLATION` relation broken (an *alert*, not a confirmed defect) · `SKIP` precondition/scope not
 met · `INVALID_SOURCE` / `INVALID_PAIR` bad input or bad transformation · `INCONCLUSIVE` verdict missing or baseline unmet ·
 `SCAN_ERROR` binary/timeout/bad JSON/version pin · `ENVIRONMENT_MISMATCH` the two scans were not comparable.
 A missing finding is never PASS. Verdicts are `PASS | FAIL | NOT_EVALUATED | UNKNOWN`.

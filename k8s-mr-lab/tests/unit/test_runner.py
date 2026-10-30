@@ -38,7 +38,8 @@ def make(tmp_path, catalog, mapping, scanner, version=None, **kw):
     (tmp_path / "tcache/policy").mkdir(parents=True, exist_ok=True)
     (tmp_path / "tcache/policy/metadata.json").write_text(json.dumps({"Digest": "sha256:aaa"}))
     (tmp_path / "ks").mkdir(exist_ok=True)
-    (tmp_path / "ks/allcontrols.json").write_text("{}")
+    for name in ("allcontrols.json", "controls-inputs.json", "exceptions.json"):    # all three are part of the policy digest
+        (tmp_path / "ks" / name).write_text("{}")
     rp = Replay(scanner, version or cfg[scanner]["version"], **kw)
     sc = make_scanner(scanner, cfg, rp)
     return Runner(sc, mapping, catalog, tmp_path / "out"), rp, cfg

@@ -29,7 +29,9 @@ ENVIRONMENT_MISMATCH`; `VIOLATION` chỉ là alert, chưa là bug.
 
 * Repo `k8s-mr-lab/`: loader YAML chặt (từ chối key trùng), 5 MR (`mrs/catalog.yaml`), validator cấu trúc, adapter gọi **Trivy 0.75.0 và Kubescape v4.0.15 thật** (quét manifest, offline, pin version + digest policy),
   hai normalizer, checker (`equal`/`pass_to_fail`/`fail_to_pass`), runner có provenance, triage (chạy lại, reproducer), report với mẫu số rõ.
-* 65 test (unit, golden từ raw JSON thật, integration chạy binary thật) đều pass.
+* 80 test (unit, golden từ raw JSON thật, integration chạy binary thật) đều pass trên máy chạy thực nghiệm; trên máy không có đúng binary đã pin thì 3 test integration bị skip (chỉ 77 chạy).
+* Sau một đợt review độc lập (30/10/2026) đã siết: kết quả `PARTIAL` thay cho `PASS` khi một phần scope không có verdict; MR-05 không áp dụng control cấp subject/workload khi quyền đọc Secrets còn được cấp bằng đường khác;
+  validator MR-04 kiểm đúng container; scanner có mã thoát khác 0 hoặc thiếu policy digest bị báo `SCAN_ERROR`. Các thay đổi này không làm đổi số liệu đã báo cáo (xem mục 5).
 * Hạn chế PASS của Trivy đã kiểm chứng và xử lý: entry `PASS` không gắn resource; FAIL được gắn bằng ánh xạ dòng, PASS chỉ là suy luận có nhãn `pass_inferred`.
 
 | MR | Biến đổi | Quan hệ | Nhóm OWASP K8s Top 10 (2025) | Căn cứ dẫn xuất |
@@ -99,7 +101,10 @@ Cả hai là lớp lỗi đã được biết trước (guided), không gọi l�
 
 * DEV/REG có định hướng; chưa có held-out hay BLIND; số seed nhỏ và có seed trùng nội dung (đã khử trùng).
 * Chưa có adjudication thủ công: 0 defect confirmed; không báo alert precision/specificity.
-* MR bất biến bỏ sót lỗi sai nhất quán; Trivy PASS là suy luận (không dùng làm bằng chứng chính).
+* MR bất biến bỏ sót lỗi sai nhất quán; Trivy PASS là suy luận (không dùng làm bằng chứng chính): 100 trên 256 phép so sánh có kết luận của Trivy (khoảng 39%) dựa vào PASS suy luận, nên với Trivy phần lớn kết quả "PASS" nghĩa là "tập FAIL không đổi"; Kubescape thì 0/382 vì verdict của nó tường minh.
+* Kubescape gộp verdict RBAC theo subject (ServiceAccount + Role + RoleBinding) rồi gán cho từng thành viên, lấy trạng thái xấu nhất; một Role nằm trong nhiều đường liên kết có thể mất ngữ cảnh. Bằng chứng K1 không bị ảnh hưởng vì nó nằm trực tiếp trên Deployment.
+* Validator nguồn chỉ kiểm cấu trúc (khóa trùng, định danh, RoleBinding tham chiếu Role cùng namespace), chưa kiểm schema Kubernetes; kết luận chỉ hợp lệ ở chế độ quét manifest cục bộ.
+* Gom họ lỗi (`family`) là heuristic theo scanner + MR + kiểu đổi verdict; việc tách/gộp theo nguyên nhân gốc thật là của người adjudicate.
 * Mapping control→MR mới 6 check Trivy + 7 control Kubescape; chưa bao phủ token (không có MR), init container, securityContext override.
 * Chỉ một phiên bản mỗi scanner, chỉ chế độ quét manifest; chưa rõ lỗi còn ở bản mới hơn.
 * Chưa xác minh trạng thái sửa lỗi của issue #2579 và chưa tìm issue upstream cho `KSV-0113`.
