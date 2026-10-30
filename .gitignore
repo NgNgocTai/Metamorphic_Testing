@@ -1,0 +1,60 @@
+# Local environment variables; keep templates safe to share.
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+!.env.*.example
+
+# Python virtual environments.
+.venv/
+venv/
+env/
+ENV/
+
+# Python bytecode, packaging, test and tool caches.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Generated experiment output. Keep tests/golden/ and docs/evidence/ tracked.
+/k8s-mr-lab/runs/
+*.log
+
+# Local credentials and Kubernetes access configuration.
+.aws/
+.kube/
+kubeconfig
+kubeconfig.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local editor and operating system files.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# Local backups and the downloaded reference paper.
+*.bak
+*.backup
+*.BACKUP_*
+/2208.09505v2.pdf

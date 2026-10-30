@@ -1,0 +1,3 @@
+# Detect text files automatically; keep Bash scripts runnable in WSL/Linux.
+* text=auto
+*.sh text eol=lf
