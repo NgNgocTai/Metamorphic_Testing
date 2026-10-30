@@ -100,7 +100,8 @@ Chọn 65 file theo quy tắc cố định: bỏ file bắt đầu bằng `_`, l
 | Thời gian quét trung bình mỗi lượt gọi / tổng | ≈ 1,2 s / 233 s | ≈ 4,2 s / 840 s |
 
 **Đọc kết quả thế nào:**
-* **Không có cảnh báo giả từ MR-01 và MR-04.** MR-01 (95 cặp) và MR-04 (33 cặp) không sinh violation nào ở cả hai scanner trên manifest lạ: các MR này không bị tinh chỉnh cho riêng seed của đề tài.
+* **Không quan sát MR violation nào ở MR-01 (95 cặp) và MR-04 (33 cặp)** trong tập chạy này, ở cả hai scanner. Đây là bằng chứng ban đầu rằng các quan hệ ổn định trên dữ liệu bên thứ ba và không bị tinh chỉnh cho riêng seed của đề tài, nhưng **chưa đủ để kết luận tỉ lệ cảnh báo giả bằng 0**: không có violation không đồng nghĩa đã đo specificity.
+* **Mẫu số:** 141 follow-up sinh ra = 139 cặp có kết quả (PASS, VIOLATION hoặc INCONCLUSIVE) + **2 cặp SKIP sau khi quét** (`no_comparable_keys`: MR-01 trên `rbac-016-serviceaccount-without-binding` và `rbac-027-1-role-binds-to-anonymous-unauthenticated`, không có control đã ánh xạ hay failure nào để so). Hai cặp này giống nhau ở cả hai scanner.
 * **N2 của Trivy tái hiện trên seed độc lập:** 3 violation MR-05 trên `rbac-002-1/2/3` của Kalm (Role chỉ cấp `secrets` ở core group; đổi sang `apps` thì `KSV-0113` vẫn FAIL). Đây là ba biến thể của cùng một kịch bản, nên vẫn **một họ**, không phải ba lỗi. Nó cho thấy N2 không phải sản phẩm của seed tự viết, nhưng MR-05 vốn được viết sau khi biết N2.
 * **K1 của Kubescape không xuất hiện ở đây.** K1 cần ServiceAccount + RoleBinding + workload dùng SA đó; manifest Kalm gần như không có tổ hợp này (MR-02 chỉ áp dụng 3 file, đều cho PASS). Đây là hạn chế về seed, không phải bằng chứng rằng lỗi hiếm.
 * **Áp dụng:** 105/320 = 33% (seed, MR). Số seed áp dụng được trên 65: MR-01 62 (95 cặp), MR-04 33, MR-02 3, MR-03 2, MR-05 3. MR RBAC cần seed có nhiều resource liên kết, mà benchmark đơn-lỗi không cung cấp.
@@ -108,7 +109,9 @@ Chọn 65 file theo quy tắc cố định: bỏ file bắt đầu bằng `_`, l
   Kubescape: cả 29 đều là file RBAC chỉ có một Role hoặc ClusterRole đứng riêng, không có binding hay ServiceAccount (24 ở MR-01, 5 ở MR-03/MR-05). Các control RBAC của Kubescape đánh giá theo subject nên không phát verdict nào cho Role không được bind, framework không có gì để so và báo INCONCLUSIVE thay vì PASS. Nút thắt khi mở rộng seed là **seed có đủ liên kết RBAC** và **độ phủ control của mapping**, không phải thiết kế MR.
 * **Chi phí:** 205 lượt quét mỗi scanner, 77 lượt tiết kiệm nhờ cache; tổng sinh cặp ≈ 14 s; 0 `SCAN_ERROR`.
 
-**Giới hạn:** một benchmark duy nhất, chỉ mẫu 65/238 file, chưa có adjudication thủ công, và 73% số so sánh có kết luận của Trivy dựa vào PASS suy luận. Không dùng kết quả này làm tỉ lệ phát hiện lỗi.
+**Giới hạn:** một benchmark duy nhất; 65/238 file **không phải mẫu ngẫu nhiên** (mỗi file thứ 4 cộng ưu tiên toàn bộ file mà MR RBAC áp dụng được, nên thành phần RBAC được tuyển chọn); chưa có adjudication thủ công; 73% số so sánh có kết luận của Trivy dựa vào PASS suy luận. Không dùng kết quả này làm tỉ lệ phát hiện lỗi hay tỉ lệ cảnh báo giả.
+
+**Tái lập:** commit Kalm `dac3df5`, hash sha256 của từng file đã chọn nằm trong `runs/heldout/selection.json`, digest đóng băng trong `runs/heldout/freeze.json`. Gói bằng chứng tối thiểu (0,5 MB, không gồm 70 MB artifact tái sinh được): `runs/evidence-pack.zip` do `python scripts/make_evidence_pack.py` tạo, kèm `MANIFEST.sha256.json`. Raw report trong gói có đường dẫn cục bộ (tên người dùng trong `/home/...`), không có thông tin xác thực; xem lại trước khi gửi ra ngoài.
 
 ## 6. Phân tích hai ứng viên lỗi
 
