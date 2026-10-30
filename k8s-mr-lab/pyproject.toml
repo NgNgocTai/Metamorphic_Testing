@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "k8s-mr-lab"
+version = "0.1.0"
+description = "Metamorphic testing (MR-first) of Kubernetes security scanners: Trivy and Kubescape"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+k8s-mr-lab = "k8s_mr_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: needs real Trivy/Kubescape binaries (skipped when absent)"]

@@ -1,0 +1,93 @@
+# MR catalog. Each entry is (Precondition, Transformation, ExpectedRelation, Scope) + limits + a counterexample that
+# the structural validator / applicability check must reject (enforced by tests/unit/test_mrs.py).
+mrs:
+  - id: MR-01
+    name: yaml-key-order
+    category: Syntax
+    status: mvp
+    property: scanner verdicts do not depend on mapping-key order
+    relation: equal
+    scope: every mapped control on every object of its kind, plus every FAIL seen in either report
+    preconditions:
+      - bundle has no duplicate mapping keys
+      - reordering changes the text
+    transformation: reverse or sort mapping keys recursively; sequence order is preserved
+    pair_checks:
+      - parsed content identical (canonical JSON)
+      - document order identical
+      - text differs
+    counterexample: reordering a *sequence* (e.g. containers) is NOT allowed because it changes semantics; the validator rejects a follow-up whose parsed content differs
+    limits:
+      - a scanner that is wrong in the same way on both inputs passes
+      - line numbers are not compared
+
+  - id: MR-02
+    name: add-unbound-same-name-role
+    category: R4
+    status: mvp
+    property: effective permissions of the ServiceAccount bound by a namespaced RoleBinding
+    relation: equal
+    scope: controls on the bound Role and its workload; NEVER the added decoy Role
+    preconditions:
+      - RoleBinding points at a Role in its own namespace
+      - a ServiceAccount subject that exists in the bundle
+    transformation: add a Role with the same name in a fresh namespace (profile secrets_read or wildcard_admin); add no binding
+    pair_checks:
+      - diff is exactly one added Role
+      - decoy namespace holds only that Role
+      - binding count unchanged
+    counterexample: a control that audits every Role (e.g. Trivy KSV-0113 on the decoy itself) legitimately reports the decoy; such findings are out of scope and are never compared
+    limits:
+      - covers name-only join bugs; a RoleBinding to a ClusterRole is not covered
+
+  - id: MR-03
+    name: split-rule-verbs
+    category: R3
+    status: mvp
+    property: effective permissions of a Role
+    relation: equal
+    scope: effective-permission controls of the Role and of workloads bound to it
+    preconditions:
+      - a rule with at least two distinct verbs
+    transformation: replace one rule by one rule per verb (all other fields copied)
+    pair_checks:
+      - expanded permission tuples identical
+      - rule count increased
+      - change confined to rules of the target Role
+    counterexample: a control that counts rules or inspects rule shape would legitimately change; none is mapped for this MR
+    limits:
+      - wildcard verbs are not expanded, so splitting a wildcard is rejected by the tuple check
+
+  - id: MR-04
+    name: privileged-flip
+    category: R9
+    status: mvp_conditional
+    property: container runs privileged
+    relation: pass_to_fail
+    scope: the privileged-container control of each scanner on the mutated workload
+    preconditions:
+      - container has explicit securityContext.privileged false
+      - source verdict of the control is PASS (evidenced)
+    transformation: set securityContext.privileged to true on exactly one container
+    pair_checks:
+      - exactly one change, privileged false to true, on the target workload
+    counterexample: if the source verdict is not PASS or not evidenced the comparison is INCONCLUSIVE, never a violation
+    limits:
+      - does not claim that the total number of findings must grow
+
+  - id: MR-05
+    name: api-group-switch
+    category: R3
+    status: mvp_conditional
+    property: read access to core-group Secrets
+    relation: fail_to_pass
+    scope: controls that claim to detect core Secrets read access, on the Role and its bound workload
+    preconditions:
+      - Role has exactly one rule, apiGroups core, resources secrets, read-only verbs, no resourceNames
+      - source verdict of the control is FAIL (evidenced)
+    transformation: change apiGroups from core to apps
+    pair_checks:
+      - exactly one change, rules[0].apiGroups[0] from empty string to apps
+    counterexample: with a second rule granting secrets (or a wildcard) the permission survives the change, so the Role is not eligible
+    limits:
+      - valid only for controls whose documentation covers core Secrets; unrelated controls are not mapped

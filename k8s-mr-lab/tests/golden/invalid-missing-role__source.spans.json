@@ -1,0 +1,1 @@
+[[1, 5, ["", "ServiceAccount", "lab-a", "app"]], [7, 19, ["rbac.authorization.k8s.io", "RoleBinding", "lab-a", "app-binding"]]]

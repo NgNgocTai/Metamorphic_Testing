@@ -1,0 +1,41 @@
+{
+  "trivy": {
+    "version": "0.75.0",
+    "mode": "local-file",
+    "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+    "command_example": [
+      "trivy",
+      "config",
+      "--skip-check-update",
+      "--skip-version-check",
+      "--include-non-failures",
+      "--format",
+      "json",
+      "--cache-dir",
+      "/home/ngoctai/.cache/trivy",
+      "--output",
+      "/tmp/tmp8a7w1eke/report.json",
+      "/tmp/tmp8a7w1eke/in"
+    ]
+  },
+  "kubescape": {
+    "version": "v4.0.15",
+    "mode": "local-file",
+    "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+    "command_example": [
+      "kubescape",
+      "scan",
+      "framework",
+      "allcontrols",
+      "--keep-local",
+      "--verbose",
+      "--format",
+      "json",
+      "--output",
+      "/tmp/tmpx22swhjn/report.json",
+      "--use-artifacts-from",
+      "/home/ngoctai/.kubescape",
+      "/tmp/tmpx22swhjn/in"
+    ]
+  }
+}

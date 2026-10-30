@@ -1,0 +1,54 @@
+metadata:
+  namespace: lab-a
+  name: app
+kind: ServiceAccount
+apiVersion: v1
+---
+rules:
+- verbs:
+  - get
+  resources:
+  - configmaps
+  apiGroups:
+  - ''
+metadata:
+  namespace: lab-a
+  name: app-role
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+---
+roleRef:
+  name: app-role
+  kind: Role
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- namespace: lab-a
+  name: app
+  kind: ServiceAccount
+metadata:
+  namespace: lab-a
+  name: app-binding
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+---
+spec:
+  template:
+    spec:
+      containers:
+      - securityContext:
+          privileged: false
+        image: nginx:1.27
+        name: web
+      serviceAccountName: app
+    metadata:
+      labels:
+        app: web
+  selector:
+    matchLabels:
+      app: web
+  replicas: 1
+metadata:
+  namespace: lab-a
+  name: web
+kind: Deployment
+apiVersion: apps/v1

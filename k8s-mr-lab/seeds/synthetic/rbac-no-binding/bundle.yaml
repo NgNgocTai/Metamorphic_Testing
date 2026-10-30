@@ -1,0 +1,10 @@
+# Negative seed: a Role but no RoleBinding -> MR-02 must SKIP (no fake pair).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: lonely
+  namespace: lab-a
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get"]
