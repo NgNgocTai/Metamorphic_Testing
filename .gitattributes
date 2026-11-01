@@ -1,3 +1,6 @@
 # Detect text files automatically; keep Bash scripts runnable in WSL/Linux.
 * text=auto
 *.sh text eol=lf
+
+# Evidence is committed and verified as RAW BYTES (sha256 in manifest.json): never convert newlines.
+k8s-mr-lab/docs/evidence/** -text
