@@ -2,6 +2,32 @@
 # classified from existing MRs, not designed first). `shared_code` says what, if anything, the code actually shares.
 # Which MRs use a pattern is NOT listed here: it is derived from `pattern:` in catalog.yaml (single source).
 # Allowed relations are enforced by `k8s-mr-lab mr validate`.
+#
+# template_elements: the MR template vocabulary (the K8s analogue of MST-wi Table 3). Each MR declares, under
+# `template:` in catalog.yaml, only the elements that cannot be derived from other metadata. Derived elements:
+#   P-VERDICT  from relation (pass_to_fail / fail_to_pass: the checker requires the source verdict)
+#   S-ALL      from all_failures: true (else S-TARGET)
+#   O-*        from relation
+# `k8s-mr-lab mr patterns` builds the MR x element matrix and groups identical rows (the MST-wi Table 4 method), so the
+# hand-named KP families below can be compared with the element-level grouping.
+template_elements:
+  preconditions:
+    P-STRUCT: the target object must have a given shape (field present with a value, rule with >= 2 verbs, ...)
+    P-REF: a reference path must exist in the bundle (RoleBinding -> Role in its namespace, subject ServiceAccount present)
+    P-CLOSED: no other path in the closed bundle may grant the same property (checked before the subject-level scope is used)
+    P-VERDICT: the source verdict of the compared control must be conclusive in the expected direction (derived)
+  followup:
+    G-REWRITE: rewrite existing objects without changing their API meaning
+    G-ADD: add object(s); existing objects stay byte-identical
+    G-MODIFY: change one field value with a known security effect
+    G-REMOVE: remove object(s) or field(s)
+  scope:
+    S-TARGET: only (control, resource) keys derived from the MR's targets (derived)
+    S-ALL: every mapped control on every object of its kind plus every FAIL in either report (derived)
+  output:
+    O-EQUAL: verdicts identical (derived from relation equal)
+    O-PASS-TO-FAIL: PASS on source, FAIL on follow-up (derived)
+    O-FAIL-TO-PASS: FAIL on source, PASS on follow-up (derived)
 patterns:
   - id: KP1
     name: representation-invariance

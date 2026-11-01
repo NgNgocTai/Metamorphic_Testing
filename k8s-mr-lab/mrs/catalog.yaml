@@ -7,6 +7,7 @@ mrs:
     status: mvp
     pattern: KP1
     property_id: SP-SYN-MAPPING-ORDER
+    template: {preconditions: [], followup: [G-REWRITE]}
     all_failures: true   # also compare every FAIL seen in either report
     property: scanner verdicts do not depend on mapping-key order
     relation: equal
@@ -30,6 +31,7 @@ mrs:
     status: mvp
     pattern: KP2
     property_id: SP-RBAC-NS-ROLE-RESOLUTION
+    template: {preconditions: [P-REF], followup: [G-ADD]}
     property: effective permissions of the ServiceAccount bound by a namespaced RoleBinding
     relation: equal
     scope: controls on the bound Role and its workload; NEVER the added decoy Role
@@ -51,6 +53,7 @@ mrs:
     status: mvp
     pattern: KP1
     property_id: SP-RBAC-ADDITIVE-RULES
+    template: {preconditions: [P-STRUCT], followup: [G-REWRITE]}
     property: effective permissions of a Role
     relation: equal
     scope: effective-permission controls of the Role and of workloads bound to it
@@ -71,6 +74,7 @@ mrs:
     status: mvp_conditional
     pattern: KP3
     property_id: SP-POD-PRIVILEGED
+    template: {preconditions: [P-STRUCT], followup: [G-MODIFY]}
     property: container runs privileged
     relation: pass_to_fail
     scope: the privileged-container control of each scanner on the mutated workload
@@ -90,6 +94,7 @@ mrs:
     status: mvp_conditional
     pattern: KP3
     property_id: SP-RBAC-SECRETS-API-GROUP
+    template: {preconditions: [P-STRUCT, P-CLOSED], followup: [G-MODIFY]}
     property: read access to core-group Secrets
     relation: fail_to_pass
     scope: controls that claim to detect core Secrets read access, on the Role and its bound workload
@@ -110,6 +115,7 @@ mrs:
     status: candidate        # mapped and run on one DEV seed only; promoting it would add MR-06 rows to every default run, so it stays opt-in (--mr MR-06)
     pattern: KP3
     property_id: SP-POD-HOST-NAMESPACES
+    template: {preconditions: [P-STRUCT], followup: [G-MODIFY]}
     property: pod shares the node network namespace (spec.hostNetwork)
     relation: pass_to_fail
     scope: Trivy KSV-0009 and Kubescape C-0041 on the mutated workload
@@ -124,3 +130,26 @@ mrs:
       - hostPID and hostIPC are separate properties and are not mutated
       - Trivy's PASS on the source is inferred (no FAIL attributed), Kubescape's is explicit
       - "evidence so far: one DEV seed (seeds/candidate/pod-hostnet), n=1 per scanner; no held-out evaluation"
+
+  - id: MR-07
+    name: sa-subject-as-user
+    category: R1
+    status: candidate        # designed after reading C-0267/C-0272 rego (subject.kind == "ServiceAccount"): guided, not blind
+    pattern: KP1
+    property_id: SP-RBAC-SA-SUBJECT-IDENTITY
+    template: {preconditions: [P-STRUCT, P-REF], followup: [G-REWRITE]}
+    property: effective permissions of the ServiceAccount named by a RoleBinding subject
+    relation: equal
+    scope: Role-level controls on the bound Role and workload-level controls on the workloads that run as the ServiceAccount
+    preconditions:
+      - RoleBinding points at a Role in its own namespace
+      - the subject is a ServiceAccount with an explicit namespace, and that ServiceAccount exists in the bundle
+    transformation: replace that one subject by {kind User, apiGroup rbac.authorization.k8s.io, name system:serviceaccount:<ns>:<name>}
+    pair_checks:
+      - the subject became exactly the equivalent User subject
+      - the RoleBinding is otherwise unchanged and no other object changed
+    counterexample: a Group subject (system:serviceaccounts:<ns>) is NOT equivalent (it covers every ServiceAccount of the namespace), and a User name with another namespace names a different identity; both must be rejected
+    limits:
+      - "relies on the documented username of service accounts; it does not cover tokens issued for other identities"
+      - "the subject namespace must be explicit: defaulting of a missing namespace is not modelled"
+      - "evidence so far: DEV seeds only (synthetic + historical), no held-out evaluation"

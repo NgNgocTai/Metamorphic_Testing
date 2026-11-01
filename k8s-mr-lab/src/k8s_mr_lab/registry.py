@@ -12,7 +12,7 @@ from .checker import RELATIONS
 from .transforms.base import IMPLEMENTATIONS, MetamorphicRelation
 
 REQUIRED_MR_FIELDS = ("id", "name", "category", "status", "pattern", "property_id", "property", "relation", "scope",
-                      "preconditions", "transformation", "pair_checks", "counterexample", "limits")
+                      "preconditions", "transformation", "pair_checks", "counterexample", "limits", "template")
 STATUSES = ("mvp", "mvp_conditional", "candidate")
 TEXT_FIELDS = ("name", "category", "pattern", "property_id", "property", "scope", "transformation", "counterexample")
 LIST_FIELDS = ("preconditions", "pair_checks", "limits")
@@ -71,6 +71,10 @@ def read_specs(path: str | Path) -> list[dict]:
         for f in LIST_FIELDS:
             if not isinstance(s[f], list) or not s[f] or not all(isinstance(x, str) and x.strip() for x in s[f]):
                 raise ValueError(f"{mr_id}: field '{f}' must be a non-empty list of non-empty strings")
+        t = s["template"]
+        if not (isinstance(t, dict) and set(t) == {"preconditions", "followup"}
+                and all(isinstance(t[k], list) and all(isinstance(x, str) for x in t[k]) for k in t) and t["followup"]):
+            raise ValueError(f"{mr_id}: field 'template' must be {{preconditions: [..], followup: [..non-empty]}}")
         if "all_failures" in s and not isinstance(s["all_failures"], bool):
             raise ValueError(f"{mr_id}: field 'all_failures' must be a boolean")
         if s["relation"] not in RELATIONS:

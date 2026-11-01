@@ -11,9 +11,9 @@ def _first(mr, src):
 
 
 def test_catalog_matches_code(catalog):
-    # the five frozen PoC MRs, plus MR-06 which is a candidate and is not part of the PoC baseline
+    # the five frozen PoC MRs, plus MR-06 / MR-07 which are candidates and are not part of the PoC baseline
     assert sorted(m for m, mr in catalog.items() if mr.spec["status"] != "candidate") == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05"]
-    assert sorted(catalog) == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06"]
+    assert sorted(catalog) == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06", "MR-07"]
     for mr in catalog.values():
         assert mr.spec["preconditions"] and mr.spec["counterexample"] and mr.spec["limits"]
 
@@ -149,3 +149,48 @@ def test_mr05_requires_core_secrets_read_only(catalog, seed):
     src = seed("rbac-secrets-reader")
     src.find("Role", "lab-c", "reader-role")["rules"][0]["verbs"].append("delete")
     assert not catalog["MR-05"].applicable(src)[0]
+
+
+# ---------------- MR-07 (candidate): ServiceAccount subject rewritten as the equivalent User subject
+def test_mr07_positive_rewrites_exactly_one_subject(catalog, seed):
+    mr, src = catalog["MR-07"], seed("rbac-secrets-reader")
+    before = copy.deepcopy(src.objects)
+    (p,) = mr.generate_parameters(src, 9)
+    fu, trace = mr.transform(src, p)
+    assert src.objects == before
+    assert fu.find("RoleBinding", "lab-c", "reader-binding")["subjects"] == [
+        {"kind": "User", "apiGroup": "rbac.authorization.k8s.io", "name": "system:serviceaccount:lab-c:reader"}]
+    assert mr.validate_pair(src, fu, p) == (VALID_PAIR, "")
+    assert mr.targets(src, p)["workload"] == [("", "Pod", "lab-c", "reader-pod")]
+
+
+def test_mr07_counterexample_group_subject_is_not_equivalent(catalog, seed):
+    mr, src = catalog["MR-07"], seed("rbac-secrets-reader")
+    (p,) = mr.generate_parameters(src, 9)
+    fu, _ = mr.transform(src, p)
+    fu.find("RoleBinding", "lab-c", "reader-binding")["subjects"] = [
+        {"kind": "Group", "apiGroup": "rbac.authorization.k8s.io", "name": "system:serviceaccounts:lab-c"}]
+    assert mr.validate_pair(src, fu, p) == ("INVALID_PAIR", "subject_is_not_the_equivalent_user")
+
+
+def test_mr07_counterexample_user_of_another_namespace_is_not_equivalent(catalog, seed):
+    mr, src = catalog["MR-07"], seed("rbac-secrets-reader")
+    (p,) = mr.generate_parameters(src, 9)
+    fu, _ = mr.transform(src, p)
+    fu.find("RoleBinding", "lab-c", "reader-binding")["subjects"][0]["name"] = "system:serviceaccount:other:reader"
+    assert mr.validate_pair(src, fu, p)[0] == "INVALID_PAIR"
+
+
+def test_mr07_counterexample_other_binding_change_is_invalid(catalog, seed):
+    mr, src = catalog["MR-07"], seed("rbac-secrets-reader")
+    (p,) = mr.generate_parameters(src, 9)
+    fu, _ = mr.transform(src, p)
+    fu.find("RoleBinding", "lab-c", "reader-binding")["roleRef"]["name"] = "something-else"
+    assert mr.validate_pair(src, fu, p) == ("INVALID_PAIR", "rolebinding_changed_beyond_the_subject")
+
+
+def test_mr07_requires_explicit_subject_namespace_and_present_sa(catalog, seed):
+    src = seed("rbac-secrets-reader")
+    del src.find("RoleBinding", "lab-c", "reader-binding")["subjects"][0]["namespace"]
+    assert not catalog["MR-07"].applicable(src)[0]
+    assert not catalog["MR-07"].applicable(seed("rbac-no-binding"))[0]

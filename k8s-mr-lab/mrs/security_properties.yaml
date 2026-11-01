@@ -4,6 +4,7 @@
 #   * a risk-taxonomy entry (OWASP/CWE/CIS/NSA) only SELECTS the domain; it never proves an MR valid. Proof = k8s_spec refs
 #     plus the MR's precondition and pair checks.
 #   * `cwe` names the weakness class of the MISCONFIGURATION a scanner control detects, never a label for a scanner defect.
+# review_status: draft | author_reviewed | independently_reviewed (the last needs a second person; none is yet).
 # Controls are NOT repeated here: they come from config/policy-mapping.yaml (`k8s-mr-lab mr trace` joins them).
 # OWASP Kubernetes Top 10 titles verified 2026-11-01 at https://kubernetes-top10.owasp.org/ (2025 edition).
 # cis_nsa: only entries read from an artifact are filled, with `basis` saying which. The only CIS label found for a mapped control is
@@ -14,6 +15,9 @@ properties:
   - id: SP-SYN-MAPPING-ORDER
     name: mapping key order is not significant
     domain: Syntax
+    security_meaning: "Scanner consistency: a verdict that depends on serialisation order can hide or invent findings for any control."
+    k8s_objects: [any]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
     statement: Reordering the keys of a YAML/JSON mapping does not change the Kubernetes object it denotes.
     owasp_k8s_2025: []
     cwe: []
@@ -30,6 +34,9 @@ properties:
   - id: SP-RBAC-NS-ROLE-RESOLUTION
     name: a RoleBinding resolves its Role inside its own namespace
     domain: RBAC
+    security_meaning: "Wrongly attributing a Role to a subject produces false alarms or hides real grants (authorization misjudged)."
+    k8s_objects: [RoleBinding, Role, ServiceAccount, workload]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
     statement: A RoleBinding grants only the Role named in roleRef from the RoleBinding's namespace; a same-name Role elsewhere grants nothing to its subjects.
     owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
     cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
@@ -46,6 +53,9 @@ properties:
   - id: SP-RBAC-ADDITIVE-RULES
     name: RBAC permissions are the union of rules
     domain: RBAC
+    security_meaning: "Equivalent RBAC rules must be judged alike, otherwise rule layout decides whether excessive permissions are reported."
+    k8s_objects: [Role, ClusterRole]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
     statement: Effective permissions of a Role are the union of its rules, so splitting one rule into several rules with the same fields and one verb each leaves the permission set unchanged.
     owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
     cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
@@ -62,6 +72,9 @@ properties:
   - id: SP-POD-PRIVILEGED
     name: a privileged container is a Baseline violation
     domain: Pod Security
+    security_meaning: "A privileged container disables most isolation; missing it is a false negative on a Baseline violation."
+    k8s_objects: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
     statement: A container whose securityContext.privileged is true is in the Privileged profile; false or unset is allowed by Baseline.
     owasp_k8s_2025: [{id: K01, title: Insecure Workload Configurations, verified: true}]
     cwe: [{id: CWE-250, title: Execution with Unnecessary Privileges, verified: true}]
@@ -78,6 +91,9 @@ properties:
   - id: SP-RBAC-SECRETS-API-GROUP
     name: Secrets live in the core API group
     domain: RBAC
+    security_meaning: "Reporting Secrets access that a rule cannot grant is a false alarm; missing it is a false negative on credential exposure."
+    k8s_objects: [Role, RoleBinding, ServiceAccount]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
     statement: A rule grants access to Secrets only through apiGroups "" (core) or "*"; moving the sole rule to another group removes that access.
     owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
     cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
@@ -94,6 +110,9 @@ properties:
   - id: SP-POD-HOST-NAMESPACES
     name: sharing the host network namespace is a Baseline violation
     domain: Pod Security
+    security_meaning: "Sharing the node network namespace exposes host-local services; missing it is a false negative on a Baseline violation."
+    k8s_objects: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, Job, CronJob]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
     statement: A pod with spec.hostNetwork true shares the node network namespace; false or unset is allowed by Baseline.
     owasp_k8s_2025: [{id: K01, title: Insecure Workload Configurations, verified: true}]
     cwe: []
@@ -108,3 +127,26 @@ properties:
     known_non_equivalences: [a control may be defined over a different set of workload kinds]
     candidate_patterns: [KP3]
     rationale: worked example of the derivation workflow (MR-06); controls Trivy KSV-0009 and Kubescape C-0041 read from the pinned policy bundles, one DEV seed run on both scanners, no independent evaluation yet, so the MR stays a candidate
+  - id: SP-RBAC-SA-SUBJECT-IDENTITY
+    name: a ServiceAccount subject and the User subject with its username name the same identity
+    domain: RBAC
+    security_meaning: "If one spelling of the same subject is ignored, a workload's real permissions are not assessed (false negative)."
+    k8s_objects: [RoleBinding, ServiceAccount, Role, workload]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
+    statement: A RoleBinding subject {kind ServiceAccount, name N, namespace S} and a subject {kind User, name system:serviceaccount:S:N} grant the bound Role to the same authenticated identity.
+    owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
+    cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, Authenticating (service account tokens)
+        url: https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+        claim: 'Service accounts authenticate with the username system:serviceaccount:(NAMESPACE):(SERVICEACCOUNT), and are assigned to the groups system:serviceaccounts and system:serviceaccounts:(NAMESPACE).'
+        verified: true
+      - source: Kubernetes docs, Using RBAC Authorization (Referring to subjects)
+        url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+        claim: 'system:serviceaccount: (singular) is the prefix for service account usernames.'
+        verified: true
+    scope_assumptions: [the subject namespace is explicit; only one subject of one RoleBinding is rewritten]
+    known_non_equivalences: [a Group subject covers every ServiceAccount of a namespace; a token for a different identity is out of scope]
+    candidate_patterns: [KP1]
+    rationale: candidate MR-07; the equivalence follows from the two quoted rules (User subjects match the authenticated username); motivated by reading the pinned C-0267/C-0272 rego, which joins only subject.kind == "ServiceAccount", so it is guided, not blind

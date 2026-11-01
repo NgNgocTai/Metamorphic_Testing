@@ -124,6 +124,7 @@ def test_unsupported_scanner_control_mapping_is_rejected():
 def test_candidate_is_skipped_unless_named(catalog):
     assert [m.id for m in active_mrs(catalog)] == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05"]
     assert [m.id for m in active_mrs(catalog, ["MR-06"])] == ["MR-06"]
+    assert [m.id for m in active_mrs(catalog, ["MR-07"])] == ["MR-07"]
 
 
 def test_metadata_has_a_single_source(catalog):
@@ -249,11 +250,11 @@ def test_trace_matrix_lists_every_mr(mapping, tmp_path):
     out = tmp_path / "t.md"
     mr_tools.cmd_trace(SimpleNamespace(properties=str(PROPS), out=str(out)), str(CATALOG), mapping)
     text = out.read_text(encoding="utf-8")
-    assert all(f"| MR-0{i} |" in text for i in range(1, 7)) and "K02" in text and "CWE-269" in text and "KSV-0009" in text and "(unverified)" not in text
+    assert all(f"| MR-0{i} |" in text for i in range(1, 8)) and "K02" in text and "CWE-269" in text and "KSV-0009" in text and "(unverified)" not in text
 
 
 def test_scaffold_refuses_to_overwrite(tmp_path):
-    a = SimpleNamespace(id="MR-07", name="host-pid-flip", pattern="KP3", src_dir=str(tmp_path), patterns=str(PATS))
+    a = SimpleNamespace(id="MR-08", name="host-pid-flip", pattern="KP3", src_dir=str(tmp_path), patterns=str(PATS))
     assert mr_tools.cmd_scaffold(a, str(CATALOG)) == 0
     assert mr_tools.cmd_scaffold(a, str(CATALOG)) == 1
 
@@ -316,7 +317,7 @@ def test_exercise_skips_invalid_sources(catalog, mapping):
 
 
 def _scaffold(tmp_path, **kw):
-    a = SimpleNamespace(**{"id": "MR-07", "name": "x-flip", "pattern": "KP3", "src_dir": str(tmp_path),
+    a = SimpleNamespace(**{"id": "MR-08", "name": "x-flip", "pattern": "KP3", "src_dir": str(tmp_path),
                            "patterns": str(PATS), **kw})
     return mr_tools.cmd_scaffold(a, str(CATALOG))
 
@@ -360,3 +361,93 @@ def test_compare_runs_rejects_duplicates_and_count_mismatch(tmp_path):
     assert cr.main(str(a), str(run("dupc", [row_r], [row_c, row_c]))) == 1
     assert cr.main(str(a), str(run("verdict", [row_r], ["c1,KSV-1,Pod/p,PASS,PASS,ok,"]))) == 1   # differs only in comparisons.csv
     assert cr.main(str(a), str(run("missing", [row_r], []))) == 1
+
+
+# ------------------------------------------------------------------ template elements, mr patterns, mr explain
+def test_template_is_required_and_typed(tmp_path):
+    specs = specs_copy()
+    del specs[0]["template"]
+    with pytest.raises(ValueError, match="missing required field.*template"):
+        read_specs(write_catalog(tmp_path, specs))
+    specs = specs_copy()
+    specs[0]["template"] = {"preconditions": [], "followup": []}
+    with pytest.raises(ValueError, match="field 'template'"):
+        read_specs(write_catalog(tmp_path, specs))
+
+
+def test_template_elements_are_checked_against_the_vocabulary():
+    elements = mr_tools.load_template_elements(PATS)
+    assert mr_tools.check_template(read_specs(CATALOG), elements) == []
+    specs = specs_copy()
+    specs[1]["template"]["followup"] = ["G-TELEPORT"]
+    specs[3]["template"]["preconditions"] = ["P-VERDICT"]          # derived, must not be declared
+    bad = mr_tools.check_template(specs, elements)
+    assert any("MR-02: unknown template followup element G-TELEPORT" in b for b in bad)
+    assert any("MR-04: template element P-VERDICT is derived" in b for b in bad)
+
+
+def test_template_row_derives_verdict_scope_and_output():
+    rows = {s["id"]: mr_tools.template_row(s) for s in read_specs(CATALOG)}
+    assert rows["MR-01"] == {"G-REWRITE", "S-ALL", "O-EQUAL"}
+    assert rows["MR-04"] == {"P-STRUCT", "P-VERDICT", "G-MODIFY", "S-TARGET", "O-PASS-TO-FAIL"}
+    assert "P-VERDICT" not in rows["MR-02"] and "O-FAIL-TO-PASS" in rows["MR-05"]
+
+
+def test_element_groups_follow_the_mstwi_rule():
+    _, rows = mr_tools.element_matrix(read_specs(CATALOG), mr_tools.load_template_elements(PATS))
+    groups = mr_tools.element_groups(rows)
+    assert groups[0] == ["MR-04", "MR-06"]                          # the only identical combination today
+    assert sorted(map(tuple, groups[1:])) == [("MR-01",), ("MR-02",), ("MR-03",), ("MR-05",), ("MR-07",)]
+
+
+def test_mr_patterns_reports_coarser_families(capsys):
+    mr_tools.cmd_patterns(SimpleNamespace(patterns=str(PATS), out=None), str(CATALOG))
+    out = capsys.readouterr().out
+    assert "KP2 = MR-02: spans EP3 -> identical" in out
+    assert "KP3 = MR-04, MR-05, MR-06" in out and "coarser than the element level" in out
+
+
+EVIDENCE = ROOT / "docs" / "evidence" / "p0_reverification_2026-11-01"
+
+
+def _explain(capsys, mr_id, case=None):
+    from k8s_mr_lab.cli import main
+    args = ["--config", str(ROOT / "config/scanners.yaml"), "--mapping", str(ROOT / "config/policy-mapping.yaml"),
+            "--catalog", str(CATALOG), "mr", "--properties", str(PROPS), "--patterns", str(PATS), "explain", mr_id]
+    rc = main(args + (["--case", str(case)] if case else []))
+    return rc, capsys.readouterr()
+
+
+@pytest.mark.parametrize("mr_id", ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06", "MR-07"])
+def test_explain_works_for_every_catalog_mr(capsys, mr_id):
+    rc, out = _explain(capsys, mr_id)
+    assert rc == 0
+    for field in ("Security property", "MR pattern", "Relation", "Preconditions", "Transformation", "Implementation",
+                  "Known limitations"):
+        assert field in out.out
+
+
+def test_explain_a_real_violation_case_with_triage(capsys):
+    case = EVIDENCE / "kubescape" / "cases" / "MR-02__rbac-workload__66de14dad8"
+    rc, out = _explain(capsys, "MR-02", case)
+    assert rc == 0
+    assert "VIOLATION" in out.out and "C-0267" in out.out and "PASS -> FAIL  violation  [explicit]" in out.out
+    assert "add_object Role/lab-a-decoy/app-role" in out.out
+    assert "CANDIDATE_REPRODUCED" in out.out and "kubescape/issues/2579" in out.out
+
+
+def test_explain_reports_missing_evidence_as_not_available(capsys, tmp_path):
+    d = tmp_path / "MR-02__x__0"
+    d.mkdir()
+    rc, out = _explain(capsys, "MR-02", d)
+    assert rc == 0
+    assert out.out.count("NOT_AVAILABLE") >= 5 and "PASS ->" not in out.out
+
+
+def test_explain_rejects_a_case_of_another_mr_and_unknown_ids(capsys):
+    case = EVIDENCE / "trivy" / "cases" / "MR-05__rbac-secrets-reader__d31cd60ffd"
+    rc, out = _explain(capsys, "MR-02", case)
+    assert rc == 2 and "is a case of MR-05" in out.out
+    rc, out = _explain(capsys, "MR-42")
+    assert rc == 2 and "MR-42" in out.err
+

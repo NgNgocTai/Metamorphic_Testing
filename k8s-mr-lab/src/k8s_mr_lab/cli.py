@@ -137,6 +137,10 @@ def cmd_mr(a) -> int:
         return mr_tools.cmd_list(load_catalog(a.catalog), mapping)
     if a.mr_cmd == "validate":
         return mr_tools.cmd_validate(a, a.catalog, mapping)
+    if a.mr_cmd == "patterns":
+        return mr_tools.cmd_patterns(a, a.catalog)
+    if a.mr_cmd == "explain":
+        return mr_tools.cmd_explain(a, load_catalog(a.catalog), mapping)
     return mr_tools.cmd_trace(a, a.catalog, mapping)
 
 
@@ -199,6 +203,11 @@ def main(argv: list[str] | None = None) -> int:
     mv.add_argument("--seeds", nargs="+", default=["seeds/synthetic", "seeds/historical", "seeds/candidate"])
     mt = msub.add_parser("trace", help="Property -> Pattern -> MR -> control traceability matrix")
     mt.add_argument("--out")
+    mp = msub.add_parser("patterns", help="MR x template-element matrix and the grouping it implies (MST-wi Table 4 method)")
+    mp.add_argument("--out")
+    me = msub.add_parser("explain", help="explain one MR from its metadata; with --case, explain a saved case from its evidence")
+    me.add_argument("id")
+    me.add_argument("--case", help="a saved case directory (runs/<scanner>/cases/<case_id> or a packaged evidence case)")
     ms = msub.add_parser("scaffold", help="write an MR implementation skeleton and print the catalog stub")
     ms.add_argument("id")
     ms.add_argument("name", help="kebab-case name, e.g. host-network-flip")

@@ -87,3 +87,16 @@ mrs:
       - {control: KSV-0009, target: workload}
     kubescape:
       - {control: C-0041, target: workload}
+  MR-07:   # candidate. Workload-level controls judge the workload's ServiceAccount; Role-level ones judge the unchanged Role.
+    trivy:
+      - {control: KSV-0113, target: bound_role}
+      - {control: KSV-0048, target: bound_role}
+      - {control: KSV-0049, target: bound_role}
+      - {control: KSV-0112, target: bound_role}
+      - {control: KSV-0050, target: bound_role}
+    kubescape:
+      - {control: C-0267, target: workload}
+      - {control: C-0272, target: workload}
+      - {control: C-0015, target: bound_role}
+      - {control: C-0007, target: bound_role}
+      - {control: C-0035, target: bound_role}
