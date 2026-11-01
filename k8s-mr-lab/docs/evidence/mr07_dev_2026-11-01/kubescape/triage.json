@@ -1,0 +1,39 @@
+{
+  "scanner": "kubescape",
+  "cases": {
+    "MR-07__rbac-secrets-reader__88249c50fa": {
+      "family": "kubescape:MR-07:FAIL->PASS",
+      "reproduced": true,
+      "status": "CANDIDATE_REPRODUCED",
+      "confirmed": false,
+      "violating_comparisons": [
+        {
+          "control": "C-0267",
+          "resource": "Pod/lab-c/reader-pod",
+          "source": "FAIL",
+          "followup": "PASS",
+          "outcome": "violation",
+          "reason": "FAIL->PASS but relation requires equality",
+          "basis": "explicit"
+        }
+      ],
+      "known_issue": null,
+      "known_issue_match": null,
+      "rule_evidence": [
+        {
+          "control": "C-0267",
+          "rule_source": "/home/ngoctai/.kubescape/c-0267.json",
+          "rule_source_sha256": "3960239f39c9191a",
+          "property_pattern": "",
+          "rule_text_has_": false,
+          "matching_lines": [],
+          "join_lines": [
+            "26: rolebinding.roleRef.name == role.metadata.name",
+            "27: rolebinding.roleRef.kind == role.kind"
+          ]
+        }
+      ]
+    }
+  },
+  "note": "candidates only - human confirmation required"
+}
