@@ -75,7 +75,7 @@ Bản gốc không bị sửa. Trivy: tương tự được (check là rego), **
 (i) khai báo *dự đoán trước khi chạy*, (ii) so từng case và từng khóa verdict với baseline đã ghim, (iii) xét mutant tương đương
 (mutant không đổi hành vi trên mọi input hợp lệ không thể bị kill), (iv) ghi seed có kích hoạt được mutant không.
 
-**Kết quả đã thực thi (2026-11-01, Kubescape v4.0.15; `docs/evidence/fault_variants_2026-11-01/`):**
+**Kết quả đã thực thi (2026-11-01, Kubescape v4.0.15; `docs/evidence/archive/fault_variants_2026-11-01/`):**
 
 | Thí nghiệm | Dự đoán nêu trước | Quan sát |
 |---|---|---|

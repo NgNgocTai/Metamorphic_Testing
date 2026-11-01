@@ -409,7 +409,7 @@ def test_mr_patterns_reports_coarser_families(capsys):
     assert "KP3 = MR-04, MR-05, MR-06" in out and "coarser than the element level" in out
 
 
-EVIDENCE = ROOT / "docs" / "evidence" / "p0_reverification_2026-11-01"
+EVIDENCE = ROOT / "docs" / "evidence" / "archive" / "p0_reverification_2026-11-01"
 
 
 def _explain(capsys, mr_id, case=None):
@@ -535,7 +535,7 @@ def test_package_run_evidence_can_sanitise_before_hashing(tmp_path):
     spec = importlib.util.spec_from_file_location("package_run_evidence", ROOT / "scripts" / "package_run_evidence.py")
     pk = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(pk)
-    src = ROOT / "docs" / "evidence" / "mr07_dev_2026-11-01" / "kubescape"            # a packaged run that still carries /home/<user>
+    src = ROOT / "docs" / "evidence" / "archive" / "mr07_dev_2026-11-01" / "kubescape"            # a packaged run that still carries /home/<user>
     out = tmp_path / "pub"
     assert pk.main([str(src), str(out), "--mr", "MR-07", "--sanitize"]) == 0
     man = json.loads((out / "manifest.json").read_text(encoding="utf-8"))

@@ -83,4 +83,4 @@ làm mờ đúng điều cần chứng minh. Chỉ khi xuất hiện MR KP1 th�
 - Mapping đọc từ policy bundle đã pin: Trivy KSV-0009, Kubescape C-0041 (không điền theo trí nhớ). Chạy thật trên seed
   `seeds/candidate/pod-hostnet`: cả hai scanner cho PASS (`pass_to_fail`); nguồn Trivy là PASS suy luận, nguồn Kubescape tường minh.
 - **Trạng thái `candidate`**: mới có DEV evidence (n=1/scanner). Runner mặc định bỏ qua; chạy bằng `--mr MR-06`. Không có
-  tuyên bố nào về khả năng bắt lỗi của MR-06. Chi tiết: `MR_REFACTOR_REPORT.md` §5.
+  tuyên bố nào về khả năng bắt lỗi của MR-06. Chi tiết: `archive/MR_REFACTOR_REPORT.md` §5.

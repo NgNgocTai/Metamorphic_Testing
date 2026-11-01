@@ -18,7 +18,7 @@ Lượt chạy độc lập trên Kalm-Benchmark (65 file, cùng selection) so v
 | Trivy 0.75.0 | 350 | 73 | 195 | 0 | 0 | không |
 | Kubescape v4.0.15 | 279 | 77 | 259 | 0 | 0 | không |
 
-(NEW_BEHAVIOR của lượt độc lập: MR-06..09 chưa có trong lượt cũ.) (đếm theo case; bảng từng case: `docs/evidence/poc_v2_2026-11-01/migration_trivy.md`, `migration_kubescape.md`.) **Không có verdict nào của cùng một khóa so sánh thay đổi** giữa hai khung, nên không có hồi quy do scanner hay do pipeline; mọi khác biệt là khác biệt về phạm vi so sánh.
+(NEW_BEHAVIOR của lượt độc lập: MR-06..09 chưa có trong lượt cũ.) (đếm theo case; bảng từng case: `docs/evidence/archive/poc_v2_superseded_2026-11-01/migration_trivy.md`, `migration_kubescape.md`.) **Không có verdict nào của cùng một khóa so sánh thay đổi** giữa hai khung, nên không có hồi quy do scanner hay do pipeline; mọi khác biệt là khác biệt về phạm vi so sánh.
 
 ## 2. Từng thay đổi và nguyên nhân
 

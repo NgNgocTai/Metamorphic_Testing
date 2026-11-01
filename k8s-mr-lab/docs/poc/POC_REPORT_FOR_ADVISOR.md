@@ -1,7 +1,7 @@
 # Báo cáo PoC: Metamorphic Testing (MR-first) cho Trivy và Kubescape
 
 Viết cho: giảng viên hướng dẫn — để đánh giá tiến độ và duyệt hướng nghiên cứu tiếp theo.
-Số liệu chính thức lấy từ `docs/poc/POC_RESULTS.md` (sinh tự động từ `docs/evidence/poc_v2_2026-11-01/`, scanner thật, không mock). Kiến trúc: `docs/architecture/UNIFIED_FRAMEWORK.md`. Tác động của việc thống nhất lên số liệu: `docs/poc/MIGRATION_IMPACT_REPORT.md`.
+Số liệu chính thức lấy từ `docs/poc/POC_RESULTS.md` (sinh tự động từ `docs/evidence/archive/poc_v2_superseded_2026-11-01/`, scanner thật, không mock). Kiến trúc: `docs/architecture/UNIFIED_FRAMEWORK.md`. Tác động của việc thống nhất lên số liệu: `docs/poc/MIGRATION_IMPACT_REPORT.md`.
 
 ## 1. Bài toán nghiên cứu
 
@@ -126,7 +126,7 @@ Thời gian người nghiên cứu bỏ ra để triage chưa được ghi nên 
 
 **Giới hạn:** một benchmark; 65/238 file **không phải mẫu ngẫu nhiên**; chưa có adjudication thủ công. Lock của lượt này ghi `dirty: true` do một sửa chữ trong `scripts/make_evidence_pack.py` chưa commit lúc chạy (ngoài danh sách đóng băng). Không dùng kết quả này làm tỉ lệ phát hiện lỗi hay tỉ lệ cảnh báo giả.
 
-**Tái lập:** `bash scripts/heldout_run.sh` sau `python scripts/heldout_prepare.py` (cần `~/Kalm-Benchmark` ở commit `dac3df5`); `docs/evidence/poc_v2_2026-11-01/{freeze,selection}.json`.
+**Tái lập:** `bash scripts/heldout_run.sh` sau `python scripts/heldout_prepare.py` (cần `~/Kalm-Benchmark` ở commit `dac3df5`); `docs/evidence/archive/poc_v2_superseded_2026-11-01/{freeze,selection}.json`.
 
 ## 6. Phân tích các ứng viên và lỗi lịch sử
 

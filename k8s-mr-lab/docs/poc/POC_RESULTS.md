@@ -2,7 +2,7 @@
 
 Viết cho: người đọc cần số liệu và giới hạn của PoC, không cần đọc mã. Đây là **bộ kết quả chính thức duy nhất**. Kết quả của khung cũ chỉ còn là evidence lưu trữ; khác biệt được giải thích ở `MIGRATION_IMPACT_REPORT.md`.
 
-Mọi bảng bên dưới do `scripts/poc_tables.py` sinh từ các thư mục run trong `docs/evidence/poc_v2_2026-11-01/` (mỗi thư mục có `manifest.json` sha256, `environment.lock.json` với khối `experiment`). Chạy từ commit `aa40b76` của nhánh `research/mr-patterns`, cây mã sạch (`dirty: false`), Trivy 0.75.0 (checks bundle `sha256:b591e919…`) và Kubescape v4.0.15 (artifacts `8cfb2323…`), chế độ quét manifest cục bộ, `registry_matches_policy: true`. 9 MR (cả 4 candidate, gọi tường minh), 8 thư mục seed (`seeds/synthetic`, `seeds/historical`, `seeds/candidate`): 7 hợp lệ và 1 cố ý sai; 6 nguồn hợp lệ duy nhất vì `K1-role-namespace` trùng nội dung với `rbac-workload`.
+Mọi bảng bên dưới do `scripts/poc_tables.py` sinh từ các thư mục run trong `docs/evidence/archive/poc_v2_superseded_2026-11-01/` (mỗi thư mục có `manifest.json` sha256, `environment.lock.json` với khối `experiment`). Chạy từ commit `aa40b76` của nhánh `research/mr-patterns`, cây mã sạch (`dirty: false`), Trivy 0.75.0 (checks bundle `sha256:b591e919…`) và Kubescape v4.0.15 (artifacts `8cfb2323…`), chế độ quét manifest cục bộ, `registry_matches_policy: true`. 9 MR (cả 4 candidate, gọi tường minh), 8 thư mục seed (`seeds/synthetic`, `seeds/historical`, `seeds/candidate`): 7 hợp lệ và 1 cố ý sai; 6 nguồn hợp lệ duy nhất vì `K1-role-namespace` trùng nội dung với `rbac-workload`.
 
 ## Đọc thế nào
 

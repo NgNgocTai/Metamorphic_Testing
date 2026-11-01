@@ -34,7 +34,7 @@ Mapping mở rộng chỉ dùng cho lần chạy này (file riêng trong thư m�
 **Tiêu chí kết luận:** "phát hiện" = có VIOLATION ở bản lỗi mà không có ở bản sửa trên cùng `case_id` (cùng sha256 source/follow-up) và cùng artifacts.
 **Inconclusive nếu:** binary cũ không nạp được artifacts; verdict nguồn khác nhau giữa các binary (khi đó phải xem lại); hoặc binary không đúng phiên bản.
 
-## 3. Kết quả (Kubescape v4.0.11 / v4.0.12 / v4.0.15, cùng artifacts digest `8cfb2323…`, local-file; evidence: `docs/evidence/kd001_2026-11-01/`)
+## 3. Kết quả (Kubescape v4.0.11 / v4.0.12 / v4.0.15, cùng artifacts digest `8cfb2323…`, local-file; evidence: `docs/evidence/archive/kd001_2026-11-01/`)
 
 Binary v4.0.11 và v4.0.12 tải từ trang phát hành; **sha256 trùng với `checksums.sha256` chính thức** của từng bản (`OFFICIAL_CHECKSUMS.txt`). Chạy MR-02 trên 7 seed (4 áp dụng × 2 profile = 8 cặp).
 
@@ -56,7 +56,7 @@ Phạm vi (B) được gợi ý **bởi lỗi đã biết**, nên là cải ti�
 ### Cập nhật sau khi thống nhất khung: phạm vi (B) là phạm vi chính thức duy nhất
 
 Quyết định đã được áp dụng: `config/policy-mapping.yaml` giờ chỉ có **một** phạm vi MR-02 (aggregator trên `subject_sa` và `rolebinding`; `C-0267/C-0272` trên workload; `C-0057` là đối chứng âm; Trivy khai báo `unsupported`). Không còn mapping A hay B riêng. Phạm vi này được kiểm bằng validator tĩnh (control phải quan sát được thay đổi của MR), không chỉ bằng việc nó bắt được KD-001.
-Chạy lại bằng pipeline chính thức (`--experiment-type historical-defect`, cây mã sạch, binary v4.0.11 và v4.0.12 tải lại và khớp `checksums.sha256`; evidence: `docs/evidence/poc_v2_2026-11-01/kd001-v4.0.1{1,2}/`, bảng: `docs/poc/POC_RESULTS.md`):
+Chạy lại bằng pipeline chính thức (`--experiment-type historical-defect`, cây mã sạch, binary v4.0.11 và v4.0.12 tải lại và khớp `checksums.sha256`; evidence: `docs/evidence/archive/poc_v2_superseded_2026-11-01/kd001-v4.0.1{1,2}/`, bảng: `docs/poc/POC_RESULTS.md`):
 
 | Bốn verdict trên 64 khóa aggregator (ServiceAccount, RoleBinding) | số khóa |
 |---|---|

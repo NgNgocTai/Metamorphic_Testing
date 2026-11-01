@@ -9,7 +9,7 @@
 | Unit tests trước refactor | 80 passed, 3 skipped |
 | Unit tests sau refactor (Windows) | 125 passed, 3 skipped (45 test mới; 1 test cũ sửa, xem 4) |
 | Toàn bộ test trong WSL với Trivy 0.75.0 + Kubescape v4.0.15 thật | **128 passed, 0 skipped** (3 integration test chạy trên scanner thật) |
-| Chạy lại pipeline thật trên toàn bộ seed (`run --scanner trivy|kubescape`, 2026-11-01) so với run PoC đã lưu (`runs/trivy`, `runs/kubescape`) | **`results.csv`: 41/41 dòng mỗi scanner giống hệt. `comparisons.csv` (verdict từng cặp control×resource): Trivy 256/256, Kubescape 386/386 giống hệt.** `results.csv` chỉ có verdict nguồn/follow-up ở dòng VIOLATION, nên verdict của các dòng PASS được đối chiếu qua `comparisons.csv`. Tái lập bằng `scripts/compare_runs.py` (kiểm trùng key, số dòng, cả hai file). Bản lưu tự chứa: `docs/evidence/mr_patterns_verification/` (xem 8) |
+| Chạy lại pipeline thật trên toàn bộ seed (`run --scanner trivy|kubescape`, 2026-11-01) so với run PoC đã lưu (`runs/trivy`, `runs/kubescape`) | **`results.csv`: 41/41 dòng mỗi scanner giống hệt. `comparisons.csv` (verdict từng cặp control×resource): Trivy 256/256, Kubescape 386/386 giống hệt.** `results.csv` chỉ có verdict nguồn/follow-up ở dòng VIOLATION, nên verdict của các dòng PASS được đối chiếu qua `comparisons.csv`. Tái lập bằng `scripts/compare_runs.py` (kiểm trùng key, số dòng, cả hai file). Bản lưu tự chứa: `docs/evidence/archive/mr_patterns_verification/` (xem 8) |
 | `tests/golden`, scanner pins và seed PoC so với `poc-v1.0.0` | Giữ nguyên; `config/policy-mapping.yaml` bổ sung control/mapping MR-06 và `seeds/candidate/pod-hostnet` là seed DEV mới, nằm ngoài tập seed PoC |
 | Fingerprint hành vi MR-01..05 trên 7 seed (applicable, tham số, trace, sha256 follow-up, pair status, targets, mapping, relation) | **Giống hệt** (`scripts/snapshot_mr_behavior.py`; baseline: `docs/baseline/mr_behavior_poc_v1.json`, 28 case) |
 | Chưa chạy | `capture_golden.py` (ghi đè golden nên cố ý không chạy; chỉ kiểm import). Chạy lại triage/minimize để tái hiện reproducer K1/N2: không chạy, nhưng họ K1 vẫn xuất hiện nguyên vẹn (5 VIOLATION Kubescape giống hệt PoC) |
@@ -116,7 +116,7 @@ Từng nhận định được tái hiện bằng lệnh/code trước khi sửa
 | P3 | `compare_runs.py` bỏ sót key trùng | Đúng | Báo lỗi key trùng, số dòng khác, dòng thiếu; so thêm `comparisons.csv`. Test: `test_compare_runs_rejects_duplicates_and_count_mismatch` |
 
 Giữ nguyên: scanner adapters, normalizers, golden, ngữ nghĩa MR-01..05 (snapshot hành vi vẫn **giống hệt** baseline), MR-06 ở `candidate`, chưa merge.
-Lưu ý khi chia sẻ: raw scanner JSON trong `docs/evidence/mr_patterns_verification/` chứa đường dẫn cục bộ (`/home/<user>/...`) ở 28 file; xem lại trước khi gửi ra ngoài. Các đường dẫn tuyệt đối trong `raw_output_paths` của CSV mô tả máy đã chạy; dùng `case_index.json`.
+Lưu ý khi chia sẻ: raw scanner JSON trong `docs/evidence/archive/mr_patterns_verification/` chứa đường dẫn cục bộ (`/home/<user>/...`) ở 28 file; xem lại trước khi gửi ra ngoài. Các đường dẫn tuyệt đối trong `raw_output_paths` của CSV mô tả máy đã chạy; dùng `case_index.json`.
 
 ## 9. Phiên nâng cấp phương pháp 2026-11-01 (sau commit `890f5a8`)
 

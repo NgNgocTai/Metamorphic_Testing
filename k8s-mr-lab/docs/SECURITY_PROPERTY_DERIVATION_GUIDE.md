@@ -37,7 +37,7 @@ Với mỗi bước: input, cơ sở, output, tiêu chí đúng/sai, phần tự
 9. **Proof obligation:** lập luận bước 3, và *quan trọng*: không đường quyền nào khác thay đổi (chỉ đổi một subject).
 10. **Phản ví dụ có test:** subject Group; User với namespace khác; RoleBinding đổi thêm `roleRef`; subject thiếu `namespace`; SA không có trong bundle (`tests/unit/test_mrs.py::test_mr07_*`).
 11–12. Cài đặt `transforms/rbac_sa_subject_as_user.py`; `mr validate` 0 error.
-13. **Chạy thật (DEV, 2026-11-01):** xem `docs/MR_CANDIDATE_EVALUATION.md §MR-07` và `docs/evidence/mr07_dev_2026-11-01/`.
+13. **Chạy thật (DEV, 2026-11-01):** xem `docs/MR_CANDIDATE_EVALUATION.md §MR-07` và `docs/evidence/archive/mr07_dev_2026-11-01/`.
 14. Chưa có đánh giá độc lập; MR-07 giữ `candidate`.
 
 **Lưu ý trung thực:** MR-07 được thiết kế *sau khi đọc* rego của `C-0267/C-0272` (join chỉ cho `subjects[j].kind == "ServiceAccount"`),

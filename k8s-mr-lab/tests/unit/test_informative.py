@@ -63,7 +63,7 @@ def test_unknown_control_is_an_error_not_a_silent_default(mapping):
         inf.classify("trivy", comp("KSV-9999", ROLE, "PASS", "PASS"), [ROLE], mapping)
 
 
-EVIDENCE = ROOT / "docs" / "evidence" / "mr07_dev_2026-11-01"
+EVIDENCE = ROOT / "docs" / "evidence" / "archive" / "mr07_dev_2026-11-01"
 
 
 def test_real_mr07_evidence_trivy_is_entirely_uninformative_and_kubescape_is_not(mapping):
@@ -83,7 +83,7 @@ def test_analysis_does_not_touch_the_saved_evidence(tmp_path, mapping):
 
 
 def test_engaged_marks_weak_comparisons_where_a_fail_shows_the_check_reacts(mapping):
-    e = ROOT / "docs" / "evidence" / "informative_2026-11-01"
+    e = ROOT / "docs" / "evidence" / "archive" / "informative_2026-11-01"
     rows = inf.analyze_run(e / "trivy-run", mapping)
     weak = [r for r in rows if r["tier"] == inf.WEAK]
     assert weak, "Trivy MR-06 has an inferred PASS that turns into an attributed FAIL"

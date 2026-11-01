@@ -1,6 +1,6 @@
 # Báo cáo coverage seed (2026-11-01)
 
-Sinh bằng `k8s-mr-lab seeds coverage ... --with-mr` (tất định, không scanner). Dữ liệu thô: `docs/evidence/seed_coverage_2026-11-01/*.json`.
+Sinh bằng `k8s-mr-lab seeds coverage ... --with-mr` (tất định, không scanner). Dữ liệu thô: `docs/evidence/archive/seed_coverage_2026-11-01/*.json`.
 Từ vựng 52 token được khai báo cố định trong `src/k8s_mr_lab/seeds.py` **trước** khi đo corpus nào; coverage = token phủ / token định nghĩa.
 Token là điều kiện cần cho kiểm thử có nghĩa, không phải bằng chứng seed phát hiện được lỗi.
 

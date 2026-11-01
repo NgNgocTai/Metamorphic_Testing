@@ -24,7 +24,7 @@ python3 -m venv ~/mrlab-venv && ~/mrlab-venv/bin/pip install -e '.[dev]'
 PY=~/mrlab-venv/bin/python
 
 $PY -m k8s_mr_lab versions                                   # check the pins
-$PY -m pytest -q                                              # unit tests; the 3 integration ones use the real binaries and skip if absent (counts: docs/RESEARCH_BASELINE_AUDIT.md)
+$PY -m pytest -q                                              # unit tests; the 3 integration ones use the real binaries and skip if absent (counts: docs/archive/RESEARCH_BASELINE_AUDIT.md)
 $PY -m k8s_mr_lab generate --seeds seeds/synthetic seeds/historical --out runs/generated
 $PY -m k8s_mr_lab run --scanner trivy     --seeds seeds/synthetic seeds/historical --out runs/trivy
 $PY -m k8s_mr_lab run --scanner kubescape --seeds seeds/synthetic seeds/historical --out runs/kubescape   # ~3 min
@@ -112,7 +112,7 @@ k8s-mr-lab seeds coverage --roots seeds/synthetic seeds/historical seeds/candida
 
 | Read | For |
 |---|---|
-| `docs/RESEARCH_BASELINE_AUDIT.md` | what was re-verified, what exists, what does not |
+| `docs/archive/RESEARCH_BASELINE_AUDIT.md` | what was re-verified, what exists, what does not |
 | `docs/CODE_WALKTHROUGH.md` | seed -> assessment, function by function |
 | `docs/MR_DERIVATION_METHODOLOGY.md`, `docs/SECURITY_PROPERTY_DERIVATION_GUIDE.md` | how to derive an MR |
 | `docs/WEB_MST_TO_K8S_METHOD_MAPPING.md` | what is taken from MST-wi, what is ours |
@@ -127,7 +127,7 @@ k8s-mr-lab seeds coverage --roots seeds/synthetic seeds/historical seeds/candida
 | `docs/KD001_REPRODUCTION.md` | PoC stage 2: known defect kubescape#2579 reproduced on the buggy vs fixed binary |
 | `docs/INDEPENDENT_MR_REVIEW_PROTOCOL.md`, `docs/review_packets/` | independent review of an MR |
 | `docs/EVIDENCE_SHARING_AUDIT.md`, `scripts/sanitize_evidence.py` | what in the repository is personal, and the public copy |
-| `docs/NEXT_STAGE_RESEARCH_REPORT.md`, `REPLICATE.md` | this stage's report; reproduce from a clean machine |
+| `docs/archive/NEXT_STAGE_RESEARCH_REPORT.md`, `REPLICATE.md` | this stage's report; reproduce from a clean machine |
 
 Evidence is under `docs/evidence/*/` with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
 `results.csv` (whose verdict columns are filled only for VIOLATION rows). Tools: `scripts/compare_runs.py`,

@@ -59,7 +59,7 @@ Tham số sinh ra: `{get,list,watch} → [get]`, `→ [list]`, `→ [watch]` (3 
 **Kết quả inconclusive nếu:** nguồn `C-0015` ở mutant khác pinned; hoặc scanner đã pin vốn không cho FAIL→FAIL ở nguồn.
 Một **VIOLATION ở scanner đã pin** sẽ là phát hiện đáng điều tra (control phân biệt động từ), không tự động là lỗi: phải đối chiếu hợp đồng trước.
 
-## 7. Kết quả (Trivy 0.75.0, Kubescape v4.0.15; evidence: `docs/evidence/mr09_requirement_derived_2026-11-01/`)
+## 7. Kết quả (Trivy 0.75.0, Kubescape v4.0.15; evidence: `docs/evidence/archive/mr09_requirement_derived_2026-11-01/`)
 
 Chạy trên 8 seed: 1 `INVALID_SOURCE`, 6 `SKIP` (không có rule Secrets đủ điều kiện), 1 seed áp dụng (`rbac-secrets-reader`) cho 3 cặp.
 

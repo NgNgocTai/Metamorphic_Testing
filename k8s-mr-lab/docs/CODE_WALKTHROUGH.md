@@ -104,7 +104,7 @@ cảnh báo giả), và **hai lần quét khác môi trường không bao giờ 
 ```bash
 k8s-mr-lab mr list                       # catalog
 k8s-mr-lab mr explain MR-02              # property, pattern, template, mapping, precondition, giới hạn, vị trí code, test
-k8s-mr-lab mr explain MR-02 --case docs/evidence/p0_reverification_2026-11-01/kubescape/cases/MR-02__rbac-workload__66de14dad8
+k8s-mr-lab mr explain MR-02 --case docs/evidence/archive/p0_reverification_2026-11-01/kubescape/cases/MR-02__rbac-workload__66de14dad8
 k8s-mr-lab mr patterns                   # ma trận MR × phần tử template (phương pháp Bảng 4 của MST-wi)
 k8s-mr-lab mr trace                      # ma trận truy vết property → MR → control
 k8s-mr-lab mr validate                   # cổng cấu trúc (không cần scanner)
