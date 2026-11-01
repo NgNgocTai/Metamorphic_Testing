@@ -4,7 +4,7 @@ Mục đích: bạn tự làm lại các bước dưới đây để rồi tự 
 nó **không phải kết luận của bạn**. Mọi lệnh chạy trong Ubuntu (WSL), thư mục `k8s-mr-lab`:
 
 ```bash
-cd /mnt/d/Code/KLTN/Metarmophic_testing/k8s-mr-lab
+cd k8s-mr-lab        # the directory containing pyproject.toml
 ls runs/kubescape/reproducers runs/trivy/reproducers      # mỗi thư mục con là một gói tự chứa
 ```
 
@@ -24,7 +24,7 @@ Cả ba đã chạy lại và cho đúng `passed → failed`.
 | 6 | `python scripts/triage_probe.py` rồi đọc `docs/evidence/k1_kubescape_ablation.json` | Decoy khác tên → PASS; decoy tên giống nhưng quyền vô hại → PASS; Role local cấp secrets thật → FAIL (đúng). Nên kích hoạt do **trùng tên + quyền của decoy** |
 
 **Câu bạn cần tự trả lời:** có phải rule `C-0267/C-0272` ghép Role theo tên bỏ qua namespace là *lỗi* (false positive) hay là chủ ý thiết kế? Rồi tra xem upstream đã báo/sửa chưa
-(issue kubescape#2579 là lớp lỗi tương tự nhưng ở hàm khác; chưa xác minh bản sửa của nó) và thử Kubescape 4.0.16 trong `D:\Code\KLTN\Tools`.
+(issue kubescape#2579 là lớp lỗi tương tự nhưng ở hàm khác; chưa xác minh bản sửa của nó) và thử Kubescape 4.0.16 trong `<TOOLS_DIR>`.
 
 ## B. Trivy 0.75.0 — N2 (MR-05)
 

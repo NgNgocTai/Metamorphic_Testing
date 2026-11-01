@@ -47,6 +47,6 @@ vấn đề đang gặp, và rủi ro làm lệch artifact của evidence pack �
 
 ## 4. Nguyên tắc đã áp dụng
 
-Chỉ trừu tượng hóa phần có **ít nhất 2 MR thật sự dùng chung**. KP1 (2 MR) và KP2 (1 MR) có pattern trong catalog
+Chỉ trừu tượng hóa phần có **ít nhất 2 MR thật sự dùng chung**. KP1 (2 MR lúc audit; 3 từ khi có MR-07) và KP2 (1 MR) có pattern trong catalog
 nhưng **không có base class**, vì validator của chúng khác nhau thật (bất biến khác nhau). Chỉ KP3 và "per-candidate"
 có code chung.

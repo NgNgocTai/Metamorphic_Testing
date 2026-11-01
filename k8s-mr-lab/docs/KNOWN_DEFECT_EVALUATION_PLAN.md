@@ -49,5 +49,5 @@ Schema bản ghi (đề xuất): `id, scanner, component, source{issue_url, fix_
 
 ## 6. Việc thực hiện sớm nhất có giá trị (không cần quyết định thêm)
 
-* Kiểm K1 và N2 trên Kubescape v4.0.16/v4.0.17 và Trivy 0.76.1 (binary sẵn ở `D:\Code\KLTN\Tools`): một **track thí nghiệm riêng** (digest khác), cho biết lỗi còn hay đã hết ở bản mới: không đổi baseline.
+* Kiểm K1 và N2 trên Kubescape v4.0.16/v4.0.17 và Trivy 0.76.1 (binary sẵn ở `<TOOLS_DIR>`): một **track thí nghiệm riêng** (digest khác), cho biết lỗi còn hay đã hết ở bản mới: không đổi baseline.
 * Tra `kubescape` và `trivy-checks` xem `C-0267/C-0272` và `KSV-0113` (apiGroups) đã được báo hay sửa chưa.

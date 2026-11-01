@@ -62,7 +62,7 @@ Quan sát trên v4.0.15: các control đi qua aggregator (`C-0015`, `C-0007`, `C
 (`role := input[_]`, không dùng `subjectVector`). Do đó **cùng lớp lỗi (ghép roleRef theo tên, bỏ qua namespace), nhưng không có bằng chứng cùng nguyên nhân gốc/cùng vị trí mã**.
 Chưa xác minh: commit sửa nào đóng #2579 và nó đã nằm trong v4.0.15 chưa. Vì issue đã tồn tại, **không gọi đây là lỗi mới**; chỉ có thể là *lỗi chưa được báo ở rule `C-0267/C-0272`* nếu tìm không thấy issue khác.
 
-**Việc còn lại cho bạn:** (a) tìm trong issue/PR của kubescape xem `C-0267/C-0272` đã được báo hoặc sửa chưa; (b) thử v4.0.16/4.0.17 (có sẵn ở `D:\Code\KLTN\Tools`) để biết lỗi còn không; (c) tự chạy lại `reproduce.sh`; (d) quyết định `CONFIRMED` hay không.
+**Việc còn lại cho bạn:** (a) tìm trong issue/PR của kubescape xem `C-0267/C-0272` đã được báo hoặc sửa chưa; (b) thử v4.0.16/4.0.17 (có sẵn ở `<TOOLS_DIR>`) để biết lỗi còn không; (c) tự chạy lại `reproduce.sh`; (d) quyết định `CONFIRMED` hay không.
 
 ---
 
@@ -97,7 +97,7 @@ Check phân biệt được *resource* (D PASS) nhưng không phân biệt *API 
 **Đề xuất kết luận (để bạn xem xét):** *scanner defect mức thấp — false positive*: một Role chỉ cấp "secrets" trong API group `apps` không cấp quyền nào lên Secrets (Secrets thuộc core group), nhưng `KSV-0113` báo như có.
 Điểm cần bạn cân nhắc: (i) nhà phát triển có thể xem đây là lựa chọn thiết kế "cảnh báo mọi rule nhắc `secrets`"; nếu vậy cần đối chiếu mô tả check; (ii) một bản sửa đúng phải coi `""` và `"*"` đều là core (wildcard group khớp core), không chỉ so chuỗi rỗng.
 
-**Việc còn lại cho bạn:** đọc mô tả check trên trang AVD/Trivy docs, tìm issue upstream (chưa kiểm tra), thử Trivy 0.76.1 (có ở `D:\Code\KLTN\Tools`), tự adjudicate.
+**Việc còn lại cho bạn:** đọc mô tả check trên trang AVD/Trivy docs, tìm issue upstream (chưa kiểm tra), thử Trivy 0.76.1 (có ở `<TOOLS_DIR>`), tự adjudicate.
 
 ---
 
@@ -114,4 +114,4 @@ Check phân biệt được *resource* (D PASS) nhưng không phân biệt *API 
 * Chạy lại `triage --minimize` và `scripts/triage_probe.py` trên Trivy 0.75.0 / Kubescape v4.0.15 đã pin, trong bản sao cô lập của cây đã commit: trạng thái / họ / `known_issue` của cả 6 alert **giống hệt**; hai tệp ablation **giống hệt byte** bản đã commit. Evidence: `docs/evidence/p0_reverification_2026-11-01/`. K1/N2 vẫn là candidate, **0 confirmed**.
 * Phân loại theo thang của `KNOWN_DEFECT_EVALUATION_PLAN.md §2`: K1, N2 = `SCANNER_DEFECT_CANDIDATE` (chờ adjudication); chưa có mục `CONFIRMED_SCANNER_DEFECT`.
 * **Hiện tượng mới, `UNRESOLVED`:** MR-07 (candidate) trên Kubescape: `C-0267` `Pod/lab-c/reader-pod` FAIL → PASS khi subject `ServiceAccount reader` được viết lại thành `User system:serviceaccount:lab-c:reader`. Rego đã pin chỉ join `subjects[j].kind == "ServiceAccount"`, nên có thể là giới hạn có chủ đích (`POLICY_OR_SCOPE_ISSUE`) hoặc false negative. MR-07 được viết sau khi đọc rego này (dẫn dắt). Evidence: `docs/evidence/mr07_dev_2026-11-01/`; phân tích: `docs/MR_CANDIDATE_EVALUATION.md`.
-* **Thí nghiệm vá/đột biến (Kubescape, bản sao artifacts cô lập):** vá `C-0267` bằng so sánh namespace khiến 4 violation của C-0267 biến mất, 3 của C-0272 còn nguyên; mutant bỏ so sánh namespace của subject sống sót qua cả bộ MR (46/46 case). Bản vá là của tác giả, **không** phải bản sửa upstream. Xem `docs/EVALUATION_PROTOCOL_V2.md §5`.
+* **Thí nghiệm vá/đột biến (Kubescape, bản sao artifacts cô lập):** vá `C-0267` bằng so sánh namespace khiến 4 violation của C-0267 biến mất, 3 của C-0272 còn nguyên; mutant bỏ so sánh namespace của subject sống sót qua cả bộ MR (30 cặp được quét; mutant không được kích hoạt ở khóa nào; xem `MUTATION_GAP_ANALYSIS.md`, đã thêm MR-08 giết được mutant này). Bản vá là của tác giả, **không** phải bản sửa upstream. Xem `docs/EVALUATION_PROTOCOL_V2.md §5`.

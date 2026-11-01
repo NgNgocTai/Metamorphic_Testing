@@ -2,6 +2,8 @@
 
 ## 1. Bảo toàn PoC
 
+> Số test/MR trong mục 1–8 là tại thời điểm refactor đầu tiên. Số hiện hành: mục 9 và `docs/NEXT_STAGE_RESEARCH_REPORT.md`.
+
 | Kiểm tra | Kết quả |
 |---|---|
 | Unit tests trước refactor | 80 passed, 3 skipped |
@@ -45,7 +47,7 @@ Giữ nguyên: toàn bộ `scanners/`, `normalize/`, `bundles.py`, `report.py`, 
 | MR thứ 6 cùng KP3 | ~62 dòng (cỡ MR-04 cũ) | 38 dòng (MR-06) | Lợi ích xuất hiện từ MR KP3 thứ ba trở đi |
 | Metadata khai báo hai nơi | 4 trường × 5 MR | 0 | |
 | Chỗ phải sửa để thêm MR | transform + `registry.py` (2 chỗ) + catalog + mapping + test | transform + catalog + test (+ property mới, + mapping khi đã xác minh) | `registry.py`, `runner.py`, `checker.py` không còn phải sửa |
-| Truy vết MR → property → nguồn | Không | 6/6 MR | Chỉ tham chiếu `verified: true` là bằng chứng; xem ma trận |
+| Truy vết MR → property → nguồn | Không | 7/7 MR (tại 2026-11-01) | `verified: true` nghĩa là *đã đối chiếu nguồn của chính tham chiếu đó*, không phải bằng chứng MR đúng; xem ma trận |
 | Gate tự động trước khi chạy scanner | Không | `mr validate` (chạy MR trên mọi seed) | |
 | Biểu diễn MR phức tạp | Python | Python (không đổi) | Cố ý không đưa vào YAML |
 
@@ -85,7 +87,7 @@ này cần chốt cùng giảng viên cùng với việc có chạy held-out hay
 | CWE-250 *Execution with Unnecessary Privileges*; CWE-269 *Improper Privilege Management* | cwe.mitre.org/data/definitions/250.html, /269.html (đối chiếu ID và tiêu đề; **gán CWE cho MR là phán đoán chọn miền**) |
 | MR-05: core group là `apiGroups: [""]`, Secrets thuộc nhóm đó | Ví dụ Role/ClusterRole `secret-reader` trong tài liệu Kubernetes RBAC |
 | MR-01: thứ tự khóa mapping không có nghĩa | YAML 1.2.2 §3.2.1.1 và §3.2.2.1 |
-| CIS 5.2.5 (host network) | Nhãn trong framework `cis-v1.12.0` của Kubescape đã pin; **tài liệu CIS không được đọc**, số mục khác nhau giữa các phiên bản benchmark |
+| CIS 5.2.5 (host network) | Nhãn trong framework `cis-v1.12.0` của Kubescape đã pin; **tài liệu CIS không được đọc**, số mục khác nhau giữa các phiên bản benchmark ⇒ ghi `verified: false` kèm `basis` (sửa 2026-11-01; trước đó đánh `true`, quá mức) |
 
 Chưa điền: NSA/CISA, ATT&CK, và CIS cho các control còn lại (không tìm thấy nhãn trực tiếp trong artifact; không đoán).
 

@@ -72,3 +72,20 @@ phía, diff đúng một subject (`ServiceAccount reader` → `User system:servi
 | MR-07 | accept `candidate` | có cơ sở ngữ nghĩa đã trích dẫn, counterexample, evidence thật; **dẫn dắt**, n nhỏ |
 | MR-08 | defer | gần trùng MR-04, cần seed |
 | MR-09 | defer | ngữ nghĩa defaulting chưa xác minh |
+
+## MR-07: đánh giá lại ngày 2026-11-01 (7 câu hỏi)
+
+Nguồn: policy đã pin (`c-0267.json`, `c-0272.json`, `c-0015.json`, `c-0035.json`; rego của Trivy), `config/control-registry.yaml`, `mr informative`.
+
+| # | Câu hỏi | Trả lời có căn cứ |
+|---|---|---|
+| 1 | Ngữ nghĩa K8s có coi hai biểu diễn là cùng danh tính không? | **Có, với một bước suy diễn.** Đã trích nguyên văn: username của service account là `system:serviceaccount:(NS):(SA)` (docs Authentication) và "ServiceAccounts have names prefixed with `system:serviceaccount:`" (docs RBAC). Bước "subject `User` khớp username đã xác thực" là cách RBAC hoạt động nhưng **không có câu trích riêng** trong hai trang đã đọc: ghi `verified: false` cho bước đó nếu cần chặt hơn |
+| 2 | Precondition đủ chưa? | Đủ cho `equal` ở mức hiện tại: RoleBinding→Role cục bộ, subject SA có namespace tường minh, SA có trong bundle. Không cần "không có binding khác" vì một subject bị viết lại không làm thêm/bớt đường nào khác |
+| 3 | Counterexamples | Group `system:serviceaccounts:<ns>` (rộng hơn); User namespace khác; đổi thêm `roleRef`; thiếu namespace; thiếu SA (5 test) |
+| 4 | Control nào thật sự quan sát danh tính subject? | **Kubescape `C-0267`/`C-0272`** (join `subjects[j].kind == "ServiceAccount"`, `.name`, `.namespace` trên `RoleBinding`). `C-0015/C-0007/C-0035` dùng aggregator `subjectVector` (mô tả: "user, group or service account"); đã ánh xạ ở mức **Role**, không phải mức workload. **Trivy: không có.** |
+| 5 | PASS của Trivy có mang thông tin không? | **Không.** Các check Trivy được ánh xạ (KSV-0113/0048/0049/0112/0050) có `selector kind: role`, nhận **một tài liệu Role** mỗi lần; MR-07 chỉ sửa RoleBinding. `mr informative`: **0/20 so sánh mang thông tin** (20 UNINFORMATIVE). ⇒ **đã bỏ ánh xạ Trivy cho MR-07** (xem dưới) |
+| 6 | Hợp đồng `C-0267` có hỗ trợ subject `User` không? | Mô tả: "workload ... **service accounts** have roles that ..."; remediation: "Make sure each **service account** has only the permissions...". Rego chỉ join `kind == "ServiceAccount"`. Lời văn của hợp đồng nói về **quyền của service account mà workload dùng**, điều mà dạng `User` cũng mang lại; còn cài đặt hẹp hơn lời văn. **Không đủ để kết luận lỗi hay chủ ý** |
+| 7 | Quan sát Kubescape: ngoài phạm vi chính sách hay ứng viên lỗi? | **`UNRESOLVED`.** H1 *giới hạn chủ ý*: control chỉ định nghĩa trên subject `ServiceAccount`. H2 *false negative*: hợp đồng nói về quyền của SA, mà dạng `User` cấp cùng quyền đó. Chưa có tài liệu control hoặc phản hồi upstream để phân xử |
+
+**Thay đổi đã làm:** bỏ mục `trivy` của MR-07 khỏi `config/policy-mapping.yaml`. Lý do là cấu trúc (control không đọc đối tượng bị đổi), không phải kết quả. Evidence cũ `docs/evidence/mr07_dev_2026-11-01/trivy` giữ nguyên làm bằng chứng lịch sử.
+**Không** nâng trạng thái MR-07; **không** gọi kết quả Kubescape là false negative.
