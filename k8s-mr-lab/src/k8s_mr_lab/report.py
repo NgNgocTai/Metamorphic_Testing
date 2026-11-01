@@ -15,8 +15,8 @@ RESULT_COLUMNS = [
     "mr_relation", "mr_result", "skip_reason", "inconclusive_reason", "scanner_invocations", "elapsed_ms",
     "triage_status", "defect_family", "issue_url", "source_artifact", "followup_artifact", "raw_output_paths",
     "gen_ms", "scan_ms", "cache_hits", "source_sha256", "followup_sha256"]
-COMPARISON_COLUMNS = ["run_id", "case_id", "mr_id", "scanner", "control", "resource", "source_verdict",
-                      "followup_verdict", "outcome", "reason"]
+COMPARISON_COLUMNS = ["run_id", "case_id", "mr_id", "scanner", "control", "resource", "role", "source_verdict",
+                      "followup_verdict", "basis", "outcome", "tier", "engaged", "reason", "note"]
 
 
 def case_row(run_id: str, cr: CaseResult, relation: str) -> dict:
@@ -58,8 +58,9 @@ def write_run(out_dir: Path, run_id: str, results: list[CaseResult], catalog: di
         for r in results:
             for k in (r.assessment.key_results if r.assessment else []):
                 w.writerow({"run_id": run_id, "case_id": r.case_id, "mr_id": r.mr_id, "scanner": r.scanner,
-                            "control": k.control, "resource": fmt_key(k.resource), "source_verdict": k.source,
-                            "followup_verdict": k.followup, "outcome": k.outcome, "reason": k.reason})
+                            "control": k.control, "resource": fmt_key(k.resource), "role": k.role, "source_verdict": k.source,
+                            "followup_verdict": k.followup, "basis": "inferred_pass" if k.inferred else "explicit",
+                            "outcome": k.outcome, "tier": k.tier, "engaged": k.engaged, "reason": k.reason, "note": k.note})
     (out_dir / "results.json").write_text(json.dumps([
         {**row, "params": r.params, "assessment": r.assessment.to_json() if r.assessment else None, "reason": r.reason}
         for row, r in zip(rows, results)], indent=2, default=str), encoding="utf-8")

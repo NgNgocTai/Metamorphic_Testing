@@ -104,6 +104,11 @@ class KeyResult:
     outcome: str  # ok | violation | inconclusive
     reason: str = ""
     inferred: bool = False  # a verdict used here is an inferred PASS (Trivy), not an explicit one
+    # set by informative.annotate after the check; they never influence the outcome
+    role: str = "property"  # property | control (mapping role)
+    tier: str = ""          # INFORMATIVE | WEAK | CONTROL | UNINFORMATIVE | INCONCLUSIVE
+    note: str = ""
+    engaged: bool = False   # a FAIL is attributed to the resource on either side
 
 
 @dataclass
@@ -123,5 +128,6 @@ class Assessment:
         return {"result": self.result, "relation": self.relation, "reason": self.reason, "counts": self.counts(),
                 "comparisons": [{"control": k.control, "resource": fmt_key(k.resource), "source": k.source,
                                  "followup": k.followup, "outcome": k.outcome, "reason": k.reason,
-                                 "basis": "inferred_pass" if k.inferred else "explicit"}
+                                 "basis": "inferred_pass" if k.inferred else "explicit", "role": k.role, "tier": k.tier,
+                                 "note": k.note, "engaged": k.engaged}
                                 for k in self.key_results]}

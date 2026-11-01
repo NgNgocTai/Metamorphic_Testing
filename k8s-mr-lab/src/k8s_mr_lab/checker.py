@@ -19,6 +19,9 @@ def static_keys(mr: MetamorphicRelation, entries: list[MappingEntry], control_ki
                 source: ConfigBundle, params: dict) -> list[Key]:
     """Comparison keys derivable before scanning: mapped controls x target resources (kind-filtered)."""
     targets = mr.targets(source, params)
+    undeclared = set(targets) - set(mr.spec["targets"])
+    if undeclared:
+        raise ValueError(f"{mr.id}: targets() returned {sorted(undeclared)}, not declared in the catalog (targets: {mr.spec['targets']})")
     keys: list[Key] = []
     for e in entries:
         kinds = control_kinds.get(e.control)

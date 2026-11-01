@@ -12,6 +12,7 @@ from pathlib import Path
 from . import __version__
 from .bundles import BundleError, ConfigBundle, Span, load_bundle
 from .checker import check, full_keys, static_keys
+from .informative import annotate, changed_objects
 from .model import (R_ENV_MISMATCH, R_INCONCLUSIVE, R_INVALID_PAIR, R_INVALID_SOURCE, R_SCAN_ERROR, R_SKIP, VALID_PAIR,
                     Assessment, NormalizedReport, ScannerInvocation, fmt_key)
 from .normalize import normalize
@@ -147,6 +148,7 @@ class Runner:
         (cdir / "normalized-source.json").write_text(json.dumps(s1.report.to_json(), indent=2), encoding="utf-8")
         (cdir / "normalized-followup.json").write_text(json.dumps(s2.report.to_json(), indent=2), encoding="utf-8")
         a = check(mr, full_keys(mr, static, s1.report, s2.report), s1.report, s2.report)
+        annotate(a, self.mapping, self.scanner.name, mr.id, changed_objects(diff))
         cr.assessment, cr.result, cr.reason = a, a.result, a.reason
         return self._finish(cr, cdir, t0)
 
@@ -164,7 +166,7 @@ class Runner:
             "random_seed": None, "scanner": cr.scanner,
             "scanner_version": inv.version if inv else None, "scan_mode": inv.mode if inv else None,
             "policy_digest": inv.policy_digest if inv else None,
-            "mapping_digest": digest(self.mapping.data), "source_text_sha256": _file_sha(cdir / "source" / "bundle.yaml"),
+            "mapping_digest": self.mapping.digest(), "source_text_sha256": _file_sha(cdir / "source" / "bundle.yaml"),
             "followup_text_sha256": _file_sha(cdir / "followup" / "bundle.yaml"),
             "python": sys.version.split()[0], "platform": platform.platform()}, indent=2), encoding="utf-8")
         return cr
@@ -202,7 +204,7 @@ class Runner:
         return {"framework": f"k8s-mr-lab {__version__}", "scanner": self.scanner.name,
                 "scanner_version": self.scanner.version(), "scan_mode": self.scanner.mode,
                 "policy_digest": self.scanner.policy_digest(), "pinned_version": self.scanner.cfg.get("version"),
-                "mapping_digest": digest(self.mapping.data), "python": sys.version.split()[0],
+                "mapping_digest": self.mapping.digest(), "python": sys.version.split()[0],
                 "platform": platform.platform(), "run_id": self.run_id}
 
 

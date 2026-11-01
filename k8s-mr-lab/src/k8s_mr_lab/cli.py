@@ -7,9 +7,10 @@ import json
 import sys
 from pathlib import Path
 
-from . import mr_tools
+from . import mr_tools, seeds as seedlib
 from . import report as rep
 from .bundles import BundleError, load_bundle
+from .experiment import EXPERIMENT_TYPES, provenance
 from .registry import PolicyMapping, UnknownMRError, active_mrs, load_catalog
 from .runner import Runner
 from .scanners import SCANNERS, load_scanner_config, make_scanner
@@ -87,6 +88,8 @@ def cmd_run(a) -> int:
             print(f"{r.mr_id:6} {r.seed_id:22} {r.result:14} {r.case_id.rsplit('__', 1)[-1]:>10}  {r.reason[:90]}")
     lock = runner.environment_lock()
     lock["total_scanner_invocations"] = runner.total_invocations
+    lock["experiment"] = provenance(experiment_type=a.experiment_type, experiment_id=a.experiment_id, scope_profile=a.scope_profile,
+                                   catalog_path=a.catalog, mapping_path=a.mapping, seed_dirs=seed_dirs(a.seeds), runner=runner, mr_ids=a.mr)
     rep.write_run(Path(a.out), runner.run_id, results, catalog, lock)
     counts = {}
     for r in results:
@@ -137,11 +140,56 @@ def cmd_mr(a) -> int:
         return mr_tools.cmd_list(load_catalog(a.catalog), mapping)
     if a.mr_cmd == "validate":
         return mr_tools.cmd_validate(a, a.catalog, mapping)
+    if a.mr_cmd == "requirements":
+        return mr_tools.cmd_requirements(a, a.catalog, mapping)
+    if a.mr_cmd == "review-packet":
+        return mr_tools.cmd_review_packet(a, load_catalog(a.catalog), mapping)
+    if a.mr_cmd == "informative":
+        return mr_tools.cmd_informative(a, mapping)
     if a.mr_cmd == "patterns":
         return mr_tools.cmd_patterns(a, a.catalog)
     if a.mr_cmd == "explain":
         return mr_tools.cmd_explain(a, load_catalog(a.catalog), mapping)
     return mr_tools.cmd_trace(a, a.catalog, mapping)
+
+
+def cmd_seeds(a) -> int:
+    """seeds inventory | coverage | select | split: deterministic, no scanner."""
+    parts = dict(p.split("=", 1) for p in (a.partition or []))
+    recs = seedlib.inventory(a.roots, parts)
+    if a.seeds_cmd == "inventory":
+        print(f"{'seed':<46} {'valid':<6} {'objs':>4} {'tokens':>6}  partition / duplicate")
+        for r in recs:
+            print(f"{r.root + '/' + r.seed_id:<46} {str(r.valid):<6} {r.n_objects:>4} {len(r.tokens):>6}  {r.partition}{' dup-of ' + r.duplicate_of if r.duplicate_of else ''}"
+                  f"{'  ' + r.problems[0][:50] if r.problems else ''}")
+        if a.out:
+            Path(a.out).write_text(json.dumps([r.to_json() for r in recs], indent=1), encoding="utf-8")
+        return 0
+    if a.seeds_cmd == "coverage":
+        cov = seedlib.coverage(recs)
+        print(f"seeds {cov['seeds']}")
+        for d, v in cov["dimensions"].items():
+            print(f"  {d:<16} {v['covered']}/{v['defined']}  missing: {', '.join(v['missing']) or '-'}")
+        print(f"tokens covered {cov['covered_tokens']}/{cov['defined_tokens']}")
+        res = {"coverage": cov}
+        if a.with_mr:
+            app = seedlib.mr_applicability(recs, load_catalog(a.catalog))
+            res["mr_applicability"] = app
+            for k, v in app.items():
+                print(f"  {k}: applicable on {v['applicable_seeds']}/{v['usable_seeds']} usable seeds, {v['cases']} case(s)")
+        if a.out:
+            Path(a.out).write_text(json.dumps(res, indent=1), encoding="utf-8")
+        return 0
+    if a.seeds_cmd == "select":
+        for r in seedlib.select(recs, a.k):
+            print(f"{r.root}/{r.seed_id}")
+        return 0
+    sp = seedlib.split(recs, a.evaluation_percent)
+    for k, v in sp.items():
+        print(f"{k}	{v}")
+    if a.out:
+        Path(a.out).write_text(json.dumps({"salt": "k8s-mr-lab-split-v1", "evaluation_percent": a.evaluation_percent, "split": sp}, indent=1), encoding="utf-8")
+    return 0
 
 
 def cmd_versions(a) -> int:
@@ -157,6 +205,9 @@ def cmd_versions(a) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    for stream in (sys.stdout, sys.stderr):          # reports contain non-ASCII text; never die on a cp1252 console
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
     p = argparse.ArgumentParser(prog="k8s-mr-lab", description=__doc__)
     p.add_argument("--config", default="config/scanners.yaml")
     p.add_argument("--mapping", default="config/policy-mapping.yaml")
@@ -178,6 +229,9 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--max-cases", type=int, default=4)
     r.add_argument("--no-cache", action="store_true")
     r.add_argument("--fail-on-violation", action="store_true")
+    r.add_argument("--experiment-type", choices=EXPERIMENT_TYPES, default="baseline")
+    r.add_argument("--experiment-id", help="stable id of this experiment (default: the run id)")
+    r.add_argument("--scope-profile", default="official", help="label of the comparison scope used (the shipped mapping is `official`)")
     r.set_defaults(fn=cmd_run)
 
     t = sub.add_parser("triage", help="reproduce violations and write reproducer packages (candidates only)")
@@ -197,12 +251,20 @@ def main(argv: list[str] | None = None) -> int:
     m = sub.add_parser("mr", help="author and check MRs: list | validate | trace | scaffold")
     m.add_argument("--properties", default="mrs/security_properties.yaml")
     m.add_argument("--patterns", default="mrs/patterns.yaml")
+    m.add_argument("--requirements", default="mrs/requirements.yaml")
     msub = m.add_subparsers(dest="mr_cmd", required=True)
     msub.add_parser("list", help="catalog overview")
     mv = msub.add_parser("validate", help="STRUCTURAL gate: schema, traceability, MR contract on valid seeds (no scanner; not a semantic proof)")
     mv.add_argument("--seeds", nargs="+", default=["seeds/synthetic", "seeds/historical", "seeds/candidate"])
     mt = msub.add_parser("trace", help="Property -> Pattern -> MR -> control traceability matrix")
     mt.add_argument("--out")
+    msub.add_parser("requirements", help="requirement -> MR matrix with coverage X/N (checked against the catalog)")
+    mr_ = msub.add_parser("review-packet", help="write a packet for an INDEPENDENT reviewer (decision left blank, status PENDING)")
+    mr_.add_argument("id")
+    mr_.add_argument("--out")
+    mi = msub.add_parser("informative", help="classify the comparisons of saved runs: could the control observe the change? (reporting only)")
+    mi.add_argument("--run", nargs="+", required=True, help="run directories with cases/ (or packaged evidence directories)")
+    mi.add_argument("--out")
     mp = msub.add_parser("patterns", help="MR x template-element matrix and the grouping it implies (MST-wi Table 4 method)")
     mp.add_argument("--out")
     me = msub.add_parser("explain", help="explain one MR from its metadata; with --case, explain a saved case from its evidence")
@@ -214,6 +276,16 @@ def main(argv: list[str] | None = None) -> int:
     ms.add_argument("--pattern", default="KP3")
     ms.add_argument("--src-dir", default="src/k8s_mr_lab/transforms")
     m.set_defaults(fn=cmd_mr)
+
+    sd = sub.add_parser("seeds", help="seed inventory / coverage / deterministic selection / dev-eval split (no scanner)")
+    sd.add_argument("seeds_cmd", choices=["inventory", "coverage", "select", "split"])
+    sd.add_argument("--roots", nargs="+", required=True, help="directories of seed directories, or of flat YAML files")
+    sd.add_argument("--partition", nargs="*", help="ROOTNAME=DEV|REGRESSION|EXTERNAL ...; DEV/REGRESSION are always development")
+    sd.add_argument("--k", type=int, default=10)
+    sd.add_argument("--evaluation-percent", type=int, default=30)
+    sd.add_argument("--with-mr", action="store_true", help="coverage: also count MR applicability (static)")
+    sd.add_argument("--out")
+    sd.set_defaults(fn=cmd_seeds)
 
     a = p.parse_args(argv)
     try:

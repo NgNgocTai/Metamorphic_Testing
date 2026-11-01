@@ -14,12 +14,6 @@ from .model import R_VIOLATION, fmt_key
 from .runner import Runner
 from .scanners.base import expand
 
-# What a static look at the rule source should contain for the MR's property to even be considered by the check:
-# (evidence key, regex). MR-02 asks specifically whether a *Role's* namespace is compared, not any "namespace" token.
-PROPERTY_PATTERN = {"MR-05": ("apiGroups", r"apiGroups"),
-                    "MR-02": ("role_namespace_compared", r"role(\.metadata)?\.namespace|roleRef\.namespace"),
-                    "MR-03": ("verbs", r"verbs"), "MR-04": ("privileged", r"privileged")}
-
 
 def load_known_issues(path: Path) -> list[dict]:
     return (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("issues", []) if path.exists() else []
@@ -30,11 +24,11 @@ def _lines(text: str, pattern: str, limit: int = 8) -> list[str]:
     return [f"{i}: {ln.strip()}" for i, ln in enumerate(text.splitlines(), 1) if rx.search(ln)][:limit]
 
 
-def rule_evidence(scanner: str, control: str, mr_id: str, mapping, cfg: dict) -> dict:
+def rule_evidence(scanner: str, control: str, mr, mapping, cfg: dict) -> dict:
     """Static rule-source evidence for a violating control (aid for the human adjudicator, not an oracle)."""
-    key, pattern = PROPERTY_PATTERN.get(mr_id, ("", ""))
+    key, pattern = mr.rule_probe or ("", "")
     if scanner == "trivy":
-        rego = mapping.control_meta("trivy", control).get("rego")
+        rego = mapping.control_meta("trivy", control).get("source")
         base = expand(cfg["trivy"].get("cache_dir", "~/.cache/trivy")) / "policy/content/policies/kubernetes/policies"
         files = list(base.rglob(rego)) if rego else []
         src = files[0] if files else None
@@ -92,7 +86,7 @@ def triage_run(run_dir: Path, runner: Runner, cfg: dict, known: list[dict], mini
             "status": "CANDIDATE_REPRODUCED" if reproduced else "NOT_REPRODUCED", "confirmed": False,
             "violating_comparisons": viol, "known_issue": km["url"] if km else None,
             "known_issue_match": "class-level only; root cause NOT verified" if km else None,
-            "rule_evidence": [rule_evidence(runner.scanner.name, c, row["mr_id"], runner.mapping, cfg) for c in sorted(controls)]}
+            "rule_evidence": [rule_evidence(runner.scanner.name, c, mr, runner.mapping, cfg) for c in sorted(controls)]}
         if reproduced and minimize:
             entry["minimization"] = minimize_case(runner, row["seed_id"], source, mr, row["params"], controls)
         out["cases"][cid] = entry
