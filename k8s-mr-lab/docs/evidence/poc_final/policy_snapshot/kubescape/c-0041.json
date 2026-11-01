@@ -1,0 +1,95 @@
+{
+  "rulesIDs": [
+    ""
+  ],
+  "guid": "",
+  "name": "HostNetwork access",
+  "attributes": {
+    "controlTypeTags": [
+      "security",
+      "compliance"
+    ],
+    "attackTracks": [
+      {
+        "categories": [
+          "Lateral Movement (Network)"
+        ],
+        "attackTrack": "workload-external-track"
+      }
+    ]
+  },
+  "controlID": "C-0041",
+  "creationTime": "",
+  "description": "Potential attackers may gain access to a pod and inherit access to the entire host network. For example, in AWS case, they will have access to the entire VPC. This control identifies all the pods with host network access enabled.",
+  "remediation": "Only connect pods to host network when it is necessary. If not, set the hostNetwork field of the pod spec to false, or completely remove it (false is the default). Whitelist only those pods that must have access to host network by design.",
+  "rules": [
+    {
+      "guid": "",
+      "name": "host-network-access",
+      "creationTime": "",
+      "rule": "# regal ignore:directory-package-mismatch\npackage armo_builtins\n\nimport rego.v1\n\n# Fails if pod has hostNetwork enabled\ndeny contains msga if {\n\tpath := \"spec.hostNetwork\"\n\tpods := [pod | pod = input[_]; pod.kind == \"Pod\"]\n\tpod := pods[_]\n\n\tis_host_network(pod.spec)\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"Pod: %v is connected to the host network\", [pod.metadata.name]),\n\t\t\"alertScore\": 9,\n\t\t\"deletePaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertObject\": {\"k8sApiObjects\": [pod]},\n\t}\n}\n\n# Fails if workload has hostNetwork enabled\ndeny contains msga if {\n\tspec_template_spec_patterns := {\"Deployment\", \"ReplicaSet\", \"DaemonSet\", \"StatefulSet\", \"Job\"}\n\tpath := \"spec.template.spec.hostNetwork\"\n\twl := input[_]\n\tspec_template_spec_patterns[wl.kind]\n\tis_host_network(wl.spec.template.spec)\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"%v: %v has a pod connected to the host network\", [wl.kind, wl.metadata.name]),\n\t\t\"alertScore\": 9,\n\t\t\"deletePaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertObject\": {\"k8sApiObjects\": [wl]},\n\t}\n}\n\n# Fails if cronjob has hostNetwork enabled\ndeny contains msga if {\n\tpath := \"spec.jobTemplate.spec.template.spec.hostNetwork\"\n\twl := input[_]\n\twl.kind == \"CronJob\"\n\tis_host_network(wl.spec.jobTemplate.spec.template.spec)\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"CronJob: %v has a pod connected to the host network\", [wl.metadata.name]),\n\t\t\"alertScore\": 9,\n\t\t\"deletePaths\": [path],\n\t\t\"failedPaths\": [path],\n\t\t\"fixPaths\": [],\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertObject\": {\"k8sApiObjects\": [wl]},\n\t}\n}\n\nis_host_network(podspec) if {\n\tpodspec.hostNetwork == true\n}\n",
+      "resourceEnumerator": "",
+      "ruleLanguage": "Rego",
+      "match": [
+        {
+          "apiGroups": [
+            ""
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "Pod"
+          ]
+        },
+        {
+          "apiGroups": [
+            "apps"
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "Deployment",
+            "ReplicaSet",
+            "DaemonSet",
+            "StatefulSet"
+          ]
+        },
+        {
+          "apiGroups": [
+            "batch"
+          ],
+          "apiVersions": [
+            "*"
+          ],
+          "resources": [
+            "Job",
+            "CronJob"
+          ]
+        }
+      ],
+      "ruleDependencies": [],
+      "controlConfigInputs": null,
+      "description": "fails if pod has hostNetwork  enabled",
+      "remediation": "Make sure that the hostNetwork field of the pod spec is not set to true (set to false or not present)",
+      "ruleQuery": "armo_builtins",
+      "relevantCloudProviders": null
+    }
+  ],
+  "baseScore": 7,
+  "scanningScope": {
+    "matches": [
+      "cluster",
+      "file"
+    ]
+  },
+  "category": {
+    "name": "Workload",
+    "id": "Cat-5",
+    "subCategory": {
+      "name": "Network",
+      "id": "Cat-4"
+    }
+  }
+}

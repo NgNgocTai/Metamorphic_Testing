@@ -1,0 +1,107 @@
+{
+  "rulesIDs": [
+    ""
+  ],
+  "guid": "",
+  "name": "Workload with cluster takeover roles",
+  "attributes": {
+    "controlTypeTags": [
+      "security"
+    ],
+    "attackTracks": [
+      {
+        "clickableResourceKind": "ServiceAccount",
+        "attackTrack": "external-workload-with-cluster-takeover-roles",
+        "categories": [
+          "Cluster Access"
+        ],
+        "displayRelatedResources": true
+      }
+    ]
+  },
+  "controlID": "C-0267",
+  "creationTime": "",
+  "description": "Cluster takeover roles include workload creation or update and secret access. They can easily lead to super privileges in the cluster. If an attacker can exploit this workload then the attacker can take over the cluster using the RBAC privileges this workload is assigned to.",
+  "remediation": "You should apply least privilege principle. Make sure each service account has only the permissions that are absolutely necessary.",
+  "rules": [
+    {
+      "guid": "",
+      "name": "workload-with-cluster-takeover-roles",
+      "creationTime": "",
+      "rule": "# regal ignore:directory-package-mismatch  \npackage armo_builtins\n\nimport rego.v1\n\ndeny contains msga if {\n\twl := input[_]\n\tstart_of_path := get_start_of_path(wl)\n\twl_spec := object.get(wl, start_of_path, [])\n\n\t# get service account wl is using\n\tsa := input[_]\n\tsa.kind == \"ServiceAccount\"\n\tis_same_sa(wl_spec, sa.metadata, wl.metadata)\n\n\t# check service account token is mounted\n\tis_sa_auto_mounted(wl_spec, sa)\n\n\t# check if sa has cluster takeover roles\n\trole := input[_]\n\trole.kind in [\"Role\", \"ClusterRole\"]\n\tis_takeover_role(role)\n\n\trolebinding := input[_]\n\trolebinding.kind in [\"RoleBinding\", \"ClusterRoleBinding\"]\n\trolebinding.roleRef.name == role.metadata.name\n\trolebinding.roleRef.kind == role.kind\n\trolebinding.subjects[j].kind == \"ServiceAccount\"\n\trolebinding.subjects[j].name == sa.metadata.name\n\trolebinding.subjects[j].namespace == sa.metadata.namespace\n\n\tdeletePath := sprintf(\"subjects[%d]\", [j])\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"%v: %v in the following namespace: %v has cluster takeover roles\", [wl.kind, wl.metadata.name, wl.metadata.namespace]),\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertScore\": 9,\n\t\t\"alertObject\": {\"k8sApiObjects\": [wl]},\n\t\t\"relatedObjects\": [\n\t\t\t{\"object\": sa},\n\t\t\t{\n\t\t\t\t\"object\": rolebinding,\n\t\t\t\t\"deletePaths\": [deletePath],\n\t\t\t},\n\t\t\t{\"object\": role},\n\t\t],\n\t}\n}\n\nget_start_of_path(workload) := start_of_path if {\n\tspec_template_spec_patterns := {\"Deployment\", \"ReplicaSet\", \"DaemonSet\", \"StatefulSet\", \"Job\"}\n\tspec_template_spec_patterns[workload.kind]\n\tstart_of_path := [\"spec\", \"template\", \"spec\"]\n}\n\nget_start_of_path(workload) := start_of_path if {\n\tworkload.kind == \"Pod\"\n\tstart_of_path := [\"spec\"]\n}\n\nget_start_of_path(workload) := start_of_path if {\n\tworkload.kind == \"CronJob\"\n\tstart_of_path := [\"spec\", \"jobTemplate\", \"spec\", \"template\", \"spec\"]\n}\n\nis_sa_auto_mounted(wl_spec, sa) if {\n\t# automountServiceAccountToken not in pod spec\n\tnot wl_spec.automountServiceAccountToken == false\n\tnot wl_spec.automountServiceAccountToken == true\n\n\tnot sa.automountServiceAccountToken == false\n}\n\nis_sa_auto_mounted(wl_spec, sa) if {\n\t# automountServiceAccountToken set to true in pod spec\n\twl_spec.automountServiceAccountToken == true\n}\n\nis_same_sa(wl_spec, sa_metadata, wl_metadata) if {\n\twl_spec.serviceAccountName == sa_metadata.name\n\tis_same_namespace(sa_metadata, wl_metadata)\n}\n\nis_same_sa(wl_spec, sa_metadata, wl_metadata) if {\n\tnot wl_spec.serviceAccountName\n\tsa_metadata.name == \"default\"\n\tis_same_namespace(sa_metadata, wl_metadata)\n}\n\n# is_same_namespace supports cases where ns is not configured in the metadata\n# for yaml scans\nis_same_namespace(metadata1, metadata2) if {\n\tmetadata1.namespace == metadata2.namespace\n}\n\nis_same_namespace(metadata1, metadata2) if {\n\tnot metadata1.namespace\n\tnot metadata2.namespace\n}\n\nis_same_namespace(metadata1, metadata2) if {\n\tnot metadata2.namespace\n\tmetadata1.namespace == \"default\"\n}\n\nis_same_namespace(metadata1, metadata2) if {\n\tnot metadata1.namespace\n\tmetadata2.namespace == \"default\"\n}\n\n# look for rule allowing create/update workloads\nis_takeover_role(role) if {\n\ttakeover_resources := [\"pods\", \"*\"]\n\ttakeover_verbs := [\"create\", \"update\", \"patch\", \"*\"]\n\ttakeover_api_groups := [\"\", \"*\"]\n\n\ttakeover_rule := [rule |\n\t\trule = role.rules[i]\n\t\trule.resources[a] in takeover_resources\n\t\trule.verbs[b] in takeover_verbs\n\t\trule.apiGroups[c] in takeover_api_groups\n\t]\n\tcount(takeover_rule) > 0\n}\n\n# look for rule allowing secret access\nis_takeover_role(role) if {\n\ttakeover_resources := [\"secrets\", \"*\"]\n\ttakeover_verbs := [\"get\", \"list\", \"watch\", \"*\"]\n\ttakeover_api_groups := [\"\", \"*\"]\n\trule := role.rules[i]\n\n\ttakeover_rule := [rule |\n\t\trule = role.rules[i]\n\t\trule.resources[a] in takeover_resources\n\t\trule.verbs[b] in takeover_verbs\n\t\trule.apiGroups[c] in takeover_api_groups\n\t]\n\tcount(takeover_rule) > 0\n}\n",
+      "resourceEnumerator": "# regal ignore:directory-package-mismatch  \npackage armo_builtins\n\nimport rego.v1\n\ndeny contains msga if {\n\twl := input[_]\n\tstart_of_path := get_beginning_of_path(wl)\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"%v: %v in the following namespace: %v mounts service account tokens by default\", [wl.kind, wl.metadata.name, wl.metadata.namespace]),\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"alertScore\": 9,\n\t\t\"alertObject\": {\"k8sApiObjects\": [wl]},\n\t}\n}\n\nget_beginning_of_path(workload) := start_of_path if {\n\tspec_template_spec_patterns := {\"Deployment\", \"ReplicaSet\", \"DaemonSet\", \"StatefulSet\", \"Job\"}\n\tspec_template_spec_patterns[workload.kind]\n\tstart_of_path := [\"spec\", \"template\", \"spec\"]\n}\n\nget_beginning_of_path(workload) := start_of_path if {\n\tworkload.kind == \"Pod\"\n\tstart_of_path := [\"spec\"]\n}\n\nget_beginning_of_path(workload) := start_of_path if {\n\tworkload.kind == \"CronJob\"\n\tstart_of_path := [\"spec\", \"jobTemplate\", \"spec\", \"template\", \"spec\"]\n}\n",
+      "ruleLanguage": "Rego",
+      "match": [
+        {
+          "apiGroups": [
+            ""
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "Pod",
+            "ServiceAccount"
+          ]
+        },
+        {
+          "apiGroups": [
+            "apps"
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "Deployment",
+            "ReplicaSet",
+            "DaemonSet",
+            "StatefulSet"
+          ]
+        },
+        {
+          "apiGroups": [
+            "batch"
+          ],
+          "apiVersions": [
+            "*"
+          ],
+          "resources": [
+            "Job",
+            "CronJob"
+          ]
+        },
+        {
+          "apiGroups": [
+            "rbac.authorization.k8s.io"
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "RoleBinding",
+            "ClusterRoleBinding",
+            "Role",
+            "ClusterRole"
+          ]
+        }
+      ],
+      "ruleDependencies": [],
+      "controlConfigInputs": null,
+      "description": "",
+      "remediation": "",
+      "ruleQuery": "armo_builtins",
+      "relevantCloudProviders": null
+    }
+  ],
+  "baseScore": 6,
+  "scanningScope": {
+    "matches": [
+      "cluster",
+      "file"
+    ]
+  },
+  "category": {
+    "name": "Workload",
+    "id": "Cat-5"
+  }
+}

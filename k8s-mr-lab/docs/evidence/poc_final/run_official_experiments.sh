@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# HISTORICAL RECORD of the commands used for docs/evidence/poc_final (machine-specific paths, no fail-fast). For a portable run use scripts/reproduce_official.sh.
 # Official PoC rerun from a committed tree. Output goes to runs/final (git-ignored) so that producing evidence never dirties the source tree.
 set -u
 cd /mnt/d/Code/KLTN/Metarmophic_testing/k8s-mr-lab

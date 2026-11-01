@@ -1,0 +1,69 @@
+{
+  "rulesIDs": [
+    ""
+  ],
+  "guid": "",
+  "name": "Access container service account",
+  "attributes": {
+    "controlTypeTags": [
+      "compliance",
+      "security-impact"
+    ],
+    "microsoftMitreColumns": [
+      "Credential access"
+    ],
+    "rbacQuery": "Container service account mapping"
+  },
+  "controlID": "C-0053",
+  "creationTime": "",
+  "description": "Attackers who obtain access to a pod can use its SA token to communicate with KubeAPI server. All pods with SA token mounted (if such token has a Role or a ClusterRole binding) are considerred potentially dangerous.",
+  "remediation": "Verify that RBAC is enabled. Follow the least privilege principle and ensure that only necessary pods have SA token mounted into them.",
+  "rules": [
+    {
+      "guid": "",
+      "name": "access-container-service-account-v1",
+      "attributes": {
+        "m$K8sThreatMatrix": "Credential Access::Access container service account, Lateral Movement::Container service account",
+        "resourcesAggregator": "subject-role-rolebinding",
+        "useFromKubescapeVersion": "v1.0.133"
+      },
+      "creationTime": "",
+      "rule": "# regal ignore:directory-package-mismatch\npackage armo_builtins\n\nimport rego.v1\n\n# Returns the rbac permission of each service account\ndeny contains msga if {\n\tsubjectVector := input[_]\n\tsubjectVector.kind == \"ServiceAccount\"\n\n\trole := subjectVector.relatedObjects[i]\n\trolebinding := subjectVector.relatedObjects[j]\n\tendswith(role.kind, \"Role\")\n\tendswith(rolebinding.kind, \"Binding\")\n\n\tsubject := rolebinding.subjects[k]\n\tis_same_subjects(subjectVector, subject)\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"service account: %v has the following permissions in the cluster\", [subjectVector.name]),\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"failedPaths\": [],\n\t\t\"fixPaths\": [],\n\t\t\"alertScore\": 7,\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [],\n\t\t\t\"externalObjects\": subjectVector,\n\t\t},\n\t}\n}\n\n# ===============================================================\n\n# for service accounts\nis_same_subjects(subjectVector, subject) if {\n\tsubjectVector.kind == subject.kind\n\tsubjectVector.name == subject.name\n\tsubjectVector.namespace == subject.namespace\n}\n",
+      "resourceEnumerator": "# regal ignore:directory-package-mismatch\npackage armo_builtins\n\nimport rego.v1\n\n# Returns the rbac permission of each service account\ndeny contains msga if {\n\tsubjectVector := input[_]\n\tsubjectVector.kind == \"ServiceAccount\"\n\n\trole := subjectVector.relatedObjects[i]\n\trolebinding := subjectVector.relatedObjects[j]\n\tendswith(role.kind, \"Role\")\n\tendswith(rolebinding.kind, \"Binding\")\n\n\tsubject := rolebinding.subjects[k]\n\tis_same_subjects(subjectVector, subject)\n\n\tmsga := {\n\t\t\"alertMessage\": sprintf(\"service account: %v has the following permissions in the cluster\", [subjectVector.name]),\n\t\t\"packagename\": \"armo_builtins\",\n\t\t\"failedPaths\": [],\n\t\t\"fixPaths\": [],\n\t\t\"alertScore\": 7,\n\t\t\"alertObject\": {\n\t\t\t\"k8sApiObjects\": [],\n\t\t\t\"externalObjects\": subjectVector,\n\t\t},\n\t}\n}\n\n# ===============================================================\n\n# for service accounts\nis_same_subjects(subjectVector, subject) if {\n\tsubjectVector.kind == subject.kind\n\tsubjectVector.name == subject.name\n\tsubjectVector.namespace == subject.namespace\n}\n",
+      "ruleLanguage": "Rego",
+      "match": [
+        {
+          "apiGroups": [
+            "rbac.authorization.k8s.io"
+          ],
+          "apiVersions": [
+            "v1"
+          ],
+          "resources": [
+            "RoleBinding",
+            "ClusterRoleBinding",
+            "Role",
+            "ClusterRole"
+          ]
+        }
+      ],
+      "ruleDependencies": [],
+      "controlConfigInputs": null,
+      "description": "determines which service accounts can be used to access other resources in the cluster",
+      "remediation": "",
+      "ruleQuery": "armo_builtins",
+      "relevantCloudProviders": null
+    }
+  ],
+  "baseScore": 6,
+  "scanningScope": {
+    "matches": [
+      "cluster",
+      "file"
+    ]
+  },
+  "category": {
+    "name": "Access control",
+    "id": "Cat-2"
+  }
+}
