@@ -2,7 +2,7 @@
 
 Trạng thái cả hai: **`READY_FOR_HUMAN_ADJUDICATION`**. Không có mục nào được đánh `CONFIRMED` hay `NEW DEFECT`.
 Môi trường: Trivy 0.75.0 (checks bundle `sha256:b591e919…`), Kubescape v4.0.15 (artifacts digest `8cfb2323…`), cả hai local-file mode.
-Bằng chứng gốc: `runs/{kubescape,trivy}/reproducers/*` (mỗi gói tự chứa source, follow-up, diff, raw JSON, `reproduce.sh`), `docs/evidence/*.json` (ablation do `scripts/triage_probe.py` sinh ra) và `runs/evidence-pack.zip`. Thư mục `runs/*/cases/` (artifact từng case) đã được dọn; chạy lại `scripts/demo.sh` sẽ sinh lại chúng.
+Bằng chứng gốc: các case trong `docs/evidence/poc_final/{kubescape,trivy}/cases/*` (source, follow-up, diff, raw JSON, assessment); gói reproducer sinh lại bằng `k8s-mr-lab triage --run <run>` (bản V1 cũ: xem `docs/poc/HISTORICAL_DATA.md`), `docs/evidence/*.json` (ablation do `scripts/triage_probe.py` sinh ra) và `runs/evidence-pack.zip`. Thư mục `runs/*/cases/` (artifact từng case) đã được dọn; chạy lại `scripts/demo.sh` sẽ sinh lại chúng.
 
 Quy trình triage: chạy lại cặp trên cùng phiên bản (`k8s_mr_lab triage`), tạo gói reproducer, ghi bằng chứng rule và ablation; **không bao giờ tự gắn `CONFIRMED`**. Kết luận cuối do người nghiên cứu đọc bằng chứng và quyết định (xem `HUONG_DAN_TU_KIEM_TRA.md`).
 
@@ -26,7 +26,7 @@ Khử trùng: seed `K1-role-namespace` trùng hệt `rbac-workload`, nên 5 aler
 
 | Bước | Kết quả |
 |---|---|
-| 1. Chạy lại reproducer, đúng version/policy pin | `bash runs/kubescape/reproducers/*/reproduce.sh` in `source C-0272 passed` / `followup C-0272 failed`; `triage` rerun cho cùng tập violation (`CANDIDATE_REPRODUCED`) |
+| 1. Chạy lại reproducer, đúng version/policy pin | `reproduce.sh` trong gói do `k8s-mr-lab triage` sinh in `source C-0272 passed` / `followup C-0272 failed`; `triage` rerun cho cùng tập violation (`CANDIDATE_REPRODUCED`) |
 | 2. Kiểm manifest | diff chỉ là một Role mới (`diff.patch`); `trace.json` ghi thao tác `rbac.add_unbound_same_name_role` |
 | 3. Tiền điều kiện/tính hợp lệ MR-02 | pair validator: đúng 1 object thêm, 0 binding thêm, namespace decoy mới và chỉ chứa Role đó. Ngữ nghĩa K8s: RoleBinding phân giải `roleRef` Role chỉ trong namespace của nó, nên `lab-a:app` không nhận quyền của Role ở `lab-a-decoy` |
 | 4. Raw JSON | `scanner-followup.json`: control `C-0267` của Deployment `web` có `status: failed`, rule `workload-with-cluster-takeover-roles`. **Kubescape tự liệt kê `.../lab-a-decoy/Role/app-role` trong `relatedResourcesIDs` của alert** — tức scanner dùng chính Role decoy làm căn cứ cảnh báo |
@@ -58,7 +58,7 @@ Vì vậy mọi Role cùng tên, ở bất kỳ namespace nào, được coi là
 
 **Quan hệ với issue kubescape/kubescape#2579** (đã đọc thân issue qua GitHub API ngày 2026-10-29: tạo 2026-07-29, trạng thái *closed*).
 Issue mô tả lỗi trong hàm Go `AggregateResourcesBySubjects` (`reporthandling/regoresourcesaggregator.go`, repo `kubescape/opa-utils`), nơi ghép binding/role theo `roleRef.kind + name`.
-Quan sát trên v4.0.15: các control đi qua aggregator (`C-0015`, `C-0007`, `C-0035`, `C-0053`: `ok` trong cả 8/8 cặp MR-02, theo `runs/kubescape/comparisons.csv`) **không** bị ảnh hưởng, trong khi `C-0267/C-0272` tự join trên input thô
+Quan sát trên v4.0.15: các control đi qua aggregator (`C-0015`, `C-0007`, `C-0035`, `C-0053`: `ok` trong cả 8/8 cặp MR-02, theo `docs/evidence/poc_final/kubescape/comparisons.csv`) **không** bị ảnh hưởng, trong khi `C-0267/C-0272` tự join trên input thô
 (`role := input[_]`, không dùng `subjectVector`). Do đó **cùng lớp lỗi (ghép roleRef theo tên, bỏ qua namespace), nhưng không có bằng chứng cùng nguyên nhân gốc/cùng vị trí mã**.
 Chưa xác minh: commit sửa nào đóng #2579 và nó đã nằm trong v4.0.15 chưa. Vì issue đã tồn tại, **không gọi đây là lỗi mới**; chỉ có thể là *lỗi chưa được báo ở rule `C-0267/C-0272`* nếu tìm không thấy issue khác.
 
@@ -111,7 +111,7 @@ Check phân biệt được *resource* (D PASS) nhưng không phân biệt *API 
 
 ## 4. Chạy lại 2026-11-01 (không đổi kết luận) và hiện tượng mới
 
-* Chạy lại `triage --minimize` và `scripts/triage_probe.py` trên Trivy 0.75.0 / Kubescape v4.0.15 đã pin, trong bản sao cô lập của cây đã commit: trạng thái / họ / `known_issue` của cả 6 alert **giống hệt**; hai tệp ablation **giống hệt byte** bản đã commit. Evidence: `docs/evidence/archive/p0_reverification_2026-11-01/`. K1/N2 vẫn là candidate, **0 confirmed**.
+* Chạy lại `triage --minimize` và `scripts/triage_probe.py` trên Trivy 0.75.0 / Kubescape v4.0.15 đã pin, trong bản sao cô lập của cây đã commit: trạng thái / họ / `known_issue` của cả 6 alert **giống hệt**; hai tệp ablation **giống hệt byte** bản đã commit. Evidence: evidence lịch sử `p0_reverification_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`). K1/N2 vẫn là candidate, **0 confirmed**.
 * Phân loại theo thang của `KNOWN_DEFECT_EVALUATION_PLAN.md §2`: K1, N2 = `SCANNER_DEFECT_CANDIDATE` (chờ adjudication); chưa có mục `CONFIRMED_SCANNER_DEFECT`.
-* **Hiện tượng mới, `UNRESOLVED`:** MR-07 (candidate) trên Kubescape: `C-0267` `Pod/lab-c/reader-pod` FAIL → PASS khi subject `ServiceAccount reader` được viết lại thành `User system:serviceaccount:lab-c:reader`. Rego đã pin chỉ join `subjects[j].kind == "ServiceAccount"`, nên có thể là giới hạn có chủ đích (`POLICY_OR_SCOPE_ISSUE`) hoặc false negative. MR-07 được viết sau khi đọc rego này (dẫn dắt). Evidence: `docs/evidence/archive/mr07_dev_2026-11-01/`; phân tích: `docs/MR_CANDIDATE_EVALUATION.md`.
+* **Hiện tượng mới, `UNRESOLVED`:** MR-07 (candidate) trên Kubescape: `C-0267` `Pod/lab-c/reader-pod` FAIL → PASS khi subject `ServiceAccount reader` được viết lại thành `User system:serviceaccount:lab-c:reader`. Rego đã pin chỉ join `subjects[j].kind == "ServiceAccount"`, nên có thể là giới hạn có chủ đích (`POLICY_OR_SCOPE_ISSUE`) hoặc false negative. MR-07 được viết sau khi đọc rego này (dẫn dắt). Evidence: evidence lịch sử `mr07_dev_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`); phân tích: `docs/MR_CANDIDATE_EVALUATION.md`.
 * **Thí nghiệm vá/đột biến (Kubescape, bản sao artifacts cô lập):** vá `C-0267` bằng so sánh namespace khiến 4 violation của C-0267 biến mất, 3 của C-0272 còn nguyên; mutant bỏ so sánh namespace của subject sống sót qua cả bộ MR (30 cặp được quét; mutant không được kích hoạt ở khóa nào; xem `MUTATION_GAP_ANALYSIS.md`, đã thêm MR-08 giết được mutant này). Bản vá là của tác giả, **không** phải bản sửa upstream. Xem `docs/EVALUATION_PROTOCOL_V2.md §5`.

@@ -1,0 +1,33 @@
+{
+  "note": "REFERENCE ONLY. MR-02 on Kubescape v4.0.11 (affected) and v4.0.12 (fixed) with the OLD comparison scope (aggregator controls on the bound Role), run before the framework was unified and therefore NOT rerun by the official experiments. Kept because the statement 'the old scope cannot tell the two binaries apart' rests on it. Same artifacts (digest 8cfb2323...) and seeds as kd001-v4.0.1x; v4.0.12 has no results.json in the original package.",
+  "files": {
+    "v4.0.11/comparisons.csv": {
+      "sha256": "75bff14043cce89d147232af1dfe1d712d63de9df6db6c0d83c31028bd7baba0",
+      "size": 7330
+    },
+    "v4.0.11/environment.lock.json": {
+      "sha256": "6b139eb62bbe83488f3dbc2c0157e003bcf2aab7a053f0df291329b6a2f58d94",
+      "size": 453
+    },
+    "v4.0.11/results.csv": {
+      "sha256": "4f0cecd17fccc9b271e9843c052724b7f4044f29d60e6d87fc5036ddbea7cbf1",
+      "size": 7009
+    },
+    "v4.0.11/results.json": {
+      "sha256": "7fc2c9c1b1a580bb24b2d0caac07d51394d2ed3571feec7c41b64d88b77c9ea5",
+      "size": 32066
+    },
+    "v4.0.12/comparisons.csv": {
+      "sha256": "8850142d720fd11a043061222ebf7dab6f0303cfd1e1b65b5b74ec038923d199",
+      "size": 7330
+    },
+    "v4.0.12/environment.lock.json": {
+      "sha256": "2b375f0cba6818939bb7c99318c80f83b2974d9c444013a8874e5ed633e4c917",
+      "size": 453
+    },
+    "v4.0.12/results.csv": {
+      "sha256": "6ec2c4382c77aca5f0f0437cd72851970ac01334bcce78f7e3743440c6f98834",
+      "size": 7010
+    }
+  }
+}

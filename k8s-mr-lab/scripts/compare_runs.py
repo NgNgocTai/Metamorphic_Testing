@@ -1,6 +1,6 @@
-"""Row-by-row comparison of two run directories (e.g. the poc-v1.0.0 run vs a run after a refactor).
+"""Row-by-row comparison of two run directories (e.g. the official poc_final run vs a rerun).
 
-    python scripts/compare_runs.py runs/trivy /path/to/new/trivy
+    python scripts/compare_runs.py docs/evidence/poc_final/trivy /path/to/new/trivy
 
 Compares results.csv and comparisons.csv. NOTE: in results.csv the source/follow-up verdict columns are only filled for
 violating cases, so the per-key PASS/FAIL verdicts are compared through comparisons.csv, not results.csv.

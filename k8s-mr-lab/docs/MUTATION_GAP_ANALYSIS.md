@@ -1,6 +1,6 @@
 # Phân tích khoảng trống từ thí nghiệm đột biến
 
-## 1. Đọc lại đúng thí nghiệm cũ (`docs/evidence/archive/fault_variants_2026-11-01/drop-subject-ns/`)
+## 1. Đọc lại đúng thí nghiệm cũ (evidence lịch sử `fault_variants_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`))
 
 Đột biến: trong rego `C-0267` của bản sao artifacts, bỏ dòng `rolebinding.subjects[j].namespace == sa.metadata.namespace`
 (`scripts/fault_variant_kubescape.py`; digest policy khác bản đã pin ⇒ track riêng). Bộ MR: MR-01..05 và MR-07.

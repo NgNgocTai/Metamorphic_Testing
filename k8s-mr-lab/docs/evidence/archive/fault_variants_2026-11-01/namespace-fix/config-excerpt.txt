@@ -1,7 +1,0 @@
-  mode: local-file             # `kubescape scan framework allcontrols <dir>`: manifest scan, no cluster
-  timeout_s: 180
-  accepted_exit_codes: [0]     # observed on every real run: Kubescape exits 0 even with failed controls
-  artifacts_dir: /tmp/mut/ks-namespace-fix
-  framework: allcontrols
-  env:
-    KUBESCAPE_SKIP_UPDATE_CHECK: "true"

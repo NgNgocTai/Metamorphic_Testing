@@ -1,9 +1,0 @@
-[
-  {
-    "op": "change",
-    "path": "spec.containers[0].securityContext.privileged",
-    "old": false,
-    "new": true,
-    "object": "Pod/lab-h/web"
-  }
-]

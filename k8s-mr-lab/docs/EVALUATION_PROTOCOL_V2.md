@@ -75,7 +75,7 @@ Bản gốc không bị sửa. Trivy: tương tự được (check là rego), **
 (i) khai báo *dự đoán trước khi chạy*, (ii) so từng case và từng khóa verdict với baseline đã ghim, (iii) xét mutant tương đương
 (mutant không đổi hành vi trên mọi input hợp lệ không thể bị kill), (iv) ghi seed có kích hoạt được mutant không.
 
-**Kết quả đã thực thi (2026-11-01, Kubescape v4.0.15; `docs/evidence/archive/fault_variants_2026-11-01/`):**
+**Kết quả đã thực thi (2026-11-01, Kubescape v4.0.15; evidence lịch sử `fault_variants_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`)):**
 
 | Thí nghiệm | Dự đoán nêu trước | Quan sát |
 |---|---|---|
@@ -112,7 +112,7 @@ Xem `docs/KNOWN_DEFECT_EVALUATION_PLAN.md`. Tóm tắt: hiện **0 mục `ELIGIB
 | Lock môi trường mỗi run | có | `environment.lock.json` (version, mode, policy digest, mapping digest, python, platform) |
 | Lệnh chạy | một phần | `scripts/demo.sh`, `docs/architecture/HOW_TO_EXTEND_UNIFIED_FRAMEWORK.md`; **thiếu** một `REPLICATE.md` chạy từ môi trường sạch |
 | Raw kết quả + so sánh đã chuẩn hóa + evidence | có | `docs/evidence/*/` có `manifest.json` (sha256) và `case_index.json` |
-| Script tái lập kiểm | có | `compare_runs.py`, `snapshot_mr_behavior.py`, `package_run_evidence.py`, `fault_variant_kubescape.py`, `triage_probe.py` |
+| Script tái lập kiểm | có | `compare_runs.py`, `verify_evidence.py`, `package_run_evidence.py`, `fault_variant_kubescape.py`, `triage_probe.py` |
 | Cài scanner pin từ môi trường sạch | **chưa** | script tải đúng phiên bản + kiểm checksum; policy bundle Trivy (digest `b591e919…`) cần nguồn lưu trữ cố định vì tải một lần |
 | Container/lockfile Python | **chưa** | `requirements.lock`, Dockerfile Ubuntu 24.04 |
 | Sạch dữ liệu cục bộ | **chưa** | raw JSON chứa `/home/<user>/…` (28 tệp); cần bản đã làm sạch kèm bản gốc băm |

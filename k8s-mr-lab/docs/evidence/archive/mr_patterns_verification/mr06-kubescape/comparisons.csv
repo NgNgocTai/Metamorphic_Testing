@@ -1,2 +1,0 @@
-run_id,case_id,mr_id,scanner,control,resource,source_verdict,followup_verdict,outcome,reason
-kubescape-20261101T112222,MR-06__pod-hostnet__355c0e2f74,MR-06,kubescape,C-0041,Pod/lab-h/web,PASS,FAIL,ok,

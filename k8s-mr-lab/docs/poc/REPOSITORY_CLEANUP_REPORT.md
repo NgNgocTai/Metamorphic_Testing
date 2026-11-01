@@ -1,34 +1,37 @@
 # Báo cáo dọn repository
 
-Viết cho: người cần biết cái gì còn dùng, cái gì chỉ để kiểm toán, và vì sao không có gì bị xóa mất bằng chứng.
+Viết cho: người cần biết cái gì còn trong repository, cái gì đã bỏ và vì sao không mất khả năng kiểm toán.
 
-## Phân loại
+## Còn lại (một khung, một bộ kết quả)
 
-| Loại | Vị trí | Hành động | Lý do |
-|---|---|---|---|
-| ACTIVE | `mrs/`, `config/`, `src/`, `tests/`, `scripts/`, `seeds/` | giữ | một catalog, một registry sinh, một mapping, một pipeline |
-| ACTIVE | `docs/evidence/poc_final/` | giữ (mới) | **bộ kết quả chính thức duy nhất**, gắn commit nguồn, có `manifest.json` sha256 |
-| ACTIVE | `docs/poc/`, `docs/architecture/`, `docs/case_studies/`, `REPLICATE.md`, `README.md` | giữ, cập nhật | tài liệu canonical; số liệu sinh từ `poc_final` |
-| ACTIVE | `docs/evidence/{k1_kubescape,n2_trivy}_ablation.json` | giữ nguyên chỗ | do `scripts/triage_probe.py` ghi và `DEFECT_TRIAGE_RESULTS.md` dẫn tới |
-| ARCHIVE | `docs/evidence/archive/*` (9 thư mục thí nghiệm trước, kể cả `poc_v2_superseded_2026-11-01` = lượt thống nhất đầu tiên trước khi sửa phạm vi) | **di chuyển nguyên thư mục** (`git mv`), không sửa file | giá trị kiểm toán; manifest dùng đường dẫn tương đối nên vẫn đúng |
-| ARCHIVE | `docs/archive/*` (4 báo cáo giai đoạn trước) | di chuyển | trùng vai trò với `poc/` và `architecture/`; số liệu cũ |
-| ARCHIVE (ngoài Git) | `runs/trivy`, `runs/kubescape`, `runs/heldout_poc_v1`, `runs/heldout_poc_v2_superseded`, `runs/poc_v2_superseded`, `runs/evidence-pack-poc-v1.0.0.zip`, `runs/summary` | **không đụng** | raw output PoC v1 và lượt trung gian; `runs/` bị `.gitignore`, đây là bản duy nhất của một số raw output |
-| REGENERABLE | `runs/final`, `runs/heldout` | giữ cục bộ | sinh lại bằng `docs/evidence/poc_final/run_official_experiments.sh`; bản đóng gói nằm trong `poc_final` |
-| TEMPORARY | `__pycache__`, `.pytest_cache`, script/config tạm trong `runs/` (`_*.sh`, `_cfg*.yaml`) | dọn | sinh lại được; bản cần thiết đã nằm trong `poc_final` |
+| Thành phần | Vị trí |
+|---|---|
+| MR catalog, requirements, properties | `mrs/` |
+| Control registry (sinh) và policy mapping | `config/` |
+| Runner, Checker, pipeline, MR | `src/` |
+| Test (kể cả ràng buộc kiến trúc) | `tests/` (+ `tests/golden/`) |
+| Công cụ thực nghiệm, báo cáo, kiểm hash | `scripts/` |
+| Bộ kết quả chính thức duy nhất | `docs/evidence/poc_final/` |
+| Tài liệu | `docs/architecture`, `docs/poc`, `docs/case_studies`, tài liệu phương pháp/giao thức |
+| Ablation K1/N2 (do `triage_probe.py` ghi) | `docs/evidence/{k1_kubescape,n2_trivy}_ablation.json` |
 
-## Đã làm
+Không còn thư mục `archive/`, không còn cấu hình, mapping hay script chạy V1/V2 (`test_no_legacy_mapping_checker_or_input_model_remains`).
 
-* `docs/evidence/**` được commit là `-text` (`.gitattributes`); 115 file có blob LF nhưng manifest băm CRLF đã được lưu lại đúng byte gốc. `scripts/verify_evidence.py` kiểm hash trên byte thô và không bao giờ sửa file; có test.
-* Sửa tham chiếu: `docs/evidence/<tên>` → `docs/evidence/archive/<tên>` trong tài liệu, script, test; `HOW_TO_ADD_AN_MR.md` → `architecture/HOW_TO_EXTEND_UNIFIED_FRAMEWORK.md`; `POC_REPORT_FOR_ADVISOR.md` → `poc/`.
-* `scripts/demo.sh` không còn `rm -rf runs/trivy runs/kubescape runs/summary` (đã từng xóa raw output PoC v1): ghi vào `runs/demo/`.
-* Không còn cấu hình hay mapping cũ chạy song song (kiểm bởi `test_no_legacy_mapping_checker_or_input_model_remains`).
+## Đã bỏ và nơi khôi phục
 
-## Không được xóa (và không xóa)
+Xem `HISTORICAL_DATA.md`: toàn bộ dữ liệu bị bỏ được sao lưu ngoài repository (16 416 tệp, 314 MB, manifest sha256, đã đối chiếu lại 0 tệp lệch) và còn nguyên trong lịch sử Git. Không rewrite history.
 
-Raw evidence PoC v1, evidence KD-001, MR-09, MR-07/08, lịch sử Git (không rewrite), `runs/` nói chung, các file ngoài `k8s-mr-lab/` (`KLTN_*.md`, `KE_HOACH_*.md`, `*.pdf`, `project.zip` giữ nguyên).
+## Dữ liệu cũ vẫn được dùng (đã chuyển theo provenance)
+
+`poc_final/kd001-old-scope/` (có manifest, ghi rõ chưa được chạy lại bởi khung hiện tại) và `tests/golden/seed_coverage_project_seeds.json`. Các test từng đọc evidence cũ nay đọc `poc_final`.
+
+## Các thay đổi kèm theo
+
+* `scripts/demo.sh` ghi vào `runs/demo/` (từng `rm -rf runs/trivy runs/kubescape`).
+* `docs/evidence/**` là `-text` (`.gitattributes`); `scripts/verify_evidence.py` kiểm hash trên byte thô.
 
 ## Giới hạn
 
-* `docs/evidence/archive/poc_v2_superseded_2026-11-01` và các thư mục `docs/` cũ còn chứa số liệu của khung trước; chúng không tham gia báo cáo mặc định và không được trích làm kết quả chính.
-* Các tài liệu giai đoạn (`docs/*.md` ngoài `poc/`, `architecture/`) vẫn nhắc số liệu lịch sử; nguồn số liệu chính thức luôn là `POC_RESULTS.md`.
-* Chưa gộp thêm các tài liệu phương pháp (`MR_DERIVATION_METHODOLOGY`, `SECURITY_PROPERTY_DERIVATION_GUIDE`…) vì chúng không trùng nội dung.
+* Backup nằm trên máy tác giả (`D:\Code\KLTN\_backup\`), chưa được sao chép lên nơi lưu trữ khác; mất máy là mất bản sao `runs/` ngoài Git (phần trong Git vẫn còn).
+* Các tài liệu giai đoạn còn nêu số liệu lịch sử; số liệu chính thức luôn là `POC_RESULTS.md`.
+* `poc_final` chỉ đóng gói các case cần cho kết luận (không phải mọi case PASS của MR-01); sinh lại đầy đủ bằng `scripts/reproduce_official.sh`.

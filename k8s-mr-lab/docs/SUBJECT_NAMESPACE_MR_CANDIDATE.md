@@ -54,7 +54,7 @@ Seed: `rbac-secrets-reader` (Pod `lab-c/reader-pod` chạy bằng `lab-c:reader`
 
 (điền sau khi chạy; xem phần dưới)
 
-### Kết quả thực (2026-11-01; Kubescape v4.0.15; evidence: `docs/evidence/archive/mr08_mutation_2026-11-01/`)
+### Kết quả thực (2026-11-01; Kubescape v4.0.15; evidence: evidence lịch sử `mr08_mutation_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`))
 
 Hai lượt chạy cùng seed, cùng MR-08, cùng `case_id` và cùng sha256 của source và follow-up; chỉ khác artifacts (digest policy `8cfb2323…` đã pin so với `772c1faf…` của bản sao đột biến).
 

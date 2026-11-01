@@ -81,7 +81,6 @@ sed "s#~/.kubescape#$PWD/out/mut-artifacts#" config/scanners.yaml > out/scanners
 $PY -m k8s_mr_lab --config out/scanners-mutant.yaml run --scanner kubescape --seeds $SEEDS --mr MR-09 --experiment-type mutation --experiment-id mr09-drop-watch-mutant --out out/mr09-mutant
 # 4. bảng kết quả và tác động migration (sinh từ run, không gõ tay)
 $PY scripts/poc_tables.py --trivy out/trivy --kubescape out/kubescape --kd-affected out/kd001/v4.0.11 --kd-fixed out/kd001/v4.0.12 --mutant out/mr09-mutant --heldout-trivy runs/heldout/trivy --heldout-kubescape runs/heldout/kubescape --out out/poc_tables.md
-$PY scripts/migration_impact.py --scanner kubescape --new out/kubescape --old <thư mục run cũ> ... --out out/migration_kubescape   # run cũ: runs/ và docs/evidence/ (chỉ đọc)
 ```
 **Script portable:** `OUT=out/repro KUBESCAPE_4_0_11=<binary> KUBESCAPE_4_0_12=<binary> bash scripts/reproduce_official.sh` chạy kiểm tra, baseline, KD-001 và mutation MR-09 từ checkout sạch; dừng ở lỗi đầu tiên, kiểm dependency, không xóa gì và từ chối ghi vào thư mục không rỗng. `docs/evidence/poc_final/run_official_experiments.sh` chỉ là **bản ghi lịch sử** các lệnh đã dùng (đường dẫn máy gốc, không fail-fast). Held-out Kalm chạy riêng bằng `heldout_prepare.py` + `heldout_run.sh` như dưới.
 Luôn đọc `comparisons.csv` (có `role`, `tier`, `basis`, `engaged`), không chỉ `results.csv` (cột verdict của `results.csv` chỉ điền ở dòng VIOLATION).
@@ -97,7 +96,7 @@ $PY scripts/compare_runs.py docs/evidence/poc_final/kubescape out/kubescape
 $PY scripts/verify_evidence.py                 # kỳ vọng: 2263+ hash, 0 mismatch; mismatch `line-ending` nghĩa là checkout đã đổi newline
 ```
 Evidence được commit là `-text` (`.gitattributes`: `k8s-mr-lab/docs/evidence/** -text`): Git không đổi CRLF/LF, nên hash đúng trên Windows, WSL và Linux. Đừng chạy `git add --renormalize` hay tự bật chuyển newline cho thư mục này.
-`compare_runs.py` so các dòng có mặt ở cả hai. Evidence cũ (PoC trước khi thống nhất: `runs/trivy`, `runs/kubescape`, `docs/evidence/archive/`) là tư liệu kiểm toán, **không** phải baseline để so; tác động của việc thống nhất: `docs/poc/MIGRATION_IMPACT_REPORT.md`.
+`compare_runs.py` so các dòng có mặt ở cả hai. Dữ liệu PoC cũ không còn trong repository (`docs/poc/HISTORICAL_DATA.md`) và **không** phải baseline để so; tác động của việc thống nhất: `docs/poc/MIGRATION_IMPACT_REPORT.md`.
 
 ## 8. Kết quả kỳ vọng (từ máy gốc, commit `b5645f0`)
 

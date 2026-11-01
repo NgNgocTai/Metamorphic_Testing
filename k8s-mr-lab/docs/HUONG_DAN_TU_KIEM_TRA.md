@@ -5,12 +5,13 @@ nó **không phải kết luận của bạn**. Mọi lệnh chạy trong Ubuntu
 
 ```bash
 cd k8s-mr-lab        # the directory containing pyproject.toml
-ls runs/kubescape/reproducers runs/trivy/reproducers      # mỗi thư mục con là một gói tự chứa
+# sinh gói reproducer từ lượt chạy mới (cần scanner): k8s-mr-lab triage --run out/kubescape ; ls out/kubescape/reproducers
+# hoặc đọc trực tiếp các case đã đóng gói: ls docs/evidence/poc_final/kubescape/cases
 ```
 
 ## A. Kubescape v4.0.15 — K1 (MR-02)
 
-Ca chính: `runs/kubescape/reproducers/*rbac-workload__e89cd9e383` (Deployment `lab-a/web`, decoy quyền secrets → `C-0267`) và
+Ca chính: `docs/evidence/poc_final/kubescape/cases/MR-02__rbac-workload__e89cd9e383` (hoặc gói reproducer tương ứng) (Deployment `lab-a/web`, decoy quyền secrets → `C-0267`) và
 `*rbac-workload__66de14dad8` (decoy wildcard → cả `C-0267` và `C-0272`). Ngoài ra có `*rbac-secrets-reader*` (Pod, wildcard → `C-0272`).
 Cả ba đã chạy lại và cho đúng `passed → failed`.
 
@@ -28,7 +29,7 @@ Cả ba đã chạy lại và cho đúng `passed → failed`.
 
 ## B. Trivy 0.75.0 — N2 (MR-05)
 
-Gói: `runs/trivy/reproducers/*MR-05*`.
+Gói: `docs/evidence/poc_final/trivy/cases/MR-05__rbac-secrets-reader__d31cd60ffd`.
 
 | # | Bạn làm | Claude đã thấy |
 |---|---|---|

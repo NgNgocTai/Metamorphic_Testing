@@ -1,8 +1,8 @@
 """Generate the result tables of docs/poc/POC_RESULTS.md from run directories. Nothing here is typed by hand.
 
-    python scripts/poc_tables.py --trivy runs/poc_v2/trivy --kubescape runs/poc_v2/kubescape \
-        --kd-affected runs/poc_v2/kd001/v4.0.11 --kd-fixed runs/poc_v2/kd001/v4.0.12 --kd-old-affected <old A dir> --kd-old-fixed <old A dir> \
-        --mutant runs/poc_v2/mr09-mutant --out docs/poc/poc_tables.md
+    python scripts/poc_tables.py --trivy runs/final/trivy --kubescape runs/final/kubescape \
+        --kd-affected runs/final/kd001/v4.0.11 --kd-fixed runs/final/kd001/v4.0.12 --kd-old-affected docs/evidence/poc_final/kd001-old-scope/v4.0.11 --kd-old-fixed docs/evidence/poc_final/kd001-old-scope/v4.0.12 \
+        --mutant runs/final/mr09-mutant --out out/poc_tables.md
 
 Each table states what it counts. `results.csv` verdict columns are filled only for VIOLATION rows, so everything is read from
 `comparisons.csv` and `results.json`.

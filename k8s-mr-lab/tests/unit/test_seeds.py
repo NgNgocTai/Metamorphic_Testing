@@ -81,5 +81,5 @@ def test_mr_applicability_counts_cases_without_a_scanner(catalog):
 
 
 def test_saved_coverage_evidence_matches_the_code():
-    saved = json.loads((ROOT / "docs/evidence/archive/seed_coverage_2026-11-01/project_seeds.json").read_text(encoding="utf-8"))
+    saved = json.loads((ROOT / "tests/golden/seed_coverage_project_seeds.json").read_text(encoding="utf-8"))
     assert saved["coverage"]["covered_tokens"] == 17 and saved["mr_applicability"]["MR-02"]["applicable_seeds"] == 3

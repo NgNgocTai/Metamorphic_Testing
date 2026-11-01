@@ -4,7 +4,7 @@ Mục đích: một hồ sơ mà người chưa đọc mã vẫn phản biện v
 **framework kiểm tra được gì**, **scanner quan sát được gì**, **đã thấy violation nào**, **defect nào đã xác nhận**.
 
 Môi trường mọi quan sát bên dưới: Trivy 0.75.0 (checks bundle `sha256:b591e919…`), Kubescape v4.0.15 (artifacts
-`8cfb2323…`), local-file mode, chạy lại ngày 2026-11-01. Bằng chứng: `docs/evidence/archive/p0_reverification_2026-11-01/`.
+`8cfb2323…`), local-file mode, chạy lại ngày 2026-11-01. Bằng chứng chính thức: `docs/evidence/poc_final/` (lượt chạy cũ hơn không còn trong repository: `docs/poc/HISTORICAL_DATA.md`).
 
 ## 1. Phát biểu
 
@@ -122,7 +122,7 @@ Chạy `k8s-mr-lab mr explain MR-02 --case <thư mục case>` để xem lại t�
 ## 7. Walkthrough: một case thật, từng bước
 
 Case `MR-02__rbac-workload__66de14dad8` (Kubescape). Mọi đường dẫn tương đối từ `k8s-mr-lab/`.
-Thư mục case: `docs/evidence/archive/p0_reverification_2026-11-01/kubescape/cases/MR-02__rbac-workload__66de14dad8/`.
+Thư mục case: `docs/evidence/poc_final/kubescape/cases/MR-02__rbac-workload__66de14dad8/`.
 
 | # | Bước | Mã | Input → Output | Vì sao | Có thể lỗi |
 |---|---|---|---|---|---|

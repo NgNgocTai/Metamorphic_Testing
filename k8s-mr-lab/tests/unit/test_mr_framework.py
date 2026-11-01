@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import re
+import shutil
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -409,7 +410,7 @@ def test_mr_patterns_reports_coarser_families(capsys):
     assert "KP3 = MR-04, MR-05, MR-06" in out and "coarser than the element level" in out
 
 
-EVIDENCE = ROOT / "docs" / "evidence" / "archive" / "p0_reverification_2026-11-01"
+EVIDENCE = ROOT / "docs" / "evidence" / "poc_final"
 
 
 def _explain(capsys, mr_id, case=None):
@@ -429,13 +430,12 @@ def test_explain_works_for_every_catalog_mr(capsys, mr_id):
         assert field in out.out
 
 
-def test_explain_a_real_violation_case_with_triage(capsys):
+def test_explain_a_real_violation_case(capsys):
     case = EVIDENCE / "kubescape" / "cases" / "MR-02__rbac-workload__66de14dad8"
     rc, out = _explain(capsys, "MR-02", case)
     assert rc == 0
     assert "VIOLATION" in out.out and "C-0267" in out.out and "PASS -> FAIL  violation  [explicit]" in out.out
     assert "add_object Role/lab-a-decoy/app-role" in out.out
-    assert "CANDIDATE_REPRODUCED" in out.out and "kubescape/issues/2579" in out.out
 
 
 def test_explain_reports_missing_evidence_as_not_available(capsys, tmp_path):
@@ -535,9 +535,14 @@ def test_package_run_evidence_can_sanitise_before_hashing(tmp_path):
     spec = importlib.util.spec_from_file_location("package_run_evidence", ROOT / "scripts" / "package_run_evidence.py")
     pk = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(pk)
-    src = ROOT / "docs" / "evidence" / "archive" / "mr07_dev_2026-11-01" / "kubescape"            # a packaged run that still carries /home/<user>
+    src = tmp_path / "raw"                                                  # a packaged run that still carries /home/<user>
+    shutil.copytree(ROOT / "docs" / "evidence" / "poc_final" / "mr09-mutant", src)
+    for f in src.rglob("*.json"):
+        t = f.read_text(encoding="utf-8")
+        if "/home/USER" in t:
+            f.write_text(t.replace("/home/USER", "/home/alice"), encoding="utf-8")
     out = tmp_path / "pub"
-    assert pk.main([str(src), str(out), "--mr", "MR-07", "--sanitize"]) == 0
+    assert pk.main([str(src), str(out), "--mr", "MR-09", "--sanitize"]) == 0
     man = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
     assert man["sanitized"] is True
     changed = {k: v for k, v in man["files"].items() if "original_sha256" in v}

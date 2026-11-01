@@ -1,1 +1,0 @@
-[[1, 5, ["", "ServiceAccount", "lab-a", "app"]], [7, 18, ["rbac.authorization.k8s.io", "Role", "lab-a", "app-role"]], [20, 32, ["rbac.authorization.k8s.io", "RoleBinding", "lab-a", "app-binding"]], [34, 54, ["apps", "Deployment", "lab-a", "web"]], [56, 60, ["", "ServiceAccount", "lab-a-shifted", "app"]]]

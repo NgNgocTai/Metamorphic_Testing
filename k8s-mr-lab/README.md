@@ -24,13 +24,13 @@ python3 -m venv ~/mrlab-venv && ~/mrlab-venv/bin/pip install -e '.[dev]'
 PY=~/mrlab-venv/bin/python
 
 $PY -m k8s_mr_lab versions                                   # check the pins
-$PY -m pytest -q                                              # unit tests; the 3 integration ones use the real binaries and skip if absent (counts: docs/archive/RESEARCH_BASELINE_AUDIT.md)
+$PY -m pytest -q                                              # unit tests; the 3 integration ones use the real binaries and skip if absent
 $PY -m k8s_mr_lab generate --seeds seeds/synthetic seeds/historical --out runs/generated
-$PY -m k8s_mr_lab run --scanner trivy     --seeds seeds/synthetic seeds/historical --out runs/trivy
-$PY -m k8s_mr_lab run --scanner kubescape --seeds seeds/synthetic seeds/historical --out runs/kubescape   # ~3 min
-$PY -m k8s_mr_lab triage --run runs/trivy     --minimize
-$PY -m k8s_mr_lab triage --run runs/kubescape --minimize
-$PY -m k8s_mr_lab report --runs runs/trivy runs/kubescape --out runs/summary
+$PY -m k8s_mr_lab run --scanner trivy     --seeds seeds/synthetic seeds/historical --out out/trivy
+$PY -m k8s_mr_lab run --scanner kubescape --seeds seeds/synthetic seeds/historical --out out/kubescape   # ~5 min
+$PY -m k8s_mr_lab triage --run out/trivy     --minimize
+$PY -m k8s_mr_lab triage --run out/kubescape --minimize
+$PY -m k8s_mr_lab report --runs out/trivy out/kubescape --out out/summary
 ```
 
 `python scripts/capture_golden.py` re-captures the raw reports in `tests/golden/` from the real binaries.
@@ -81,7 +81,7 @@ A missing finding is never PASS. Verdicts are `PASS | FAIL | NOT_EVALUATED | UNK
 
 `config/` pins, MR->control mapping, generated control registry · `seeds/` synthetic and historical inputs · `mrs/catalog.yaml` ·
 `src/k8s_mr_lab/` engine · `tests/{unit,golden,integration}` · `scripts/` demo, probes, golden capture ·
-`docs/` · `runs/` generated output (`reproducers/` inside; the numbers are in `runs/summary/REPORT.md`).
+`docs/` · `runs/` generated output (git-ignored; official numbers: `docs/poc/POC_RESULTS.md`).
 
 Reading order for `docs/`:
 0. `HUONG_DAN_BAO_CAO.md` — understand the project and how to present it (script, demo, likely questions).
@@ -112,7 +112,6 @@ k8s-mr-lab seeds coverage --roots seeds/synthetic seeds/historical seeds/candida
 
 | Read | For |
 |---|---|
-| `docs/archive/RESEARCH_BASELINE_AUDIT.md` | what was re-verified, what exists, what does not |
 | `docs/CODE_WALKTHROUGH.md` | seed -> assessment, function by function |
 | `docs/MR_DERIVATION_METHODOLOGY.md`, `docs/SECURITY_PROPERTY_DERIVATION_GUIDE.md` | how to derive an MR |
 | `docs/WEB_MST_TO_K8S_METHOD_MAPPING.md` | what is taken from MST-wi, what is ours |
@@ -127,8 +126,8 @@ k8s-mr-lab seeds coverage --roots seeds/synthetic seeds/historical seeds/candida
 | `docs/KD001_REPRODUCTION.md` | PoC stage 2: known defect kubescape#2579 reproduced on the buggy vs fixed binary |
 | `docs/INDEPENDENT_MR_REVIEW_PROTOCOL.md`, `docs/review_packets/` | independent review of an MR |
 | `docs/EVIDENCE_SHARING_AUDIT.md`, `scripts/sanitize_evidence.py` | what in the repository is personal, and the public copy |
-| `docs/archive/NEXT_STAGE_RESEARCH_REPORT.md`, `REPLICATE.md` | this stage's report; reproduce from a clean machine |
+| `REPLICATE.md`, `docs/poc/HISTORICAL_DATA.md` | reproduce from a clean machine; where earlier PoC data went |
 
-Official evidence is `docs/evidence/poc_final/` (earlier experiments: `docs/evidence/archive/`), each directory with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
+Official evidence is `docs/evidence/poc_final/`, each directory with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
 `results.csv` (whose verdict columns are filled only for VIOLATION rows). Tools: `scripts/compare_runs.py`,
-`scripts/snapshot_mr_behavior.py`, `scripts/package_run_evidence.py`, `scripts/fault_variant_kubescape.py`.
+`scripts/verify_evidence.py`, `scripts/package_run_evidence.py`, `scripts/fault_variant_kubescape.py`.

@@ -1,6 +1,6 @@
 # Kết quả PoC chính thức (khung thống nhất, sau khi sửa phạm vi control)
 
-Viết cho: người đọc cần số liệu và giới hạn của PoC, không cần đọc mã. Đây là **bộ kết quả chính thức duy nhất**. Kết quả của các lượt trước (khung cũ, và lượt thống nhất đầu tiên trước khi sửa phạm vi) chỉ còn là evidence lưu trữ ở `docs/evidence/archive/`; khác biệt được giải thích ở `MIGRATION_IMPACT_REPORT.md`.
+Viết cho: người đọc cần số liệu và giới hạn của PoC, không cần đọc mã. Đây là **bộ kết quả chính thức duy nhất**. Kết quả của các lượt trước (khung cũ, và lượt thống nhất đầu tiên trước khi sửa phạm vi) đã được bỏ khỏi repository (xem `HISTORICAL_DATA.md`); khác biệt được giải thích ở `MIGRATION_IMPACT_REPORT.md`.
 
 Mọi bảng bên dưới do `scripts/poc_tables.py` sinh từ các thư mục run trong `docs/evidence/poc_final/` (mỗi thư mục có `manifest.json` sha256; `environment.lock.json` có khối `experiment`). Chạy từ commit `b5645f0` của nhánh `research/mr-patterns` (SHA đầy đủ: `poc_final/source_commit.txt`), cây mã sạch (`dirty: false`), Trivy 0.75.0 (checks bundle `sha256:b591e919…`) và Kubescape v4.0.15 (artifacts `8cfb2323…`), chế độ quét manifest cục bộ, `registry_matches_policy: true`. Hash binary, phiên bản Python và gói: `poc_final/environment.txt`. 9 MR (cả 4 candidate, gọi tường minh), 8 thư mục seed (`seeds/synthetic`, `seeds/historical`, `seeds/candidate`): 7 hợp lệ và 1 cố ý sai; 6 nguồn hợp lệ duy nhất vì `K1-role-namespace` trùng nội dung với `rbac-workload`. Kết quả candidate (MR-06..09) nằm cùng bảng nhưng không thuộc 5 MR cốt lõi của PoC.
 

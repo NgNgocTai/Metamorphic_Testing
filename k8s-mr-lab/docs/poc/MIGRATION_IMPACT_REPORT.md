@@ -2,7 +2,7 @@
 
 Viết cho: người phản biện cần biết con số nào đổi sau khi thống nhất khung và vì sao. Số liệu cũ **không** được giữ làm baseline; chúng chỉ là bằng chứng lưu trữ (raw evidence và git `4ca941e`) để đối chiếu. Kết quả chính thức duy nhất: `POC_RESULTS.md`.
 
-Cách phân loại: `scripts/migration_impact.py` so từng case của các lượt chạy cũ với lượt chạy mới (cùng `case_id` = MR + seed + digest tham số) và gán `UNCHANGED | EXPECTED_CHANGE | NEW_BEHAVIOR | BUG_FIX | UNEXPECTED_REGRESSION | UNRESOLVED`. Một thay đổi chỉ là `EXPECTED_CHANGE` khi suy ra được từ khác biệt **đã ghi** giữa mapping cũ (git `4ca941e`) và mới (một cặp control×target bị bỏ/thêm, hoặc `reports_on` của registry khác `kinds` cũ). Verdict khác cho cùng một khóa so sánh, hoặc khóa đổi mà không có lý do, là `UNEXPECTED_REGRESSION` / `UNRESOLVED` và làm lệnh thoát khác 0 (BLOCKED). Nguồn cũ: các lượt `runs/{trivy,kubescape}` (PoC v1) và các thư mục trong `docs/evidence/` cho MR-06..09.
+Cách phân loại: `migration_impact.py` (đã bỏ khỏi working tree vì cần các lượt chạy cũ làm đầu vào; còn trong lịch sử Git, xem `HISTORICAL_DATA.md`) so từng case của các lượt chạy cũ với lượt chạy mới (cùng `case_id` = MR + seed + digest tham số) và gán `UNCHANGED | EXPECTED_CHANGE | NEW_BEHAVIOR | BUG_FIX | UNEXPECTED_REGRESSION | UNRESOLVED`. Một thay đổi chỉ là `EXPECTED_CHANGE` khi suy ra được từ khác biệt **đã ghi** giữa mapping cũ (git `4ca941e`) và mới (một cặp control×target bị bỏ/thêm, hoặc `reports_on` của registry khác `kinds` cũ). Verdict khác cho cùng một khóa so sánh, hoặc khóa đổi mà không có lý do, là `UNEXPECTED_REGRESSION` / `UNRESOLVED` và làm lệnh thoát khác 0 (BLOCKED). Nguồn cũ: các lượt `runs/{trivy,kubescape}` (PoC v1) và các thư mục trong `docs/evidence/` cho MR-06..09.
 
 ## 1. Tổng hợp
 
@@ -11,7 +11,7 @@ Cách phân loại: `scripts/migration_impact.py` so từng case của các lư�
 | Trivy 0.75.0 | 57 | 20 | 7 | 0 | 0 | 0 | không |
 | Kubescape v4.0.15 | 59 | 17 | 0 | 0 | 0 | 0 | không |
 
-Lượt chạy độc lập trên Kalm-Benchmark (65 file, cùng selection) so với lượt cũ lưu ở `runs/heldout_poc_v1/`:
+Lượt chạy độc lập trên Kalm-Benchmark (65 file, cùng selection) so với lượt cũ (không còn trong repository, xem `HISTORICAL_DATA.md`):
 
 | Scanner | UNCHANGED | EXPECTED_CHANGE | NEW_BEHAVIOR | UNEXPECTED_REGRESSION | UNRESOLVED | BLOCKED |
 |---|---|---|---|---|---|---|
@@ -41,5 +41,5 @@ Phần còn lại của UNCHANGED (Trivy 57, Kubescape 60) gồm toàn bộ MR-0
 
 ## 4. Giới hạn của phân tích này
 
-* Chỉ so được những gì lượt cũ có: MR-06..09 cũ có evidence rời (`mr07_dev`, `mr08_mutation`, `mr09_requirement_derived`, `informative`). Lượt held-out cũ được giữ nguyên ở `runs/heldout_poc_v1/` (không bị ghi đè).
+* Chỉ so được những gì lượt cũ có: MR-06..09 cũ có evidence rời (`mr07_dev`, `mr08_mutation`, `mr09_requirement_derived`, `informative`). Lượt held-out cũ không còn trong repository (`HISTORICAL_DATA.md`).
 * Phân loại `EXPECTED_CHANGE` là máy suy ra từ khác biệt mapping/registry đã khai; người đọc vẫn nên xem lý do từng case trong bảng chi tiết.

@@ -1,9 +1,0 @@
-[
-  {
-    "op": "change",
-    "path": "rules[0].apiGroups[0]",
-    "old": "",
-    "new": "apps",
-    "object": "Role/kalm-benchmark/rbac-002-3-secret-read-watch@rbac.authorization.k8s.io"
-  }
-]

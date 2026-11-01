@@ -1,2 +1,0 @@
-trivy      found=0.75.0       pinned=0.75.0     mode=local-file  policy=sha256:b591e9190 OK
-kubescape  found=v4.0.15      pinned=v4.0.15    mode=local-file  policy=8cfb23237b739c20 OK

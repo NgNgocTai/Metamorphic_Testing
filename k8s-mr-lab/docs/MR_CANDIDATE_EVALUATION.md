@@ -32,7 +32,7 @@ hai ứng viên còn lại chỉ đặc tả.
 
 Violation duy nhất: seed `rbac-secrets-reader`, Kubescape **C-0267 trên `Pod/lab-c/reader-pod`: FAIL → PASS**, verdict tường minh ở cả hai
 phía, diff đúng một subject (`ServiceAccount reader` → `User system:serviceaccount:lab-c:reader`). Triage: `CANDIDATE_REPRODUCED`,
-`family=kubescape:MR-07:FAIL->PASS`, chưa khớp issue đã biết. Evidence: `docs/evidence/archive/mr07_dev_2026-11-01/kubescape/cases/MR-07__rbac-secrets-reader__88249c50fa/`.
+`family=kubescape:MR-07:FAIL->PASS`, chưa khớp issue đã biết. Evidence: evidence lịch sử `mr07_dev_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`).
 
 **Diễn giải (chưa phải kết luận):**
 * Phù hợp với rego đã pin: `rolebinding.subjects[j].kind == "ServiceAccount"` nên subject dạng `User` bị bỏ qua ⇒ workload vẫn chạy với quyền đọc Secrets nhưng control ngừng báo (**false negative** nếu control nhằm bao quát mọi cách cấp quyền cho SA).
@@ -87,5 +87,5 @@ Nguồn: policy đã pin (`c-0267.json`, `c-0272.json`, `c-0015.json`, `c-0035.j
 | 6 | Hợp đồng `C-0267` có hỗ trợ subject `User` không? | Mô tả: "workload ... **service accounts** have roles that ..."; remediation: "Make sure each **service account** has only the permissions...". Rego chỉ join `kind == "ServiceAccount"`. Lời văn của hợp đồng nói về **quyền của service account mà workload dùng**, điều mà dạng `User` cũng mang lại; còn cài đặt hẹp hơn lời văn. **Không đủ để kết luận lỗi hay chủ ý** |
 | 7 | Quan sát Kubescape: ngoài phạm vi chính sách hay ứng viên lỗi? | **`UNRESOLVED`.** H1 *giới hạn chủ ý*: control chỉ định nghĩa trên subject `ServiceAccount`. H2 *false negative*: hợp đồng nói về quyền của SA, mà dạng `User` cấp cùng quyền đó. Chưa có tài liệu control hoặc phản hồi upstream để phân xử |
 
-**Thay đổi đã làm:** bỏ mục `trivy` của MR-07 khỏi `config/policy-mapping.yaml`. Lý do là cấu trúc (control không đọc đối tượng bị đổi), không phải kết quả. Evidence cũ `docs/evidence/archive/mr07_dev_2026-11-01/trivy` giữ nguyên làm bằng chứng lịch sử.
+**Thay đổi đã làm:** bỏ mục `trivy` của MR-07 khỏi `config/policy-mapping.yaml`. Lý do là cấu trúc (control không đọc đối tượng bị đổi), không phải kết quả. Evidence cũ evidence lịch sử `mr07_dev_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`) giữ nguyên làm bằng chứng lịch sử.
 **Không** nâng trạng thái MR-07; **không** gọi kết quả Kubescape là false negative.

@@ -25,7 +25,7 @@ với resource đó (ví dụ Trivy `PASS suy luận → FAIL`).
 
 ## 2. Kết quả (lượt chạy ngày 2026-11-01, tất cả seed dự án, MR-01..07)
 
-Nguồn: `docs/evidence/archive/informative_2026-11-01/{informative_comparisons.csv,informative_summary.json}`; run: Trivy 0.75.0, Kubescape v4.0.15.
+Nguồn: evidence lịch sử `informative_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`); run: Trivy 0.75.0, Kubescape v4.0.15.
 Lượt chạy này tái tạo baseline PoC: 256/256 (Trivy) và 386/386 (Kubescape) so sánh của MR-01..05 **giống hệt**; lượt này có thêm so sánh do seed candidate và MR-06/07.
 
 | scanner/MR | informative | weak | uninformative | inconclusive | tổng | tỉ lệ informative |

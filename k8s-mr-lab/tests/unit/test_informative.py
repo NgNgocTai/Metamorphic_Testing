@@ -63,17 +63,16 @@ def test_unknown_control_is_an_error_not_a_silent_default(mapping):
         inf.classify("trivy", comp("KSV-9999", ROLE, "PASS", "PASS"), [ROLE], mapping)
 
 
-EVIDENCE = ROOT / "docs" / "evidence" / "archive" / "mr07_dev_2026-11-01"
+EVIDENCE = ROOT / "docs" / "evidence" / "poc_final"
 
 
-def test_real_mr07_evidence_trivy_is_entirely_uninformative_and_kubescape_is_not(mapping):
-    t = inf.analyze_run(EVIDENCE / "trivy", mapping)
-    k = inf.analyze_run(EVIDENCE / "kubescape", mapping)
-    assert t and {r["tier"] for r in t} == {inf.UNINFORMATIVE}
-    assert {r["tier"] for r in k} == {inf.INFORMATIVE}
+def test_official_mr07_evidence_kubescape_is_informative_and_trivy_has_no_scope(mapping):
+    k = [r for r in inf.analyze_run(EVIDENCE / "kubescape", mapping) if r["mr_id"] == "MR-07"]
+    assert k and {r["tier"] for r in k} == {inf.INFORMATIVE}
     assert [r["control"] for r in k if r["outcome"] == "violation"] == ["C-0267"]
-    s = inf.summarize(t + k)
-    assert s["all"]["trivy/ALL"]["informative_rate"] == 0.0 and s["unexpected_violations"] == []
+    assert not mapping.supports("MR-07", "trivy") and not [r for r in inf.analyze_run(EVIDENCE / "trivy", mapping) if r["mr_id"] == "MR-07"]
+    s = inf.summarize(k)
+    assert s["unexpected_violations"] == []
 
 
 def test_analysis_does_not_touch_the_saved_evidence(tmp_path, mapping):
@@ -83,12 +82,17 @@ def test_analysis_does_not_touch_the_saved_evidence(tmp_path, mapping):
 
 
 def test_engaged_marks_weak_comparisons_where_a_fail_shows_the_check_reacts(mapping):
-    e = ROOT / "docs" / "evidence" / "archive" / "informative_2026-11-01"
-    rows = inf.analyze_run(e / "trivy-run", mapping)
+    rows = inf.analyze_run(EVIDENCE / "trivy", mapping)
     weak = [r for r in rows if r["tier"] == inf.WEAK]
-    assert weak, "Trivy MR-06 has an inferred PASS that turns into an attributed FAIL"
+    assert weak, "Trivy has inferred PASS comparisons (MR-04, MR-06 ...)"
     assert all(r["engaged"] == ("FAIL" in (r["source"], r["followup"])) for r in rows)
-    assert any(r["engaged"] for r in weak) and inf.summarize(rows)["weak_but_engaged"]
+    assert any(r["engaged"] for r in rows) and "weak_but_engaged" in inf.summarize(rows)
+
+
+def test_official_evidence_has_the_negative_control_tier_for_mr02(mapping):
+    rows = [r for r in inf.analyze_run(EVIDENCE / "kubescape", mapping) if r["mr_id"] == "MR-02"]
+    ctl = [r for r in rows if r["role"] == "control"]
+    assert ctl and {r["control"] for r in ctl} == {"C-0057"} and {r["tier"] for r in ctl} == {inf.CONTROL}
 
 
 def test_negative_control_is_its_own_tier_and_a_violation_there_is_flagged(mapping):

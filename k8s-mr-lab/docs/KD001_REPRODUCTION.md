@@ -34,7 +34,7 @@ Mapping mở rộng chỉ dùng cho lần chạy này (file riêng trong thư m�
 **Tiêu chí kết luận:** "phát hiện" = có VIOLATION ở bản lỗi mà không có ở bản sửa trên cùng `case_id` (cùng sha256 source/follow-up) và cùng artifacts.
 **Inconclusive nếu:** binary cũ không nạp được artifacts; verdict nguồn khác nhau giữa các binary (khi đó phải xem lại); hoặc binary không đúng phiên bản.
 
-## 3. Kết quả (Kubescape v4.0.11 / v4.0.12 / v4.0.15, cùng artifacts digest `8cfb2323…`, local-file; evidence: `docs/evidence/archive/kd001_2026-11-01/`)
+## 3. Kết quả (Kubescape v4.0.11 / v4.0.12 / v4.0.15, cùng artifacts digest `8cfb2323…`, local-file; evidence: evidence lịch sử `kd001_2026-11-01` (không còn trong repository; xem `docs/poc/HISTORICAL_DATA.md`))
 
 Binary v4.0.11 và v4.0.12 tải từ trang phát hành; **sha256 trùng với `checksums.sha256` chính thức** của từng bản (`OFFICIAL_CHECKSUMS.txt`). Chạy MR-02 trên 7 seed (4 áp dụng × 2 profile = 8 cặp).
 
