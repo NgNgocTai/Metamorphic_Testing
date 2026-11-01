@@ -6,7 +6,7 @@ import difflib
 from typing import Any
 
 from .bundles import ConfigBundle, obj_key
-from .model import fmt_key
+from .model import ResKey, fmt_key
 
 
 def _walk(a: Any, b: Any, path: str, out: list[dict]) -> None:
@@ -65,3 +65,17 @@ def only_object_changes(diff: list[dict], key_str: str) -> bool:
 
 def objects_with_namespace(bundle: ConfigBundle, ns: str) -> list[str]:
     return [fmt_key(obj_key(o)) for o in bundle.objects if obj_key(o)[2] == ns]
+
+
+def expect_single_change(diff: list[dict], obj: ResKey, path: str, old, new) -> tuple[str, str]:
+    """The diff must be exactly one in-place change `old -> new` at `path` of `obj` (shared by controlled-change MRs)."""
+    if len(diff) != 1:
+        return "INVALID_PAIR", f"expected_exactly_one_change_got_{len(diff)}"
+    c = diff[0]
+    if c["object"] != fmt_key(obj):
+        return "INVALID_PAIR", "change_on_wrong_object"
+    if c["op"] != "change" or c["path"] != path:
+        return "INVALID_PAIR", f"change_on_{c['path']}_expected_{path}"
+    if (type(c["old"]), c["old"], type(c["new"]), c["new"]) != (type(old), old, type(new), new):   # 1 != True here
+        return "INVALID_PAIR", f"change_is_not_{old!r}_to_{new!r}"
+    return "VALID_PAIR", ""

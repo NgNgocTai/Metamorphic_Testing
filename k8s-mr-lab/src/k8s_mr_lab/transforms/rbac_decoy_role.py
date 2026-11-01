@@ -5,7 +5,7 @@ from ..bundles import ConfigBundle, obj_key
 from ..k8s import RBAC, local_role_bindings, sa_key, sa_subjects, workloads_using_sa
 from ..model import ResKey, VALID_PAIR, fmt_key
 from ..validation import diff_bundles, objects_with_namespace
-from .base import MetamorphicRelation
+from .base import MetamorphicRelation, implements
 
 PROFILES = {
     "secrets_read": [{"apiGroups": [""], "resources": ["secrets"], "verbs": ["get", "list"]}],
@@ -22,12 +22,8 @@ def _fresh_namespace(source: ConfigBundle, base: str) -> str:
     return ns
 
 
+@implements("MR-02")
 class DecoySameNameRole(MetamorphicRelation):
-    id = "MR-02"
-    name = "add-unbound-same-name-role"
-    category = "R4"
-    property = "target_subject_effective_permissions"
-    relation = "equal"
 
     def _rolebindings(self, source: ConfigBundle) -> list[dict]:
         return [rb for rb in local_role_bindings(source)

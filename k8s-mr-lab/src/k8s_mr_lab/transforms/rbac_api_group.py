@@ -2,36 +2,30 @@
 from __future__ import annotations
 
 from ..bundles import ConfigBundle, obj_key
-from ..k8s import READ_VERBS, bound_service_accounts, secret_read_granted_elsewhere, workloads_using_sa
-from ..model import ResKey, VALID_PAIR, fmt_key
-from ..validation import diff_bundles
-from .base import MetamorphicRelation, key_to_list, list_to_key
+from ..k8s import READ_VERBS, bound_service_accounts, secret_read_granted_elsewhere, workloads_of_service_accounts
+from ..model import ResKey, fmt_key
+from .base import implements, key_to_list, list_to_key
+from .patterns import Change, ControlledChange
 
 
-class ApiGroupSwitch(MetamorphicRelation):
-    id = "MR-05"
-    name = "api-group-switch"
-    category = "R3"
-    property = "core_secrets_read_permission"
-    relation = "fail_to_pass"
+def _is_sole_core_secrets_read(role: dict) -> bool:
+    rules = role.get("rules") or []
+    if len(rules) != 1:
+        return False
+    r = rules[0]
+    return (r.get("apiGroups") == [""] and r.get("resources") == ["secrets"] and not r.get("resourceNames")
+            and bool(r.get("verbs")) and set(r["verbs"]) <= READ_VERBS)
 
-    @staticmethod
-    def _is_sole_core_secrets_read(role: dict) -> bool:
-        rules = role.get("rules") or []
-        if len(rules) != 1:
-            return False
-        r = rules[0]
-        return (r.get("apiGroups") == [""] and r.get("resources") == ["secrets"] and not r.get("resourceNames")
-                and bool(r.get("verbs")) and set(r["verbs"]) <= READ_VERBS)
 
-    def _candidates(self, source: ConfigBundle) -> list[dict]:
-        return [r for r in source.of_kind("Role") if self._is_sole_core_secrets_read(r)]
+@implements("MR-05")
+class ApiGroupSwitch(ControlledChange):
+    no_candidates_reason = "no_role_whose_only_rule_reads_core_secrets"
 
-    def applicable(self, source: ConfigBundle) -> tuple[bool, str]:
-        return (True, "") if self._candidates(source) else (False, "no_role_whose_only_rule_reads_core_secrets")
+    def candidates(self, source: ConfigBundle) -> list[dict]:
+        return [r for r in source.of_kind("Role") if _is_sole_core_secrets_read(r)]
 
-    def generate_parameters(self, source: ConfigBundle, max_cases: int) -> list[dict]:
-        return [{"role": key_to_list(obj_key(r))} for r in self._candidates(source)][:max_cases]
+    def candidate_params(self, candidate: dict) -> dict:
+        return {"role": key_to_list(obj_key(candidate))}
 
     def transform(self, source: ConfigBundle, params: dict) -> tuple[ConfigBundle, dict]:
         fu = source.clone()
@@ -39,22 +33,14 @@ class ApiGroupSwitch(MetamorphicRelation):
         return fu, {"operation": "rbac.switch_api_group", "role": fmt_key(list_to_key(params["role"])),
                     "from": [""], "to": ["apps"], "object_mapping": "identity"}
 
-    def validate_pair(self, source: ConfigBundle, followup: ConfigBundle, params: dict) -> tuple[str, str]:
-        key = list_to_key(params["role"])
-        d = diff_bundles(source, followup)
-        if len(d) != 1:
-            return "INVALID_PAIR", f"expected_exactly_one_change_got_{len(d)}"
-        c = d[0]
-        if c["object"] != fmt_key(key) or c["path"] != "rules[0].apiGroups[0]" or (c["old"], c["new"]) != ("", "apps"):
-            return "INVALID_PAIR", "change_is_not_core_to_apps_on_target_rule"
-        return VALID_PAIR, ""
+    def expected_change(self, source: ConfigBundle, params: dict) -> Change:
+        return Change(list_to_key(params["role"]), "rules[0].apiGroups[0]", "", "apps")
 
     def targets(self, source: ConfigBundle, params: dict) -> dict[str, list[ResKey]]:
         key = list_to_key(params["role"])
         role = source.index()[key]
         sas = bound_service_accounts(source, role)
-        wl = [w for (_, _, ns, n) in sas for w in workloads_using_sa(source, ns, n)]
         out = {"role_direct": [key]}          # controls that judge this Role itself (e.g. Trivy KSV-0113)
         if secret_read_granted_elsewhere(source, role, sas):
             return out                        # subject/workload-level controls would be judged on the wrong premise
-        return {**out, "bound_role": [key], "subject_sa": sas, "workload": wl}
+        return {**out, "bound_role": [key], "subject_sa": sas, "workload": workloads_of_service_accounts(source, sas)}

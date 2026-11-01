@@ -1,0 +1,110 @@
+# Security Property Catalog. A property is a statement about Kubernetes semantics that an MR relies on.
+# Rules enforced by `k8s-mr-lab mr validate`:
+#   * every reference carries `verified: true|false`; false means "not yet checked against the source", never silently trusted
+#   * a risk-taxonomy entry (OWASP/CWE/CIS/NSA) only SELECTS the domain; it never proves an MR valid. Proof = k8s_spec refs
+#     plus the MR's precondition and pair checks.
+#   * `cwe` names the weakness class of the MISCONFIGURATION a scanner control detects, never a label for a scanner defect.
+# Controls are NOT repeated here: they come from config/policy-mapping.yaml (`k8s-mr-lab mr trace` joins them).
+# OWASP Kubernetes Top 10 titles verified 2026-11-01 at https://kubernetes-top10.owasp.org/ (2025 edition).
+# cis_nsa: only entries read from an artifact are filled, with `basis` saying which. The only CIS label found for a mapped control is
+# Kubescape's (cis-v1.12.0 framework file); the CIS document itself was NOT consulted and numbering differs between benchmark versions.
+# NSA/CISA and ATT&CK are not filled (not checked).
+# 2026-11-01: CWE-250, CWE-269 titles checked at cwe.mitre.org; YAML 1.2.2 sec. 3.2.1.1 / 3.2.2.1 and the K8s RBAC examples quoted below.
+properties:
+  - id: SP-SYN-MAPPING-ORDER
+    name: mapping key order is not significant
+    domain: Syntax
+    statement: Reordering the keys of a YAML/JSON mapping does not change the Kubernetes object it denotes.
+    owasp_k8s_2025: []
+    cwe: []
+    cis_nsa: []
+    k8s_spec:
+      - source: YAML 1.2.2 specification, 3.2.1.1 Nodes and 3.2.2.1 Mapping Key Order
+        url: https://yaml.org/spec/1.2.2/
+        claim: 'The content of a mapping node is an unordered set of key/value node pairs, with the restriction that each of the keys is unique. Key order "is a serialization detail and should not be used when composing the representation graph".'
+        verified: true
+    scope_assumptions: [sequences keep their order; only mappings are reordered]
+    known_non_equivalences: [line numbers and text offsets do change; a scanner may legitimately report them]
+    candidate_patterns: [KP1]
+    rationale: scanner-internal consistency property; no risk-taxonomy entry applies, which is stated rather than forced
+  - id: SP-RBAC-NS-ROLE-RESOLUTION
+    name: a RoleBinding resolves its Role inside its own namespace
+    domain: RBAC
+    statement: A RoleBinding grants only the Role named in roleRef from the RoleBinding's namespace; a same-name Role elsewhere grants nothing to its subjects.
+    owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
+    cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, Using RBAC Authorization
+        url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+        claim: "A RoleBinding may reference any Role in the same namespace."
+        verified: true
+    scope_assumptions: [RoleBinding to Role only; a RoleBinding to a ClusterRole is out of scope]
+    known_non_equivalences: [a control that audits every Role legitimately reports the added decoy itself]
+    candidate_patterns: [KP2]
+    rationale: motivated by candidate K1 (name-only Role join); the platform rule makes the added Role unreachable from the target
+  - id: SP-RBAC-ADDITIVE-RULES
+    name: RBAC permissions are the union of rules
+    domain: RBAC
+    statement: Effective permissions of a Role are the union of its rules, so splitting one rule into several rules with the same fields and one verb each leaves the permission set unchanged.
+    owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
+    cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, Using RBAC Authorization
+        url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+        claim: 'Permissions are purely additive (there are no "deny" rules).'
+        verified: true
+    scope_assumptions: [no wildcard verbs in the split rule; rule order carries no meaning (follows from additivity, not quoted)]
+    known_non_equivalences: [a control that counts rules or inspects rule shape would legitimately change]
+    candidate_patterns: [KP1]
+    rationale: the MR holds only for controls that judge effective permissions (the mapping excludes shape-sensitive controls)
+  - id: SP-POD-PRIVILEGED
+    name: a privileged container is a Baseline violation
+    domain: Pod Security
+    statement: A container whose securityContext.privileged is true is in the Privileged profile; false or unset is allowed by Baseline.
+    owasp_k8s_2025: [{id: K01, title: Insecure Workload Configurations, verified: true}]
+    cwe: [{id: CWE-250, title: Execution with Unnecessary Privileges, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, Pod Security Standards (Baseline, Privileged Containers)
+        url: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+        claim: "restricted field spec.containers[*].securityContext.privileged; allowed values: undefined/nil, false"
+        verified: true
+    scope_assumptions: [regular containers only; init and ephemeral containers are not mutated]
+    known_non_equivalences: [a scanner may legitimately raise unrelated findings on the same workload]
+    candidate_patterns: [KP3]
+    rationale: false -> true can only move the privileged-container control from PASS to FAIL
+  - id: SP-RBAC-SECRETS-API-GROUP
+    name: Secrets live in the core API group
+    domain: RBAC
+    statement: A rule grants access to Secrets only through apiGroups "" (core) or "*"; moving the sole rule to another group removes that access.
+    owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
+    cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, Using RBAC Authorization (resources and API groups)
+        url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+        claim: 'Example Role: `apiGroups: [""] # "" indicates the core API group`; example ClusterRole secret-reader uses apiGroups [""] with resources ["secrets"].'
+        verified: true
+    scope_assumptions: [closed-bundle premise: only bindings present in the bundle are examined for other paths to the same permission]
+    known_non_equivalences: [a second rule or a wildcard keeps the permission alive, so the Role is not eligible]
+    candidate_patterns: [KP3]
+    rationale: motivated by candidate N2; the precondition requires the Role's only rule to be the core Secrets read
+  - id: SP-POD-HOST-NAMESPACES
+    name: sharing the host network namespace is a Baseline violation
+    domain: Pod Security
+    statement: A pod with spec.hostNetwork true shares the node network namespace; false or unset is allowed by Baseline.
+    owasp_k8s_2025: [{id: K01, title: Insecure Workload Configurations, verified: true}]
+    cwe: []
+    cis_nsa:
+      - {id: "CIS 5.2.5 Minimize the admission of containers wishing to share the host network namespace", basis: "label in Kubescape cis-v1.12.0 framework artifact (C-0041); CIS document not consulted", verified: true}
+    k8s_spec:
+      - source: Kubernetes docs, Pod Security Standards (Baseline, Host Namespaces)
+        url: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+        claim: "restricted fields spec.hostNetwork, spec.hostPID, spec.hostIPC; allowed values: undefined/nil, false"
+        verified: true
+    scope_assumptions: [only hostNetwork is mutated; hostPID and hostIPC are separate properties]
+    known_non_equivalences: [a control may be defined over a different set of workload kinds]
+    candidate_patterns: [KP3]
+    rationale: worked example of the derivation workflow (MR-06); controls Trivy KSV-0009 and Kubescape C-0041 read from the pinned policy bundles, one DEV seed run on both scanners, no independent evaluation yet, so the MR stays a candidate

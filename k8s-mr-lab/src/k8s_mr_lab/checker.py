@@ -1,11 +1,15 @@
 """MR relation checker: the metamorphic oracle. It only ever sees normalized verdicts of ONE scanner on C1 and C2."""
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Callable
+
 from .bundles import ConfigBundle, obj_key
 from .model import (CONCLUSIVE, EQUAL, FAIL, FAIL_TO_PASS, PASS, PASS_TO_FAIL, R_INCONCLUSIVE, R_PARTIAL, R_PASS,
                     R_SKIP, R_VIOLATION, Assessment, KeyResult, NormalizedReport, ResKey)
-from .registry import MappingEntry
 from .transforms.base import MetamorphicRelation
+
+if TYPE_CHECKING:
+    from .registry import MappingEntry
 
 ALL_OF_KIND = "ALL_OF_KIND"
 Key = tuple[str, ResKey]
@@ -34,18 +38,34 @@ def full_keys(mr: MetamorphicRelation, static: list[Key], r1: NormalizedReport, 
     return keys
 
 
+def _equal(a: str, b: str) -> tuple[str, str]:
+    return ("ok", "") if a == b else ("violation", f"{a}->{b} but relation requires equality")
+
+
+def _transition(want_from: str, want_to: str) -> Callable[[str, str], tuple[str, str]]:
+    def rel(a: str, b: str) -> tuple[str, str]:
+        if a != want_from:
+            return "inconclusive", f"baseline_precondition_not_met: source is {a}, relation needs {want_from}"
+        return ("ok", "") if b == want_to else ("violation", f"{a}->{b} but relation requires {want_from}->{want_to}")
+    return rel
+
+
+# name -> judge(source_status, followup_status) for two CONCLUSIVE verdicts. Register a custom predicate here when an
+# MR needs one; missing/inconclusive verdicts are handled once, in _compare, for every relation.
+RELATIONS: dict[str, Callable[[str, str], tuple[str, str]]] = {
+    EQUAL: _equal,
+    PASS_TO_FAIL: _transition(PASS, FAIL),
+    FAIL_TO_PASS: _transition(FAIL, PASS),
+}
+
+
 def _compare(relation: str, a: str, b: str) -> tuple[str, str]:
     """Return (outcome, reason) for one (control, resource): ok | violation | inconclusive."""
     if a not in CONCLUSIVE:
         return "inconclusive", f"source_verdict_{a.lower()}"
     if b not in CONCLUSIVE:
         return "inconclusive", f"followup_verdict_{b.lower()}"
-    if relation == EQUAL:
-        return ("ok", "") if a == b else ("violation", f"{a}->{b} but relation requires equality")
-    want_from, want_to = (PASS, FAIL) if relation == PASS_TO_FAIL else (FAIL, PASS)
-    if a != want_from:
-        return "inconclusive", f"baseline_precondition_not_met: source is {a}, relation needs {want_from}"
-    return ("ok", "") if b == want_to else ("violation", f"{a}->{b} but relation requires {want_from}->{want_to}")
+    return RELATIONS[relation](a, b)
 
 
 def check(mr: MetamorphicRelation, keys: list[Key], r1: NormalizedReport, r2: NormalizedReport) -> Assessment:

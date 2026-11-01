@@ -81,3 +81,9 @@ Reading order for `docs/`:
 2. `DEFECT_TRIAGE_RESULTS.md` — the two defect candidates with evidence (adjudication is yours).
 3. `HUONG_DAN_TU_KIEM_TRA.md` — step-by-step to redo the checks yourself.
 4. Reference: `SCANNER_VERSIONS.md` (pins and verified CLI/rule facts), `known_issues.yaml`, `evidence/`.
+
+## Building MRs (branch `research/mr-patterns`)
+
+Security property → MR pattern → MR spec → executable MR. Start with `docs/HOW_TO_ADD_AN_MR.md`;
+method: `docs/MR_DERIVATION_METHODOLOGY.md`; audit: `docs/MR_ARCHITECTURE_AUDIT.md`; results: `docs/MR_REFACTOR_REPORT.md`.
+`k8s-mr-lab mr list | validate | trace | scaffold` (no scanner needed).

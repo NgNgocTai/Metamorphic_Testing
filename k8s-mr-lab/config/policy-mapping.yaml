@@ -12,8 +12,10 @@ controls:
     KSV-0048: {title: "Manage workloads and pods", kinds: [Role, ClusterRole], rego: allowing_to_update_a_malicious_pod.rego}
     KSV-0049: {title: "Manage configmaps", kinds: [Role, ClusterRole], rego: manage_configmaps.rego}
     KSV-0112: {title: "Manage all resources at the namespace", kinds: [Role], rego: manage_all_resources_at_namespace.rego}
+    KSV-0009: {title: "Access to host network", kinds: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, CronJob, Job], rego: host_network.rego}
     KSV-0050: {title: "Privilege escalation via RBAC resources", kinds: [Role, ClusterRole], rego: manage_kubernetes_rbac_resources.rego}
   kubescape:
+    C-0041: {title: "HostNetwork access", kinds: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, CronJob, Job]}
     C-0057: {title: "Privileged container", kinds: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, CronJob, Job]}
     C-0267: {title: "Workload with cluster takeover roles", kinds: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, CronJob, Job]}
     C-0272: {title: "Workload with administrative roles", kinds: [Pod, Deployment, ReplicaSet, StatefulSet, DaemonSet, CronJob, Job]}
@@ -80,3 +82,8 @@ mrs:
     kubescape:
       - {control: C-0015, target: bound_role}
       - {control: C-0267, target: workload}
+  MR-06:   # candidate; controls read from the pinned policy bundles (Trivy host_network.rego, Kubescape c-0041.json)
+    trivy:
+      - {control: KSV-0009, target: workload}
+    kubescape:
+      - {control: C-0041, target: workload}

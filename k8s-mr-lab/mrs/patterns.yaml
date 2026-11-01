@@ -1,0 +1,26 @@
+# MR pattern catalog. A pattern is a *recurring structure* observed in shipped MRs (the MST-wi way: patterns are
+# classified from existing MRs, not designed first). `shared_code` says what, if anything, the code actually shares.
+# Which MRs use a pattern is NOT listed here: it is derived from `pattern:` in catalog.yaml (single source).
+# Allowed relations are enforced by `k8s-mr-lab mr validate`.
+patterns:
+  - id: KP1
+    name: representation-invariance
+    intent: rewrite the configuration without changing its Kubernetes semantics; every in-scope verdict must stay equal
+    allowed_relations: [equal]
+    pair_validation: an invariant of the bundle (canonical content, expanded permission tuples) is identical before and after, and the text really changed
+    shared_code: none beyond validation.diff_bundles; the invariants differ (MR-01 parsed content, MR-03 permission tuples) so no base class is justified yet
+    proof_obligation: the rewrite preserves the object's API meaning (YAML mapping order; RBAC additivity)
+  - id: KP2
+    name: unrelated-resource-noninterference
+    intent: add an object that nothing in scope references; in-scope verdicts must stay equal
+    allowed_relations: [equal]
+    pair_validation: the diff is exactly one added object, and no binding/selector can reach it from the target
+    shared_code: none (single instance, MR-02); do not abstract until a second instance exists
+    proof_obligation: the platform resolves references by (kind, namespace, name); an object in another namespace is unreachable
+  - id: KP3
+    name: controlled-single-field-change
+    intent: change one security-relevant field in one known direction; the mapped control must move accordingly
+    allowed_relations: [pass_to_fail, fail_to_pass]
+    pair_validation: the diff is exactly one in-place change old -> new at one declared path of one declared object
+    shared_code: transforms.patterns.ControlledChange + validation.expect_single_change
+    proof_obligation: the field alone decides the property (no other path in the bundle grants it) and the control claims to detect it

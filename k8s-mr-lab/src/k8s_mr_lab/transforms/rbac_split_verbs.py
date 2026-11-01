@@ -4,33 +4,24 @@ from __future__ import annotations
 import copy
 
 from ..bundles import ConfigBundle, obj_key
-from ..k8s import bound_service_accounts, permission_tuples, workloads_using_sa
+from ..k8s import bound_service_accounts, permission_tuples, workloads_of_service_accounts
 from ..model import ResKey, VALID_PAIR, fmt_key
 from ..validation import diff_bundles
-from .base import MetamorphicRelation, key_to_list, list_to_key
+from .base import implements, key_to_list, list_to_key
+from .patterns import PerCandidateMR
 
 
-class SplitRuleVerbs(MetamorphicRelation):
-    id = "MR-03"
-    name = "split-rule-verbs"
-    category = "R3"
-    property = "effective_permissions_of_role"
-    relation = "equal"
+@implements("MR-03")
+class SplitRuleVerbs(PerCandidateMR):
+    no_candidates_reason = "no_rule_with_two_or_more_distinct_verbs"
 
-    def _candidates(self, source: ConfigBundle) -> list[tuple[dict, int]]:
-        out = []
-        for role in source.of_kind("Role", "ClusterRole"):
-            for i, rule in enumerate(role.get("rules") or []):
-                verbs = rule.get("verbs") or []
-                if len(verbs) >= 2 and len(set(verbs)) == len(verbs):
-                    out.append((role, i))
-        return out
+    def candidates(self, source: ConfigBundle) -> list[tuple[dict, int]]:
+        return [(role, i) for role in source.of_kind("Role", "ClusterRole") for i, rule in enumerate(role.get("rules") or [])
+                if len(rule.get("verbs") or []) >= 2 and len(set(rule["verbs"])) == len(rule["verbs"])]
 
-    def applicable(self, source: ConfigBundle) -> tuple[bool, str]:
-        return (True, "") if self._candidates(source) else (False, "no_rule_with_two_or_more_distinct_verbs")
-
-    def generate_parameters(self, source: ConfigBundle, max_cases: int) -> list[dict]:
-        return [{"role": key_to_list(obj_key(r)), "rule_index": i} for r, i in self._candidates(source)][:max_cases]
+    def candidate_params(self, candidate: tuple[dict, int]) -> dict:
+        role, i = candidate
+        return {"role": key_to_list(obj_key(role)), "rule_index": i}
 
     def transform(self, source: ConfigBundle, params: dict) -> tuple[ConfigBundle, dict]:
         fu = source.clone()
@@ -68,5 +59,4 @@ class SplitRuleVerbs(MetamorphicRelation):
         key = list_to_key(params["role"])
         role = source.index()[key]
         sas = bound_service_accounts(source, role)
-        wl = [w for (_, _, ns, n) in sas for w in workloads_using_sa(source, ns, n)]
-        return {"bound_role": [key], "subject_sa": sas, "workload": wl}
+        return {"bound_role": [key], "subject_sa": sas, "workload": workloads_of_service_accounts(source, sas)}

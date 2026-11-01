@@ -145,3 +145,8 @@ def permission_tuples(role: dict) -> set[tuple]:
                         for v in rule.get("verbs") or []:
                             out.add((g, r, n, u, v))
     return out
+
+
+def workloads_of_service_accounts(bundle: ConfigBundle, sas: list[ResKey]) -> list[ResKey]:
+    """Workloads that run as any of the given ServiceAccount keys."""
+    return [w for (_, _, ns, name) in sas for w in workloads_using_sa(bundle, ns, name)]

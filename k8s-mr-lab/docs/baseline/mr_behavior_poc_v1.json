@@ -1,0 +1,2533 @@
+{
+ "mrs": [
+  "MR-01",
+  "MR-02",
+  "MR-03",
+  "MR-04",
+  "MR-05"
+ ],
+ "seeds": {
+  "K1-role-namespace": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "8039889618820f43b5a91b791ca00ce79c443dca86bba6a07f1790239308a08e",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      },
+      {
+       "followup_sha": "befbe9ddb2a4a84b80f3b6994a9014948bfeb9a972614f96c62153ca5bcc4685",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "sorted"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "sorted",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "35c4c0e738fb90c98110e02de240e8ddbbea7e00227254cd8540517f6f184341",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-a-decoy",
+        "namespace": "lab-a",
+        "profile": "secrets_read",
+        "role": "app-role",
+        "rolebinding": "app-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-a",
+          "app-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-a",
+          "app-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-a",
+          "app"
+         ]
+        ],
+        "workload": [
+         [
+          "apps",
+          "Deployment",
+          "lab-a",
+          "web"
+         ]
+        ]
+       },
+       "trace": {
+        "added": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "secrets_read"
+       }
+      },
+      {
+       "followup_sha": "df9b2efc61df729e09126e286c979f9db89082338b51344705eb80e8fe16b62e",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-a-decoy",
+        "namespace": "lab-a",
+        "profile": "wildcard_admin",
+        "role": "app-role",
+        "rolebinding": "app-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-a",
+          "app-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-a",
+          "app-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-a",
+          "app"
+         ]
+        ],
+        "workload": [
+         [
+          "apps",
+          "Deployment",
+          "lab-a",
+          "web"
+         ]
+        ]
+       },
+       "trace": {
+        "added": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "wildcard_admin"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rule_with_two_or_more_distinct_verbs"
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "51158d8e398749d1ebe796d99df0a502b882ba92b8179ff466ce0d6f17e8c2b4",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "container_index": 0,
+        "workload": [
+         "apps",
+         "Deployment",
+         "lab-a",
+         "web"
+        ]
+       },
+       "targets": {
+        "workload": [
+         [
+          "apps",
+          "Deployment",
+          "lab-a",
+          "web"
+         ]
+        ]
+       },
+       "trace": {
+        "object_mapping": "identity",
+        "operation": "pod.set_privileged_true",
+        "path": "spec.template.spec.containers[0].securityContext.privileged",
+        "workload": "Deployment/lab-a/web@apps"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": ""
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": "no_role_whose_only_rule_reads_core_secrets"
+    }
+   },
+   "source_sha": "ceb1e878097cc1d11ae088c06ba696d8e0e1f257dc087e6e37f1bb437d048998"
+  },
+  "invalid-missing-role": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "5bbe0f85852ce9fd96a980e8f5580318dce745c87d17578f07c949f55f83547d",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      },
+      {
+       "followup_sha": "8483b3539e20ecfa826c07625c551cb4a6e210c25043b3ea3ec6fd660cae7ca4",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "sorted"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "sorted",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rolebinding_to_local_role_with_sa_subject"
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rule_with_two_or_more_distinct_verbs"
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": "no_container_with_explicit_privileged_false"
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": "no_role_whose_only_rule_reads_core_secrets"
+    }
+   },
+   "source_sha": "1c81679cfe976a531e38d41dc5d34e20153f9c574f833ed30443294d0ea30e54"
+  },
+  "pod-basic": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "1ee715d0ac52051bba24ea761bb5a095c139cedad2a006ef08f20462a84b593b",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      },
+      {
+       "followup_sha": "abc8508533c95c8964ee0e973de0887f537ff4047f4b2479838021515bd555b4",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "sorted"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "sorted",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rolebinding"
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rule_with_two_or_more_distinct_verbs"
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "d33c760338ce8e39bd83ac38fdff0c6c521d83adcfc215c8dea2d5f563851aa9",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "container_index": 0,
+        "workload": [
+         "",
+         "Pod",
+         "lab-a",
+         "demo"
+        ]
+       },
+       "targets": {
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-a",
+          "demo"
+         ]
+        ]
+       },
+       "trace": {
+        "object_mapping": "identity",
+        "operation": "pod.set_privileged_true",
+        "path": "spec.containers[0].securityContext.privileged",
+        "workload": "Pod/lab-a/demo"
+       }
+      },
+      {
+       "followup_sha": "27f0677295db2551723c268d843efc7cdcfdf6114412a57bee06c2a34f912626",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "container_index": 1,
+        "workload": [
+         "",
+         "Pod",
+         "lab-a",
+         "demo"
+        ]
+       },
+       "targets": {
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-a",
+          "demo"
+         ]
+        ]
+       },
+       "trace": {
+        "object_mapping": "identity",
+        "operation": "pod.set_privileged_true",
+        "path": "spec.containers[1].securityContext.privileged",
+        "workload": "Pod/lab-a/demo"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": ""
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": "no_role_whose_only_rule_reads_core_secrets"
+    }
+   },
+   "source_sha": "fcd5a941c3f9f56ed0f883e0b5a87a1d11864089fa50c1b6f3fcaeb865b96ae7"
+  },
+  "rbac-basic": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "62ef5c1748eae9bbcd87522f41c2dc1262f53e481176a195349a6b74933050d9",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      },
+      {
+       "followup_sha": "5477a679e2791db278d69123ad337b7df2a2198d2c367286559b87ae31aea291",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "sorted"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "sorted",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "26f7b75e5fbb70ca59ceb5fd054055d9d8e03197885244ff6ecd299c6e39937f",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-a-decoy",
+        "namespace": "lab-a",
+        "profile": "secrets_read",
+        "role": "app-role",
+        "rolebinding": "app-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-a",
+          "app-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-a",
+          "app-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-a",
+          "app"
+         ]
+        ],
+        "workload": []
+       },
+       "trace": {
+        "added": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "secrets_read"
+       }
+      },
+      {
+       "followup_sha": "62d8d063ac59a1cc3561aa59bbdeeaea9ab69c60ed72b7b127d40b071a36371e",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-a-decoy",
+        "namespace": "lab-a",
+        "profile": "wildcard_admin",
+        "role": "app-role",
+        "rolebinding": "app-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-a",
+          "app-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-a",
+          "app-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-a",
+          "app"
+         ]
+        ],
+        "workload": []
+       },
+       "trace": {
+        "added": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "wildcard_admin"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rule_with_two_or_more_distinct_verbs"
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": "no_container_with_explicit_privileged_false"
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": "no_role_whose_only_rule_reads_core_secrets"
+    }
+   },
+   "source_sha": "0fd44d7ef96e8382bf244eaa259bfef70abc62090204b616fc3d5eabc94cf2f6"
+  },
+  "rbac-no-binding": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "383b18d0219d17ae6e72129e9faf3a831d252cec33049ee41f27c92e819e5728",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rolebinding"
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rule_with_two_or_more_distinct_verbs"
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": "no_container_with_explicit_privileged_false"
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": "no_role_whose_only_rule_reads_core_secrets"
+    }
+   },
+   "source_sha": "2c722f9188a75ab0d023cdf3234d8ffcbbb8a6db5e6d09a11c36425bce7517aa"
+  },
+  "rbac-secrets-reader": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "3b8cd5dd4d7b5749d84beb6c01212fed7ac04526f662191b7e4169b68aef971e",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      },
+      {
+       "followup_sha": "e857717639cac17ddb6357d4d556dca95a15f95380a953d8a8d21e4309925d6c",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "sorted"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "sorted",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "1384da849fc88b31010515533da9a21500de8830f0d61e43098a1c80782cc027",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-c-decoy",
+        "namespace": "lab-c",
+        "profile": "secrets_read",
+        "role": "reader-role",
+        "rolebinding": "reader-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-c",
+          "reader-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-c",
+          "reader-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-c",
+          "reader"
+         ]
+        ],
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-c",
+          "reader-pod"
+         ]
+        ]
+       },
+       "trace": {
+        "added": "Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "secrets_read"
+       }
+      },
+      {
+       "followup_sha": "d2f12e30763de59c3ecc4043a20f2c162da2275fa7ef633aed8beb3e49d400e1",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-c-decoy",
+        "namespace": "lab-c",
+        "profile": "wildcard_admin",
+        "role": "reader-role",
+        "rolebinding": "reader-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-c",
+          "reader-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-c",
+          "reader-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-c",
+          "reader"
+         ]
+        ],
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-c",
+          "reader-pod"
+         ]
+        ]
+       },
+       "trace": {
+        "added": "Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "wildcard_admin"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "2015cbabf7e097adacb33c0c5c468a7903cc840a4c3d577a3dd2d11b0c72d5cd",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "role": [
+         "rbac.authorization.k8s.io",
+         "Role",
+         "lab-c",
+         "reader-role"
+        ],
+        "rule_index": 0
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-c",
+          "reader-role"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-c",
+          "reader"
+         ]
+        ],
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-c",
+          "reader-pod"
+         ]
+        ]
+       },
+       "trace": {
+        "object_mapping": "identity",
+        "operation": "rbac.split_rule_verbs",
+        "pieces": 3,
+        "role": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "rule_index": 0
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "0372e40a85e4faabd7ca2db398647a323596020e1c64c0e338b6030cbd51e7b8",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "container_index": 0,
+        "workload": [
+         "",
+         "Pod",
+         "lab-c",
+         "reader-pod"
+        ]
+       },
+       "targets": {
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-c",
+          "reader-pod"
+         ]
+        ]
+       },
+       "trace": {
+        "object_mapping": "identity",
+        "operation": "pod.set_privileged_true",
+        "path": "spec.containers[0].securityContext.privileged",
+        "workload": "Pod/lab-c/reader-pod"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": ""
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "5a9e1177f9eef763d2f12876cc1d586afd35644fc5304e743b17e2910cfe5fc1",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "role": [
+         "rbac.authorization.k8s.io",
+         "Role",
+         "lab-c",
+         "reader-role"
+        ]
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-c",
+          "reader-role"
+         ]
+        ],
+        "role_direct": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-c",
+          "reader-role"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-c",
+          "reader"
+         ]
+        ],
+        "workload": [
+         [
+          "",
+          "Pod",
+          "lab-c",
+          "reader-pod"
+         ]
+        ]
+       },
+       "trace": {
+        "from": [
+         ""
+        ],
+        "object_mapping": "identity",
+        "operation": "rbac.switch_api_group",
+        "role": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "to": [
+         "apps"
+        ]
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": ""
+    }
+   },
+   "source_sha": "5b7aa1f13ab86f0b5828d90634922d1be115201b52b88fa0378194ef89249768"
+  },
+  "rbac-workload": {
+   "mrs": {
+    "MR-01": {
+     "all_failures": true,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "8039889618820f43b5a91b791ca00ce79c443dca86bba6a07f1790239308a08e",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "reverse"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "reverse",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      },
+      {
+       "followup_sha": "befbe9ddb2a4a84b80f3b6994a9014948bfeb9a972614f96c62153ca5bcc4685",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "mode": "sorted"
+       },
+       "targets": {},
+       "trace": {
+        "mode": "sorted",
+        "object_mapping": "identity",
+        "operation": "yaml.reorder_mapping_keys"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0267",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0272",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0015",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0007",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0035",
+        "ALL_OF_KIND"
+       ],
+       [
+        "C-0053",
+        "ALL_OF_KIND"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0113",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0048",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0049",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0112",
+        "ALL_OF_KIND"
+       ],
+       [
+        "KSV-0050",
+        "ALL_OF_KIND"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-02": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "35c4c0e738fb90c98110e02de240e8ddbbea7e00227254cd8540517f6f184341",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-a-decoy",
+        "namespace": "lab-a",
+        "profile": "secrets_read",
+        "role": "app-role",
+        "rolebinding": "app-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-a",
+          "app-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-a",
+          "app-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-a",
+          "app"
+         ]
+        ],
+        "workload": [
+         [
+          "apps",
+          "Deployment",
+          "lab-a",
+          "web"
+         ]
+        ]
+       },
+       "trace": {
+        "added": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "secrets_read"
+       }
+      },
+      {
+       "followup_sha": "df9b2efc61df729e09126e286c979f9db89082338b51344705eb80e8fe16b62e",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "decoy_namespace": "lab-a-decoy",
+        "namespace": "lab-a",
+        "profile": "wildcard_admin",
+        "role": "app-role",
+        "rolebinding": "app-binding"
+       },
+       "targets": {
+        "bound_role": [
+         [
+          "rbac.authorization.k8s.io",
+          "Role",
+          "lab-a",
+          "app-role"
+         ]
+        ],
+        "rolebinding": [
+         [
+          "rbac.authorization.k8s.io",
+          "RoleBinding",
+          "lab-a",
+          "app-binding"
+         ]
+        ],
+        "subject_sa": [
+         [
+          "",
+          "ServiceAccount",
+          "lab-a",
+          "app"
+         ]
+        ],
+        "workload": [
+         [
+          "apps",
+          "Deployment",
+          "lab-a",
+          "web"
+         ]
+        ]
+       },
+       "trace": {
+        "added": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+        "object_mapping": "identity",
+        "operation": "rbac.add_unbound_same_name_role",
+        "profile": "wildcard_admin"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ],
+       [
+        "C-0057",
+        "workload"
+       ],
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0053",
+        "bound_role"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": ""
+    },
+    "MR-03": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0007",
+        "bound_role"
+       ],
+       [
+        "C-0035",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ],
+       [
+        "C-0272",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "bound_role"
+       ],
+       [
+        "KSV-0048",
+        "bound_role"
+       ],
+       [
+        "KSV-0049",
+        "bound_role"
+       ],
+       [
+        "KSV-0112",
+        "bound_role"
+       ],
+       [
+        "KSV-0050",
+        "bound_role"
+       ]
+      ]
+     },
+     "relation": "equal",
+     "why": "no_rule_with_two_or_more_distinct_verbs"
+    },
+    "MR-04": {
+     "all_failures": false,
+     "applicable": true,
+     "cases": [
+      {
+       "followup_sha": "51158d8e398749d1ebe796d99df0a502b882ba92b8179ff466ce0d6f17e8c2b4",
+       "pair": [
+        "VALID_PAIR",
+        ""
+       ],
+       "params": {
+        "container_index": 0,
+        "workload": [
+         "apps",
+         "Deployment",
+         "lab-a",
+         "web"
+        ]
+       },
+       "targets": {
+        "workload": [
+         [
+          "apps",
+          "Deployment",
+          "lab-a",
+          "web"
+         ]
+        ]
+       },
+       "trace": {
+        "object_mapping": "identity",
+        "operation": "pod.set_privileged_true",
+        "path": "spec.template.spec.containers[0].securityContext.privileged",
+        "workload": "Deployment/lab-a/web@apps"
+       }
+      }
+     ],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0057",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0017",
+        "workload"
+       ]
+      ]
+     },
+     "relation": "pass_to_fail",
+     "why": ""
+    },
+    "MR-05": {
+     "all_failures": false,
+     "applicable": false,
+     "cases": [],
+     "mapped": {
+      "kubescape": [
+       [
+        "C-0015",
+        "bound_role"
+       ],
+       [
+        "C-0267",
+        "workload"
+       ]
+      ],
+      "trivy": [
+       [
+        "KSV-0113",
+        "role_direct"
+       ]
+      ]
+     },
+     "relation": "fail_to_pass",
+     "why": "no_role_whose_only_rule_reads_core_secrets"
+    }
+   },
+   "source_sha": "ceb1e878097cc1d11ae088c06ba696d8e0e1f257dc087e6e37f1bb437d048998"
+  }
+ }
+}

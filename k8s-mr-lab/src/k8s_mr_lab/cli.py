@@ -1,4 +1,4 @@
-"""CLI: generate | run | triage | report | versions."""
+"""CLI: generate | run | triage | report | versions | mr (list|validate|trace|scaffold)."""
 from __future__ import annotations
 
 import argparse
@@ -7,9 +7,10 @@ import json
 import sys
 from pathlib import Path
 
+from . import mr_tools
 from . import report as rep
 from .bundles import BundleError, load_bundle
-from .registry import PolicyMapping, load_catalog
+from .registry import PolicyMapping, active_mrs, load_catalog
 from .runner import Runner
 from .scanners import SCANNERS, load_scanner_config, make_scanner
 from .triage import load_known_issues, triage_run
@@ -47,9 +48,7 @@ def cmd_generate(a) -> int:
         if validate_source(src):
             print(f"{sd.name}: INVALID_SOURCE {validate_source(src)}")
             continue
-        for mr in catalog.values():
-            if a.mr and mr.id not in a.mr:
-                continue
+        for mr in active_mrs(catalog, a.mr):
             ok, why = mr.applicable(src)
             if not ok:
                 print(f"{mr.id:6} {sd.name:22} SKIP  {why}")
@@ -130,6 +129,17 @@ def cmd_report(a) -> int:
     return 0
 
 
+def cmd_mr(a) -> int:
+    if a.mr_cmd == "scaffold":
+        return mr_tools.cmd_scaffold(a)
+    mapping = PolicyMapping.load(a.mapping)
+    if a.mr_cmd == "list":
+        return mr_tools.cmd_list(load_catalog(a.catalog), mapping)
+    if a.mr_cmd == "validate":
+        return mr_tools.cmd_validate(a, a.catalog, mapping)
+    return mr_tools.cmd_trace(a, a.catalog, mapping)
+
+
 def cmd_versions(a) -> int:
     cfg = load_scanner_config(a.config)
     bad = 0
@@ -179,6 +189,22 @@ def main(argv: list[str] | None = None) -> int:
 
     v = sub.add_parser("versions", help="check installed scanner versions against the pins")
     v.set_defaults(fn=cmd_versions)
+
+    m = sub.add_parser("mr", help="author and check MRs: list | validate | trace | scaffold")
+    m.add_argument("--properties", default="mrs/security_properties.yaml")
+    m.add_argument("--patterns", default="mrs/patterns.yaml")
+    msub = m.add_subparsers(dest="mr_cmd", required=True)
+    msub.add_parser("list", help="catalog overview")
+    mv = msub.add_parser("validate", help="schema + traceability + execute every MR on the seeds (no scanner needed)")
+    mv.add_argument("--seeds", nargs="+", default=["seeds/synthetic", "seeds/historical", "seeds/candidate"])
+    mt = msub.add_parser("trace", help="Property -> Pattern -> MR -> control traceability matrix")
+    mt.add_argument("--out")
+    ms = msub.add_parser("scaffold", help="write an MR implementation skeleton and print the catalog stub")
+    ms.add_argument("id")
+    ms.add_argument("name", help="kebab-case name, e.g. host-network-flip")
+    ms.add_argument("--pattern", default="KP3")
+    ms.add_argument("--src-dir", default="src/k8s_mr_lab/transforms")
+    m.set_defaults(fn=cmd_mr)
 
     a = p.parse_args(argv)
     return a.fn(a)

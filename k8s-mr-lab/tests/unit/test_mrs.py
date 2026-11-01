@@ -11,7 +11,9 @@ def _first(mr, src):
 
 
 def test_catalog_matches_code(catalog):
-    assert sorted(catalog) == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05"]
+    # the five frozen PoC MRs, plus MR-06 which is a candidate and is not part of the PoC baseline
+    assert sorted(m for m, mr in catalog.items() if mr.spec["status"] != "candidate") == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05"]
+    assert sorted(catalog) == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06"]
     for mr in catalog.values():
         assert mr.spec["preconditions"] and mr.spec["counterexample"] and mr.spec["limits"]
 

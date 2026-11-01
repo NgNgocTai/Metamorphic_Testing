@@ -1,10 +1,27 @@
-"""Base class of an executable Metamorphic Relation: (Precondition, Transformation, ExpectedRelation, Scope)."""
+"""Base class of an executable Metamorphic Relation: (Precondition, Transformation, ExpectedRelation, Scope).
+
+Metadata (name, category, relation, pattern, ...) lives only in mrs/catalog.yaml; `load_catalog` copies it onto the
+instance. A class binds itself to its catalog entry with `@implements("MR-xx")` and is discovered automatically.
+"""
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Callable
 
 from ..bundles import ConfigBundle
 from ..model import ResKey
+
+IMPLEMENTATIONS: dict[str, type["MetamorphicRelation"]] = {}
+
+
+def implements(mr_id: str) -> Callable[[type], type]:
+    """Class decorator: bind an implementation to the catalog entry `mr_id`."""
+    def deco(cls: type) -> type:
+        if mr_id in IMPLEMENTATIONS:
+            raise ValueError(f"{mr_id} is implemented twice ({IMPLEMENTATIONS[mr_id].__name__}, {cls.__name__})")
+        cls.id = mr_id
+        IMPLEMENTATIONS[mr_id] = cls
+        return cls
+    return deco
 
 
 def key_to_list(k: ResKey) -> list[str]:
@@ -16,13 +33,23 @@ def list_to_key(v: Any) -> ResKey:
 
 
 class MetamorphicRelation:
-    id = ""
-    name = ""
+    id = ""                       # set by @implements
+    name = ""                     # everything below is filled from the catalog entry by load_catalog()
     category = ""
-    property = ""
-    relation = "equal"            # equal | pass_to_fail | fail_to_pass
+    pattern = ""
+    property_id = ""
+    relation = "equal"            # a key of checker.RELATIONS (equal | pass_to_fail | fail_to_pass | custom)
     all_failures = False          # also compare every FAIL (control, resource) seen in either report
-    spec: dict = {}               # filled from mrs/catalog.yaml by the registry
+    spec: dict = {}
+
+    def bind(self, spec: dict) -> None:
+        self.spec = spec
+        self.name = spec["name"]
+        self.category = spec["category"]
+        self.pattern = spec["pattern"]
+        self.property_id = spec["property_id"]
+        self.relation = spec["relation"]
+        self.all_failures = bool(spec.get("all_failures", False))
 
     # --- precondition ------------------------------------------------------------------
     def applicable(self, source: ConfigBundle) -> tuple[bool, str]:

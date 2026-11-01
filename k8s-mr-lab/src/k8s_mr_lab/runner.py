@@ -15,7 +15,7 @@ from .checker import check, full_keys, static_keys
 from .model import (R_ENV_MISMATCH, R_INCONCLUSIVE, R_INVALID_PAIR, R_INVALID_SOURCE, R_SCAN_ERROR, R_SKIP, VALID_PAIR,
                     Assessment, NormalizedReport, ScannerInvocation, fmt_key)
 from .normalize import normalize
-from .registry import PolicyMapping
+from .registry import PolicyMapping, active_mrs
 from .scanners.base import Scanner
 from .transforms.base import MetamorphicRelation
 from .validation import diff_bundles, unified_text_diff, validate_source
@@ -181,9 +181,7 @@ class Runner:
         if problems:
             return [CaseResult(f"INVALID_SOURCE__{seed_id}", mr_id="*", result=R_INVALID_SOURCE, reason="; ".join(problems), **base)]
         out: list[CaseResult] = []
-        for mr in self.catalog.values():
-            if mr_ids and mr.id not in mr_ids:
-                continue
+        for mr in active_mrs(self.catalog, mr_ids):
             skip = lambda why: out.append(CaseResult(f"{mr.id}__{seed_id}__skip", mr_id=mr.id, result=R_SKIP, reason=why, **base))
             if not self.mapping.supports(mr.id, self.scanner.name):
                 skip("mr_not_mapped_for_scanner")

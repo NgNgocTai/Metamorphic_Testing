@@ -5,7 +5,7 @@ from typing import Any
 
 from ..bundles import ConfigBundle
 from ..model import VALID_PAIR
-from .base import MetamorphicRelation
+from .base import MetamorphicRelation, implements
 
 R_INVALID_PAIR = "INVALID_PAIR"
 
@@ -25,13 +25,8 @@ def reorder(value: Any, mode: str) -> Any:
     return value
 
 
+@implements("MR-01")
 class YamlKeyOrder(MetamorphicRelation):
-    id = "MR-01"
-    name = "yaml-key-order"
-    category = "Syntax"
-    property = "scanner_verdicts_independent_of_mapping_key_order"
-    relation = "equal"
-    all_failures = True
 
     def applicable(self, source: ConfigBundle) -> tuple[bool, str]:
         if not source.objects:
