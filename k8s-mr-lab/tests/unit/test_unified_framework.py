@@ -289,3 +289,78 @@ def test_every_comparison_carries_role_and_tier_from_the_one_pipeline(tmp_path, 
     assert {c["control"] for c in comps if c["role"] == "control"} <= {"C-0057"}
     assert all(c["tier"] == "CONTROL" for c in comps if c["role"] == "control")
     assert any(c["tier"] == "INFORMATIVE" and c["engaged"] for c in comps)           # C-0267 PASS -> FAIL on the workload
+
+
+# ------------------------------------------------------------------ control scope rule (MR-01 on aggregator controls) and verdict availability
+from k8s_mr_lab.checker import check, full_keys, static_keys as _sk  # noqa: E402
+from k8s_mr_lab.model import FAIL, NOT_EVALUATED, PASS, NormalizedReport  # noqa: E402
+
+AGG = "C-0015"
+SA_BOUND = ("", "ServiceAccount", "lab-a", "app")
+SA_LONE = ("", "ServiceAccount", "lab-a", "lonely")
+RB = ("rbac.authorization.k8s.io", "RoleBinding", "lab-a", "app-binding")
+ROLE_LONE = ("rbac.authorization.k8s.io", "Role", "lab-a", "unbound")
+
+
+def _scoped(mapping, catalog, seed, extra=None):
+    src = seed("rbac-workload")
+    for o in extra or []:
+        src.objects.append(o)
+    mr = catalog["MR-01"]
+    ex: list = []
+    keys = _sk(mr, mapping.entries("MR-01", "kubescape"), mapping.control_kinds("kubescape"), src, {}, mapping.scope_rules("kubescape"), ex)
+    return mr, src, keys, ex
+
+
+def test_unbound_objects_are_outside_an_aggregator_scope_bound_ones_are_inside(mapping, catalog, seed):
+    lone_sa = {"apiVersion": "v1", "kind": "ServiceAccount", "metadata": {"name": "lonely", "namespace": "lab-a"}}
+    lone_role = {"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "Role", "metadata": {"name": "unbound", "namespace": "lab-a"}, "rules": []}
+    _, _, keys, ex = _scoped(mapping, catalog, seed, [lone_sa, lone_role])
+    got = {k for c, k in keys if c == AGG}
+    assert {SA_BOUND, RB} <= got and SA_LONE not in got and ROLE_LONE not in got        # 3 and 4 below stay compared, unrelated ones do not
+    assert {(c, k) for c, k, r in ex if c == AGG} >= {(AGG, SA_LONE), (AGG, ROLE_LONE)} and {r for _, _, r in ex} == {"rbac_triple_member"}
+    assert ("C-0267", SA_LONE) not in keys and not any(c == "C-0057" and k[1] in ("ServiceAccount", "Role") for c, k in keys)
+
+
+def _reports(a, b):
+    r1, r2 = NormalizedReport("kubescape"), NormalizedReport("kubescape")
+    for (rep, v) in ((r1, a), (r2, b)):
+        for k in (SA_BOUND,):
+            rep.add(AGG, k, v)
+    return r1, r2
+
+
+@pytest.mark.parametrize("a,b,result", [
+    (PASS, PASS, "PASS"),                      # verdict on both sides and equal
+    (PASS, FAIL, "VIOLATION"),                 # verdict on both sides and different: scope filtering must not hide it
+    (PASS, NOT_EVALUATED, "INCONCLUSIVE"),     # in scope, source has a verdict, follow-up lost it
+    (NOT_EVALUATED, PASS, "INCONCLUSIVE"),     # follow-up has a verdict, source missing
+    (NOT_EVALUATED, NOT_EVALUATED, "INCONCLUSIVE"),   # in scope but the scanner evaluated neither side: stays visible, never PASS
+])
+def test_verdict_availability_on_an_in_scope_key_is_never_hidden(mapping, catalog, seed, a, b, result):
+    mr, src, keys, _ = _scoped(mapping, catalog, seed)
+    r1, r2 = _reports(a, b)
+    only = [(c, k) for c, k in keys if (c, k) == (AGG, SA_BOUND)]
+    assert only
+    assert check(mr, only, r1, r2).result == result
+
+
+def test_a_fail_outside_the_resolved_scope_is_still_compared_by_all_failures(mapping, catalog, seed):
+    mr, src, keys, _ = _scoped(mapping, catalog, seed)
+    r1, r2 = NormalizedReport("kubescape"), NormalizedReport("kubescape")
+    r1.add(AGG, SA_LONE, FAIL)
+    r2.add(AGG, SA_LONE, PASS)                 # an unrelated resource's finding changes: MR-01 (all_failures) must still see it
+    full = full_keys(mr, keys, r1, r2)
+    assert (AGG, SA_LONE) in full
+
+
+def test_unknown_scope_rule_in_the_registry_is_rejected(mapping):
+    reg = copy.deepcopy(mapping.registry)
+    reg["controls"]["kubescape"]["C-0015"]["scope_rule"] = "nope"
+    assert has(problems(mapping, registry=reg), "unknown scope_rule 'nope'")
+
+
+def test_registry_declares_the_rule_for_exactly_the_aggregator_controls(mapping):
+    for sc, ctl in mapping.registry["controls"].items():
+        for c, m in ctl.items():
+            assert bool(m.get("scope_rule")) == bool(m.get("aggregator")), (sc, c)
