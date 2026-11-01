@@ -1,0 +1,26 @@
+{
+  "tool": "kubescape",
+  "version": "v4.0.15",
+  "mode": "local-file",
+  "command": [
+    "kubescape",
+    "scan",
+    "framework",
+    "allcontrols",
+    "--keep-local",
+    "--verbose",
+    "--format",
+    "json",
+    "--output",
+    "/tmp/mut/mutant/cases/MR-01__rbac-secrets-reader__39ef56d618/scanner-source.json",
+    "--use-artifacts-from",
+    "/tmp/mut/ks-drop-subject-ns",
+    "/tmp/mut/mutant/cases/MR-01__rbac-secrets-reader__39ef56d618/source"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 3809,
+  "policy_digest": "772c1faf4ad58c0029027abb9e4ed7db14a4c1e44ac488611238f2e60f2af2ab",
+  "raw_path": "/tmp/mut/mutant/cases/MR-01__rbac-secrets-reader__39ef56d618/scanner-source.json",
+  "error": null,
+  "stderr_tail": "\",\"msg\":\"Accessing local objects...\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:58:59+07:00\",\"msg\":\"Done accessing local objects\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:58:59+07:00\",\"msg\":\"Scanning Directory\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:59:02+07:00\",\"msg\":\"Done scanning Directory\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:59:02+07:00\",\"msg\":\"Done aggregating results\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:59:02+07:00\",\"msg\":\"Scan results saved\",\"filename\":\"/tmp/mut/mutant/cases/MR-01__rbac-secrets-reader__39ef56d618/scanner-source.json\"}\n\nOverall compliance-score (100- Excellent, 0- All failed): 72\n"
+}

@@ -1,0 +1,26 @@
+{
+  "tool": "kubescape",
+  "version": "v4.0.15",
+  "mode": "local-file",
+  "command": [
+    "kubescape",
+    "scan",
+    "framework",
+    "allcontrols",
+    "--keep-local",
+    "--verbose",
+    "--format",
+    "json",
+    "--output",
+    "/tmp/mut/fixed/cases/MR-02__rbac-workload__66de14dad8/scanner-followup.json",
+    "--use-artifacts-from",
+    "/tmp/mut/ks-namespace-fix",
+    "/tmp/mut/fixed/cases/MR-02__rbac-workload__66de14dad8/followup"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 4385,
+  "policy_digest": "777e057462c27e21ab2031b30ca78280d34e9eadffe1b7104629c8ae04cb20ee",
+  "raw_path": "/tmp/mut/fixed/cases/MR-02__rbac-workload__66de14dad8/scanner-followup.json",
+  "error": null,
+  "stderr_tail": "07:00\",\"msg\":\"Accessing local objects...\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:57:56+07:00\",\"msg\":\"Done accessing local objects\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:57:56+07:00\",\"msg\":\"Scanning Directory\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:58:00+07:00\",\"msg\":\"Done scanning Directory\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:58:00+07:00\",\"msg\":\"Done aggregating results\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T11:58:00+07:00\",\"msg\":\"Scan results saved\",\"filename\":\"/tmp/mut/fixed/cases/MR-02__rbac-workload__66de14dad8/scanner-followup.json\"}\n\nOverall compliance-score (100- Excellent, 0- All failed): 74\n"
+}
