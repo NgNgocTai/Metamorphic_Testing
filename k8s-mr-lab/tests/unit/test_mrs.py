@@ -11,9 +11,9 @@ def _first(mr, src):
 
 
 def test_catalog_matches_code(catalog):
-    # the five frozen PoC MRs, plus MR-06 / MR-07 which are candidates and are not part of the PoC baseline
+    # the five frozen PoC MRs, plus MR-06..MR-09 which are candidates and are not part of the PoC baseline
     assert sorted(m for m, mr in catalog.items() if mr.spec["status"] != "candidate") == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05"]
-    assert sorted(catalog) == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06", "MR-07"]
+    assert sorted(catalog) == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06", "MR-07", "MR-08", "MR-09"]
     for mr in catalog.values():
         assert mr.spec["preconditions"] and mr.spec["counterexample"] and mr.spec["limits"]
 
@@ -194,3 +194,64 @@ def test_mr07_requires_explicit_subject_namespace_and_present_sa(catalog, seed):
     del src.find("RoleBinding", "lab-c", "reader-binding")["subjects"][0]["namespace"]
     assert not catalog["MR-07"].applicable(src)[0]
     assert not catalog["MR-07"].applicable(seed("rbac-no-binding"))[0]
+
+
+# ---------------- MR-08 (candidate): ServiceAccount subject moved to another namespace
+def _mr08(catalog, seed, name="rbac-secrets-reader"):
+    mr, src = catalog["MR-08"], seed(name)
+    (p,) = mr.generate_parameters(src, 9)
+    return mr, src, p
+
+
+def test_mr08_positive_changes_one_field_and_adds_the_companion_serviceaccount(catalog, seed):
+    mr, src, p = _mr08(catalog, seed)
+    before = copy.deepcopy(src.objects)
+    fu, trace = mr.transform(src, p)
+    assert src.objects == before and mr.transform(src, p)[0].dump() == fu.dump()
+    d = diff_bundles(src, fu)
+    assert sorted(x["op"] for x in d) == ["add_object", "change"]
+    assert fu.find("RoleBinding", "lab-c", "reader-binding")["subjects"][0]["namespace"] == "lab-c-shifted"
+    assert fu.find("ServiceAccount", "lab-c-shifted", "reader") is not None
+    assert mr.validate_pair(src, fu, p) == (VALID_PAIR, "")
+    assert mr.targets(src, p) == {"workload": [("", "Pod", "lab-c", "reader-pod")]}
+
+
+def test_mr08_counterexample_another_path_to_the_serviceaccount_makes_it_inapplicable(catalog, seed):
+    mr = catalog["MR-08"]
+    for extra in ({"kind": "Group", "apiGroup": "rbac.authorization.k8s.io", "name": "system:serviceaccounts:lab-c"},
+                  {"kind": "User", "apiGroup": "rbac.authorization.k8s.io", "name": "system:serviceaccount:lab-c:reader"},
+                  {"kind": "Group", "apiGroup": "rbac.authorization.k8s.io", "name": "system:authenticated"},
+                  {"kind": "ServiceAccount", "name": "reader", "namespace": "lab-c"}):
+        src = seed("rbac-secrets-reader")
+        src.objects.append({"apiVersion": "rbac.authorization.k8s.io/v1", "kind": "RoleBinding", "metadata": {"name": "other", "namespace": "lab-c"},
+                            "subjects": [extra], "roleRef": {"apiGroup": "rbac.authorization.k8s.io", "kind": "Role", "name": "reader-role"}})
+        assert mr.applicable(src) == (False, "no_sole_binding_of_a_serviceaccount_used_by_a_workload"), extra
+
+
+def test_mr08_counterexamples_precondition(catalog, seed):
+    mr = catalog["MR-08"]
+    src = seed("rbac-secrets-reader")
+    del src.find("RoleBinding", "lab-c", "reader-binding")["subjects"][0]["namespace"]
+    assert not mr.applicable(src)[0]                                                  # no explicit namespace
+    assert not mr.applicable(seed("rbac-basic"))[0]                                   # no workload runs as the subject
+    src = seed("rbac-secrets-reader")
+    src.find("RoleBinding", "lab-c", "reader-binding")["subjects"].append({"kind": "ServiceAccount", "name": "other", "namespace": "lab-c"})
+    assert not mr.applicable(src)[0]                                                  # more than one subject
+
+
+def test_mr08_invalid_pairs_are_rejected(catalog, seed):
+    mr, src, p = _mr08(catalog, seed)
+    fu, _ = mr.transform(src, p)
+    fu.objects.pop()                                                                   # companion SA missing: dangling subject
+    assert mr.validate_pair(src, fu, p) == ("INVALID_PAIR", "the_only_added_object_must_be_the_serviceaccount_in_the_new_namespace")
+    fu, _ = mr.transform(src, p)
+    fu.find("RoleBinding", "lab-c", "reader-binding")["roleRef"]["name"] = "elsewhere"   # unrelated extra change
+    assert mr.validate_pair(src, fu, p)[0] == "INVALID_PAIR"
+    fu, _ = mr.transform(src, p)
+    fu.find("RoleBinding", "lab-c", "reader-binding")["subjects"][0]["namespace"] = "lab-c-other"   # wrong target namespace
+    assert mr.validate_pair(src, fu, p)[0] == "INVALID_PAIR"
+
+
+def test_mr08_is_scoped_to_workload_controls_only(mapping):
+    assert [(e.control, e.target) for e in mapping.entries("MR-08", "kubescape")] == [("C-0267", "workload"), ("C-0272", "workload")]
+    assert mapping.entries("MR-08", "trivy") == []                                    # no workload-level RBAC control in Trivy

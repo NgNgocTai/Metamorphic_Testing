@@ -81,7 +81,7 @@ def test_kubescape_mr05_is_satisfied_by_a_correct_scanner(tmp_path, catalog, map
 
 
 def test_source_scan_is_cached_but_followups_are_not(tmp_path, catalog, mapping):
-    runner, rp, _ = make(tmp_path, catalog, mapping, "trivy")
+    runner, rp, _ = make(tmp_path, catalog, mapping, "kubescape")
     src = load_bundle(SEEDS / "rbac-workload", "rbac-workload")
     mr = catalog["MR-02"]
     for p in mr.generate_parameters(src, 9):
@@ -124,9 +124,15 @@ def test_invalid_source_is_reported_without_scanning(tmp_path, catalog, mapping)
 
 
 def test_ut04_mr02_without_binding_is_skip_not_a_fake_pair(tmp_path, catalog, mapping):
-    runner, rp, _ = make(tmp_path, catalog, mapping, "trivy")
+    runner, rp, _ = make(tmp_path, catalog, mapping, "kubescape")
     res = runner.run_seed(SEEDS / "rbac-no-binding", ["MR-02"])
     assert [(r.result, r.reason) for r in res] == [("SKIP", "no_rolebinding")] and rp.calls == 0
+
+
+def test_mr_without_scope_for_a_scanner_is_skipped_with_the_declared_reason_path(tmp_path, catalog, mapping):
+    runner, rp, _ = make(tmp_path, catalog, mapping, "trivy")
+    res = runner.run_seed(SEEDS / "rbac-workload", ["MR-02"])
+    assert [(r.result, r.reason) for r in res] == [("SKIP", "mr_not_mapped_for_scanner")] and rp.calls == 0
 
 
 def test_invalid_pair_is_never_scanned(tmp_path, catalog, mapping):

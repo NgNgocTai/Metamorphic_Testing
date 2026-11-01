@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+import re
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -112,19 +113,20 @@ def test_reference_without_verified_flag_is_rejected(mapping):
     assert any("without boolean 'verified'" in p for p in trace_problems(read_specs(CATALOG), props=props, mapping=mapping))
 
 
-def test_unsupported_scanner_control_mapping_is_rejected():
-    data = copy.deepcopy(PolicyMapping.load(ROOT / "config" / "policy-mapping.yaml").data)
-    data["mrs"]["MR-04"]["trivy"].append({"control": "KSV-9999", "target": "workload"})
+def test_unsupported_scanner_control_mapping_is_rejected(mapping):
+    data = copy.deepcopy(mapping.data)
+    data["mrs"]["MR-04"]["trivy"].append({"control": "KSV-9999", "target": "workload", "reason": "x"})
     data["mrs"]["MR-77"] = {"trivy": []}
-    problems = trace_problems(read_specs(CATALOG), mapping=PolicyMapping(data))
-    assert any("MR-04/trivy: mapped control KSV-9999" in p for p in problems)
-    assert any("policy-mapping lists unknown MR MR-77" in p for p in problems)
+    problems = trace_problems(read_specs(CATALOG), mapping=PolicyMapping(data, mapping.registry))
+    assert any("MR-04/trivy/KSV-9999->workload: control is not in control-registry.yaml" in p for p in problems)
+    assert any("mapping lists unknown MR MR-77" in p for p in problems)
 
 
 def test_candidate_is_skipped_unless_named(catalog):
     assert [m.id for m in active_mrs(catalog)] == ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05"]
     assert [m.id for m in active_mrs(catalog, ["MR-06"])] == ["MR-06"]
     assert [m.id for m in active_mrs(catalog, ["MR-07"])] == ["MR-07"]
+    assert not {"MR-08", "MR-09"} & {m.id for m in active_mrs(catalog)}
 
 
 def test_metadata_has_a_single_source(catalog):
@@ -250,11 +252,11 @@ def test_trace_matrix_lists_every_mr(mapping, tmp_path):
     out = tmp_path / "t.md"
     mr_tools.cmd_trace(SimpleNamespace(properties=str(PROPS), out=str(out)), str(CATALOG), mapping)
     text = out.read_text(encoding="utf-8")
-    assert all(f"| MR-0{i} |" in text for i in range(1, 8)) and "K02" in text and "CWE-269" in text and "KSV-0009" in text and "(unverified)" not in text
+    assert all(f"| MR-0{i} |" in text for i in range(1, 10)) and "K02" in text and "CWE-269" in text and "KSV-0009" in text and "(unverified)" not in text
 
 
 def test_scaffold_refuses_to_overwrite(tmp_path):
-    a = SimpleNamespace(id="MR-08", name="host-pid-flip", pattern="KP3", src_dir=str(tmp_path), patterns=str(PATS))
+    a = SimpleNamespace(id="MR-10", name="host-pid-flip", pattern="KP3", src_dir=str(tmp_path), patterns=str(PATS))
     assert mr_tools.cmd_scaffold(a, str(CATALOG)) == 0
     assert mr_tools.cmd_scaffold(a, str(CATALOG)) == 1
 
@@ -298,12 +300,12 @@ def test_pattern_requires_matching_base_class(mapping):
     assert any("MR-01: pattern KP3 requires base class ControlledChange" in p for p in problems)
 
 
-def test_mapping_entry_must_have_control_and_target():
-    data = copy.deepcopy(PolicyMapping.load(ROOT / "config" / "policy-mapping.yaml").data)
+def test_mapping_entry_must_have_control_target_and_reason(mapping):
+    data = copy.deepcopy(mapping.data)
     data["mrs"]["MR-04"]["trivy"].append({"control": "KSV-0017"})
-    data["mrs"]["MR-04"]["kubescape"].append({"control": "", "target": "workload"})
-    problems = trace_problems(read_specs(CATALOG), mapping=PolicyMapping(data))
-    assert sum("needs non-empty 'control' and 'target'" in p for p in problems) == 2
+    data["mrs"]["MR-04"]["kubescape"].append({"control": "", "target": "workload", "reason": "x"})
+    problems = trace_problems(read_specs(CATALOG), mapping=PolicyMapping(data, mapping.registry))
+    assert sum("needs non-empty control, target and reason" in p for p in problems) == 2
 
 
 def test_exercise_skips_invalid_sources(catalog, mapping):
@@ -317,7 +319,7 @@ def test_exercise_skips_invalid_sources(catalog, mapping):
 
 
 def _scaffold(tmp_path, **kw):
-    a = SimpleNamespace(**{"id": "MR-08", "name": "x-flip", "pattern": "KP3", "src_dir": str(tmp_path),
+    a = SimpleNamespace(**{"id": "MR-10", "name": "x-flip", "pattern": "KP3", "src_dir": str(tmp_path),
                            "patterns": str(PATS), **kw})
     return mr_tools.cmd_scaffold(a, str(CATALOG))
 
@@ -397,13 +399,13 @@ def test_element_groups_follow_the_mstwi_rule():
     _, rows = mr_tools.element_matrix(read_specs(CATALOG), mr_tools.load_template_elements(PATS))
     groups = mr_tools.element_groups(rows)
     assert groups[0] == ["MR-04", "MR-06"]                          # the only identical combination today
-    assert sorted(map(tuple, groups[1:])) == [("MR-01",), ("MR-02",), ("MR-03",), ("MR-05",), ("MR-07",)]
+    assert sorted(map(tuple, groups[1:])) == [("MR-01",), ("MR-02",), ("MR-03",), ("MR-05",), ("MR-07",), ("MR-08",), ("MR-09",)]
 
 
 def test_mr_patterns_reports_coarser_families(capsys):
     mr_tools.cmd_patterns(SimpleNamespace(patterns=str(PATS), out=None), str(CATALOG))
     out = capsys.readouterr().out
-    assert "KP2 = MR-02: spans EP3 -> identical" in out
+    assert "KP2 = MR-02: spans EP3 -> identical" in out and "KP4 = MR-09" in out
     assert "KP3 = MR-04, MR-05, MR-06" in out and "coarser than the element level" in out
 
 
@@ -418,7 +420,7 @@ def _explain(capsys, mr_id, case=None):
     return rc, capsys.readouterr()
 
 
-@pytest.mark.parametrize("mr_id", ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06", "MR-07"])
+@pytest.mark.parametrize("mr_id", ["MR-01", "MR-02", "MR-03", "MR-04", "MR-05", "MR-06", "MR-07", "MR-08", "MR-09"])
 def test_explain_works_for_every_catalog_mr(capsys, mr_id):
     rc, out = _explain(capsys, mr_id)
     assert rc == 0
@@ -466,3 +468,85 @@ def test_docs_reference_existing_files_and_cli_commands():
         assert f"mr {cmd}" in text, cmd
     with pytest.raises(SystemExit):
         main(["mr", "no-such-subcommand"])
+
+
+
+def test_unverified_references_carry_a_basis_and_cis_is_not_called_verified(mapping):
+    props = copy.deepcopy(mr_tools.load_properties(PROPS))
+    for p in props:
+        for lst in mr_tools.REF_LISTS:
+            for ref in p.get(lst) or []:
+                assert isinstance(ref["verified"], bool), (p["id"], lst)
+                if not ref["verified"]:
+                    assert ref.get("basis"), (p["id"], lst, ref)
+        assert not any(r["verified"] for r in p.get("cis_nsa") or []), p["id"]   # the CIS document itself was not consulted
+    hostns = next(p for p in props if p["id"] == "SP-POD-HOST-NAMESPACES")
+    assert "not consulted" in hostns["cis_nsa"][0]["basis"]
+    # the tool enforces it: an unverified reference without a basis is a traceability problem
+    del hostns["cis_nsa"][0]["basis"]
+    assert any("unverified cis_nsa entry must say why" in b for b in trace_problems(read_specs(CATALOG), props=props, mapping=mapping))
+
+
+# ------------------------------------------------------------------ evidence sanitiser
+def test_sanitize_evidence_keeps_a_trace_to_the_originals(tmp_path):
+    import hashlib
+    import importlib.util
+    import json
+    spec = importlib.util.spec_from_file_location("sanitize_evidence", ROOT / "scripts" / "sanitize_evidence.py")
+    se = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(se)
+    src = tmp_path / "ev"
+    (src / "case").mkdir(parents=True)
+    raw = '{"controlsInputs": "/home/alice/.kubescape/x.json", "win": "D:\\Code\\KLTN\\Tools\\a", "ok": "/home/USER/y"}'
+    (src / "case" / "a.json").write_text(raw, encoding="utf-8")
+    (src / "case" / "plain.txt").write_text("nothing personal here", encoding="utf-8")
+    (src / "blob.bin").write_bytes(b"\x00/home/alice\xff")
+    out = tmp_path / "pub"
+    rec = se.sanitize_tree(src, out)
+    pub = json.loads((out / "case" / "a.json").read_text(encoding="utf-8"))
+    assert pub["controlsInputs"] == "/home/USER/.kubescape/x.json" and pub["win"] == "<WINDOWS_PROJECT_PATH>" and pub["ok"] == "/home/USER/y"
+    assert (out / "blob.bin").read_bytes() == b"\x00/home/alice\xff"                    # non-text files are copied byte for byte
+    f = rec["files"]
+    assert f["case/a.json"]["original_sha256"] == hashlib.sha256(raw.encode()).hexdigest() != f["case/a.json"]["sanitized_sha256"]
+    assert f["case/plain.txt"]["original_sha256"] == f["case/plain.txt"]["sanitized_sha256"]
+    assert se.scan(out) == [] and se.scan(src) != []
+    assert (src / "case" / "a.json").read_text(encoding="utf-8") == raw                   # the original is untouched
+    with pytest.raises(SystemExit, match="refusing to overwrite"):
+        se.sanitize_tree(src, out)
+
+
+def test_review_packet_never_records_a_decision(capsys, tmp_path):
+    from k8s_mr_lab.cli import main
+    out = tmp_path / "MR-07.md"
+    base = ["--config", str(ROOT / "config/scanners.yaml"), "--mapping", str(ROOT / "config/policy-mapping.yaml"), "--catalog", str(CATALOG)]
+    assert main(base + ["mr", "--properties", str(PROPS), "--patterns", str(PATS), "review-packet", "MR-07", "--out", str(out)]) == 0
+    text = out.read_text(encoding="utf-8")
+    assert "PENDING_INDEPENDENT_REVIEW" in text and "author_reviewed" in text
+    assert len([ln for ln in text.splitlines() if re.match(r"\| Q\d \|", ln)]) == 8 and "independently_reviewed" in text
+    assert "| Người review | |" in text and "| Quyết định | ACCEPT / ACCEPT_WITH_CHANGES / REJECT |" in text     # blank form
+    assert "ACCEPT" not in text.replace("ACCEPT / ACCEPT_WITH_CHANGES / REJECT", "").replace("chỉ** khi quyết định là ACCEPT", "")
+    assert main(base + ["mr", "--properties", str(PROPS), "--patterns", str(PATS), "review-packet", "MR-42"]) == 2
+
+
+def test_package_run_evidence_can_sanitise_before_hashing(tmp_path):
+    import hashlib
+    import importlib.util
+    import json
+    spec = importlib.util.spec_from_file_location("package_run_evidence", ROOT / "scripts" / "package_run_evidence.py")
+    pk = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pk)
+    src = ROOT / "docs" / "evidence" / "mr07_dev_2026-11-01" / "kubescape"            # a packaged run that still carries /home/<user>
+    out = tmp_path / "pub"
+    assert pk.main([str(src), str(out), "--mr", "MR-07", "--sanitize"]) == 0
+    man = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
+    assert man["sanitized"] is True
+    changed = {k: v for k, v in man["files"].items() if "original_sha256" in v}
+    assert changed and all(v["original_sha256"] != v["sha256"] for v in changed.values())
+    for rel, v in man["files"].items():                                                 # the manifest describes the files as shipped
+        assert hashlib.sha256((out / rel).read_bytes()).hexdigest() == v["sha256"], rel
+    se_spec = importlib.util.spec_from_file_location("sanitize_evidence", ROOT / "scripts" / "sanitize_evidence.py")
+    se = importlib.util.module_from_spec(se_spec)
+    se_spec.loader.exec_module(se)
+    assert se.scan(out) == []
+    for rel, v in changed.items():                                                      # and each changed file maps back to its original in the source package
+        assert hashlib.sha256((src / rel).read_bytes()).hexdigest() == v["original_sha256"], rel
