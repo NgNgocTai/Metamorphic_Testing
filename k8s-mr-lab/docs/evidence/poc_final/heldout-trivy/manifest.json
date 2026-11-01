@@ -1,0 +1,232 @@
+{
+  "source_run": "trivy",
+  "selected_by": {
+    "mr": [],
+    "result": [
+      "VIOLATION"
+    ]
+  },
+  "n_cases": 3,
+  "sanitized": true,
+  "files": {
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/assessment.json": {
+      "sha256": "4cfdb21bb44f7a4fb25ec66b4ae0e108684917ac74cb157e3c307718684d2ed3",
+      "bytes": 874
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/diff.json": {
+      "sha256": "ae21b845d185c3eb009a6c2d4d9e45df7fca6f23d28be60bd186a9d1a9c55bf7",
+      "bytes": 191
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/diff.patch": {
+      "sha256": "fe3479926b70f9f0741aac5693a22819fb298e418b577b3777c9d333494c4acf",
+      "bytes": 172
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/followup/bundle.yaml": {
+      "sha256": "4be81751e4a3bb5cea101bb4d5e23ae96fdcbb8a978a0a9d7f535c482bcfaf90",
+      "bytes": 1124
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/invocation-followup.json": {
+      "sha256": "58df4ff742253f76c95416c28c02ed0239fe8a123433941342a02697bacf0efa",
+      "bytes": 1080,
+      "original_sha256": "314b9d988f7abe6842b99168c92a7334539980401ba8e7bde08e2309646f4bae"
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/invocation-source.json": {
+      "sha256": "f8de1ff818229753c5ef237caa1a06031c829f7ebc4367e7c2a6ee2b98c5372f",
+      "bytes": 1074,
+      "original_sha256": "54f019f16027406373f69b4bea9c02eb211478e122fda4d833daab6e183efc2d"
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/normalized-followup.json": {
+      "sha256": "e88bcdebf04a6150b9183e420648ef22ac6a7d8837fbfda849f51aa1267b7361",
+      "bytes": 1759
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/normalized-source.json": {
+      "sha256": "e88bcdebf04a6150b9183e420648ef22ac6a7d8837fbfda849f51aa1267b7361",
+      "bytes": 1759
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/provenance.json": {
+      "sha256": "36029bec2dadfe1c4ba4100b45dc55d322e276f62616506451889c8d792f1036",
+      "bytes": 846
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/scanner-followup.json": {
+      "sha256": "86f5a2d46dec6b48fe60a2867dcc5d55c6d9b140857de0b2f91578ca64ac83cb",
+      "bytes": 75071
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/scanner-source.json": {
+      "sha256": "537a00ee1cfb115e44078888c9f991d00888c78e8f3589502cebdd95df630ce2",
+      "bytes": 75089
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/scope.json": {
+      "sha256": "db13b24bd965461afd959d430f5024566dda986aefe1d7e580bbe8a68be18e62",
+      "bytes": 164
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/source/bundle.yaml": {
+      "sha256": "85722f9f92e9e81da45a91efd9b0a586af80102be38f3416a25841533ab4b57d",
+      "bytes": 1122
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/spans-followup.json": {
+      "sha256": "455d206b0b3944cf7cfb387248478ea532c0fa04122db536824c4cc327d04990",
+      "bytes": 96
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/spans-source.json": {
+      "sha256": "455d206b0b3944cf7cfb387248478ea532c0fa04122db536824c4cc327d04990",
+      "bytes": 96
+    },
+    "cases/MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca/trace.json": {
+      "sha256": "4e4935442ef42bd638f0a7133d786f13bf4ad90da6b65a1102728d137424764d",
+      "bytes": 374
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/assessment.json": {
+      "sha256": "73ea8d7c5261c61d4a3ee87886e689196c5ba9b24126f737e847ee4a708e8371",
+      "bytes": 875
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/diff.json": {
+      "sha256": "cc3be05875d919887de6dd5f7436f1ce36a0528b247231894b1a0e07810d6926",
+      "bytes": 192
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/diff.patch": {
+      "sha256": "fe3479926b70f9f0741aac5693a22819fb298e418b577b3777c9d333494c4acf",
+      "bytes": 172
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/followup/bundle.yaml": {
+      "sha256": "183a682f93e7fcd08c4670ed79538ef9124530d88ee64cecb8b56ebc3f48887b",
+      "bytes": 1126
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/invocation-followup.json": {
+      "sha256": "a9d39d0140414d3729fa1c774eef7976109b6be5f92639409e42b1b1b3870a7a",
+      "bytes": 1080,
+      "original_sha256": "9b888f08705276c99d3081e7b42e8d10949e35d6d5a77247868e89cb8b652b39"
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/invocation-source.json": {
+      "sha256": "ea420e58c6f771dc7a359969fb6dccf3346b976a07fa11a7103e46fc89a00905",
+      "bytes": 1074,
+      "original_sha256": "c52f6e86604033aa887caedf870715f97eaddea4282e98f42e003b3c159379cd"
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/normalized-followup.json": {
+      "sha256": "6311fefd18a912e2fd14ea6544052cee73e0f8bfccc75c6aa9d1dfc4e584971f",
+      "bytes": 1765
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/normalized-source.json": {
+      "sha256": "6311fefd18a912e2fd14ea6544052cee73e0f8bfccc75c6aa9d1dfc4e584971f",
+      "bytes": 1765
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/provenance.json": {
+      "sha256": "aa996eba30fb11cfaf28d751a785e6a786a299d936d8f501854eedc33b6620d5",
+      "bytes": 847
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/scanner-followup.json": {
+      "sha256": "6bd2e1d3d040384b3cc0cfd7028b6f22e3fa6d903e1842f2880b4fbf2d636400",
+      "bytes": 75074
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/scanner-source.json": {
+      "sha256": "41a190cf1260128dfc12f1cc863bb648c3fb3e452a953a37a7228ad3e96b48e4",
+      "bytes": 75092
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/scope.json": {
+      "sha256": "f99a3b3bede350ef986e42c62b60771614755d1c994bacc71bc8be52bc92ecef",
+      "bytes": 165
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/source/bundle.yaml": {
+      "sha256": "2a36ae520afa23f4f23c265699207a3b25bb2258bb582d76887f42f47375acfc",
+      "bytes": 1124
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/spans-followup.json": {
+      "sha256": "ff83c2a0f3e050b9fc9cc1514080d6791697949ea7c9d10f73f53347c4bf4633",
+      "bytes": 97
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/spans-source.json": {
+      "sha256": "ff83c2a0f3e050b9fc9cc1514080d6791697949ea7c9d10f73f53347c4bf4633",
+      "bytes": 97
+    },
+    "cases/MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c/trace.json": {
+      "sha256": "c7ec703153248ad321c71cf9f80fc62675bc3a930365667be2919d35b67a586b",
+      "bytes": 376
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/assessment.json": {
+      "sha256": "f6505aa058e6d018b8072f78462611c79e7dd21d78be3f360c931511a1cec704",
+      "bytes": 876
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/diff.json": {
+      "sha256": "f01f211e3b271c87b6bb1ba26f54bbf5d7f9012b4d28d908f1edf2d0dedf550b",
+      "bytes": 193
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/diff.patch": {
+      "sha256": "fe3479926b70f9f0741aac5693a22819fb298e418b577b3777c9d333494c4acf",
+      "bytes": 172
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/followup/bundle.yaml": {
+      "sha256": "6277e63cdaf951625adcb6b2268b8e583f2227cbfac2628cddc200d2bc60f92c",
+      "bytes": 1128
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/invocation-followup.json": {
+      "sha256": "9c5595d8903753bc1728890082c2bd529fb09605344db9eceee613d152eadc55",
+      "bytes": 1080,
+      "original_sha256": "9972dc586477337e2feea67c935123ac1cbca76f210b2918a745343dc3a6c7b1"
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/invocation-source.json": {
+      "sha256": "4d3d0d0962a27e6289a3511bd1e16c91e73a02cc1f9d01ac2b41d75332e10164",
+      "bytes": 1074,
+      "original_sha256": "df468246200925e48bbb63e3bf31c37a48447aeae154d56107bcf39b6b0c6835"
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/normalized-followup.json": {
+      "sha256": "9ec1b65eeb53f9a725db9b9bd67954259c21486744dd40187948461ceb8bf0b4",
+      "bytes": 1771
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/normalized-source.json": {
+      "sha256": "9ec1b65eeb53f9a725db9b9bd67954259c21486744dd40187948461ceb8bf0b4",
+      "bytes": 1771
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/provenance.json": {
+      "sha256": "0a71460fe60c09f8fb31097f97d9a5dfb7ad021f257b70d4c05a12dfebc9c753",
+      "bytes": 848
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/scanner-followup.json": {
+      "sha256": "14e557270a938cdcc17280c83b0e3bcf65e87834636f0630b291fbcaf9f2b17a",
+      "bytes": 75077
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/scanner-source.json": {
+      "sha256": "599db4fd62a3fba4405f2054b23bd0d3136a1c3044eb6f9be37c86df35342b7e",
+      "bytes": 75095
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/scope.json": {
+      "sha256": "ba11f8a0ee651a7de2822c4cf1501acc460cfc11ecf791d821cda673eb71af9c",
+      "bytes": 166
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/source/bundle.yaml": {
+      "sha256": "b7d9cca3921f10f2d9df49dc89c8024b6ab651aad59ae14cd51591da7f819393",
+      "bytes": 1126
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/spans-followup.json": {
+      "sha256": "3a9f3fd1b3c1bbf5a597ffbec486ae470fb37abaa7ea84536f59f52724b7f47d",
+      "bytes": 98
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/spans-source.json": {
+      "sha256": "3a9f3fd1b3c1bbf5a597ffbec486ae470fb37abaa7ea84536f59f52724b7f47d",
+      "bytes": 98
+    },
+    "cases/MR-05__rbac-002-3-read-access-to-secrets__6c7c525260/trace.json": {
+      "sha256": "08091c86708896abb021dd9c8c4806f93d173e0fd4588da148324407fff8f9ea",
+      "bytes": 378
+    },
+    "comparisons.csv": {
+      "sha256": "393fa58493d8876c4bf2b54c2a330640de941203d5f90c92b4a3257e309278dd",
+      "bytes": 92088
+    },
+    "environment.lock.json": {
+      "sha256": "520e3f745e05abce204b1441f68cc403fb1279cdf48f4b78a30ea00ade8e0d59",
+      "bytes": 2319
+    },
+    "results.csv": {
+      "sha256": "020e03ccf83c2b9cfd307d2010b7f5e568b5b2bae4ba2ead0bc93c61d2764e9f",
+      "bytes": 254233
+    },
+    "results.json": {
+      "sha256": "06da7822a21a068f691a3acb8a17ea93200261fe6773d3558b2b0a1c789813a3",
+      "bytes": 973470
+    },
+    "triage.json": {
+      "sha256": "1008dc44fc4eabbaac920a36fd25fdc8524b0e25eee968a1496b6090f1df8013",
+      "bytes": 3604,
+      "original_sha256": "a6f72fb9fc268f46f0cca035b664e2a5d2dc6210ae8a1ab611100b67259c9825"
+    }
+  }
+}

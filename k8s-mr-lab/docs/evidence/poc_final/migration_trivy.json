@@ -1,0 +1,706 @@
+{
+  "scanner": "trivy",
+  "old_runs": [
+    "runs/trivy",
+    "docs/evidence/archive/informative_2026-11-01/trivy-run",
+    "docs/evidence/archive/mr07_dev_2026-11-01/trivy",
+    "docs/evidence/archive/mr09_requirement_derived_2026-11-01/trivy",
+    "docs/evidence/archive/p0_reverification_2026-11-01/trivy",
+    "docs/evidence/archive/p0_reverification_2026-11-01/trivy-mr02"
+  ],
+  "new_run": "runs/final/trivy",
+  "old_mapping_rev": "4ca941e",
+  "totals": {
+    "UNCHANGED": 57,
+    "EXPECTED_CHANGE": 20,
+    "NEW_BEHAVIOR": 7
+  },
+  "by_mr": {
+    "MR-01/UNCHANGED": 13,
+    "MR-02/EXPECTED_CHANGE": 12,
+    "MR-02/UNCHANGED": 3,
+    "MR-03/UNCHANGED": 7,
+    "MR-04/UNCHANGED": 8,
+    "MR-05/UNCHANGED": 7,
+    "MR-06/UNCHANGED": 7,
+    "MR-07/EXPECTED_CHANGE": 8,
+    "MR-07/UNCHANGED": 3,
+    "MR-08/NEW_BEHAVIOR": 7,
+    "MR-09/UNCHANGED": 9
+  },
+  "cases": [
+    {
+      "case_id": "MR-01__K1-role-namespace__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__K1-role-namespace__83181ed25b",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__pod-basic__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__pod-basic__83181ed25b",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__pod-hostnet__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__pod-hostnet__83181ed25b",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-basic__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-basic__83181ed25b",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-no-binding__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-secrets-reader__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-secrets-reader__83181ed25b",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-workload__39ef56d618",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-01__rbac-workload__83181ed25b",
+      "mr_id": "MR-01",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-02__K1-role-namespace__66de14dad8",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__K1-role-namespace__e89cd9e383",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__K1-role-namespace__skip",
+      "mr_id": "MR-02",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-02__pod-basic__skip",
+      "mr_id": "MR-02",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-02__pod-hostnet__skip",
+      "mr_id": "MR-02",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-02__rbac-basic__66de14dad8",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__rbac-basic__e89cd9e383",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__rbac-basic__skip",
+      "mr_id": "MR-02",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-02__rbac-no-binding__skip",
+      "mr_id": "MR-02",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-02__rbac-secrets-reader__44d79ab8cf",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__rbac-secrets-reader__bd7af0cb0d",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__rbac-secrets-reader__skip",
+      "mr_id": "MR-02",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-02__rbac-workload__66de14dad8",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__rbac-workload__e89cd9e383",
+      "mr_id": "MR-02",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-02__rbac-workload__skip",
+      "mr_id": "MR-02",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-03__K1-role-namespace__skip",
+      "mr_id": "MR-03",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-03__pod-basic__skip",
+      "mr_id": "MR-03",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-03__pod-hostnet__skip",
+      "mr_id": "MR-03",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-03__rbac-basic__skip",
+      "mr_id": "MR-03",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-03__rbac-no-binding__skip",
+      "mr_id": "MR-03",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-03__rbac-secrets-reader__b0dae3466a",
+      "mr_id": "MR-03",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-03__rbac-workload__skip",
+      "mr_id": "MR-03",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__K1-role-namespace__58c7412c5a",
+      "mr_id": "MR-04",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__pod-basic__6bee0a076b",
+      "mr_id": "MR-04",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__pod-basic__890173885c",
+      "mr_id": "MR-04",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__pod-hostnet__40fcb24159",
+      "mr_id": "MR-04",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__rbac-basic__skip",
+      "mr_id": "MR-04",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__rbac-no-binding__skip",
+      "mr_id": "MR-04",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__rbac-secrets-reader__2c716c0d66",
+      "mr_id": "MR-04",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-04__rbac-workload__58c7412c5a",
+      "mr_id": "MR-04",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__K1-role-namespace__skip",
+      "mr_id": "MR-05",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__pod-basic__skip",
+      "mr_id": "MR-05",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__pod-hostnet__skip",
+      "mr_id": "MR-05",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__rbac-basic__skip",
+      "mr_id": "MR-05",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__rbac-no-binding__skip",
+      "mr_id": "MR-05",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__rbac-secrets-reader__d31cd60ffd",
+      "mr_id": "MR-05",
+      "old": "VIOLATION",
+      "new": "VIOLATION",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-05__rbac-workload__skip",
+      "mr_id": "MR-05",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__K1-role-namespace__skip",
+      "mr_id": "MR-06",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__pod-basic__skip",
+      "mr_id": "MR-06",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__pod-hostnet__355c0e2f74",
+      "mr_id": "MR-06",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__rbac-basic__skip",
+      "mr_id": "MR-06",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__rbac-no-binding__skip",
+      "mr_id": "MR-06",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__rbac-secrets-reader__skip",
+      "mr_id": "MR-06",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-06__rbac-workload__skip",
+      "mr_id": "MR-06",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-07__K1-role-namespace__8209b1cbb6",
+      "mr_id": "MR-07",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-07__K1-role-namespace__skip",
+      "mr_id": "MR-07",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-07__pod-basic__skip",
+      "mr_id": "MR-07",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-07__pod-hostnet__skip",
+      "mr_id": "MR-07",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-07__rbac-basic__8209b1cbb6",
+      "mr_id": "MR-07",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-07__rbac-basic__skip",
+      "mr_id": "MR-07",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-07__rbac-no-binding__skip",
+      "mr_id": "MR-07",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-07__rbac-secrets-reader__88249c50fa",
+      "mr_id": "MR-07",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-07__rbac-secrets-reader__skip",
+      "mr_id": "MR-07",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-07__rbac-workload__8209b1cbb6",
+      "mr_id": "MR-07",
+      "old": "PASS",
+      "new": null,
+      "category": "EXPECTED_CHANGE",
+      "reason": "case no longer generated: the (MR, scanner) scope was removed from the mapping (declared under unsupported)"
+    },
+    {
+      "case_id": "MR-07__rbac-workload__skip",
+      "mr_id": "MR-07",
+      "old": null,
+      "new": "SKIP",
+      "category": "EXPECTED_CHANGE",
+      "reason": "one SKIP row (mr_not_mapped_for_scanner) now stands for the cases of an MR whose Trivy/Kubescape scope was removed from the mapping"
+    },
+    {
+      "case_id": "MR-08__K1-role-namespace__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-08__pod-basic__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-08__pod-hostnet__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-08__rbac-basic__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-08__rbac-no-binding__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-08__rbac-secrets-reader__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-08__rbac-workload__skip",
+      "mr_id": "MR-08",
+      "old": null,
+      "new": "SKIP",
+      "category": "NEW_BEHAVIOR",
+      "reason": "case did not exist in the archived runs (new MR, seed or parameter)"
+    },
+    {
+      "case_id": "MR-09__K1-role-namespace__skip",
+      "mr_id": "MR-09",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__pod-basic__skip",
+      "mr_id": "MR-09",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__pod-hostnet__skip",
+      "mr_id": "MR-09",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__rbac-basic__skip",
+      "mr_id": "MR-09",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__rbac-no-binding__skip",
+      "mr_id": "MR-09",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__rbac-secrets-reader__8581c64811",
+      "mr_id": "MR-09",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__rbac-secrets-reader__98f6269e80",
+      "mr_id": "MR-09",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__rbac-secrets-reader__f8dfd35941",
+      "mr_id": "MR-09",
+      "old": "PASS",
+      "new": "PASS",
+      "category": "UNCHANGED",
+      "reason": ""
+    },
+    {
+      "case_id": "MR-09__rbac-workload__skip",
+      "mr_id": "MR-09",
+      "old": "SKIP",
+      "new": "SKIP",
+      "category": "UNCHANGED",
+      "reason": ""
+    }
+  ],
+  "blocked": false
+}

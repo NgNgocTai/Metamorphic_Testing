@@ -1,0 +1,49 @@
+{
+  "compared": [
+    [
+      "C-0267",
+      "Deployment/lab-a/web@apps"
+    ],
+    [
+      "C-0272",
+      "Deployment/lab-a/web@apps"
+    ],
+    [
+      "C-0015",
+      "ServiceAccount/lab-a/app"
+    ],
+    [
+      "C-0015",
+      "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0007",
+      "ServiceAccount/lab-a/app"
+    ],
+    [
+      "C-0007",
+      "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0035",
+      "ServiceAccount/lab-a/app"
+    ],
+    [
+      "C-0035",
+      "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0053",
+      "ServiceAccount/lab-a/app"
+    ],
+    [
+      "C-0053",
+      "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0057",
+      "Deployment/lab-a/web@apps"
+    ]
+  ],
+  "out_of_control_scope": []
+}

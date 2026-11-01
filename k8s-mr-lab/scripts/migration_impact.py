@@ -51,7 +51,7 @@ def kind(resource: str) -> str:
 
 
 def classify(case_id: str, scanner: str, old: dict | None, new: dict | None, delta: dict, vocab: dict, bug_fix: set[str],
-             remaining: dict, kinds_grown: dict, kinds_shrunk: dict) -> tuple[str, str]:
+             remaining: dict, kinds_grown: dict, kinds_shrunk: dict, out_scope: set = frozenset()) -> tuple[str, str]:
     mr_id = (new or old)["mr_id"]
     dropped = bool(delta.get(mr_id, (set(), set()))[0]) and not remaining.get(mr_id)     # the whole (MR, scanner) scope left the mapping
     if old is None and dropped and new["mr_result"] == "SKIP" and new.get("skip_reason") == "mr_not_mapped_for_scanner":
@@ -68,7 +68,7 @@ def classify(case_id: str, scanner: str, old: dict | None, new: dict | None, del
     flips = [k for k in oc.keys() & nc.keys() if oc[k][:2] != nc[k][:2]]
     gone = [k for k in oc.keys() - nc.keys()]
     came = [k for k in nc.keys() - oc.keys()]
-    explained_gone = [k for k in gone if any(c == k[0] and kind(k[1]) in vocab.get(t, []) for c, t in removed_pairs) or kind(k[1]) in kinds_shrunk.get(k[0], ())]
+    explained_gone = [k for k in gone if any(c == k[0] and kind(k[1]) in vocab.get(t, []) for c, t in removed_pairs) or kind(k[1]) in kinds_shrunk.get(k[0], ()) or k in out_scope]
     explained_came = [k for k in came if any(c == k[0] and kind(k[1]) in vocab.get(t, []) for c, t in added_pairs) or kind(k[1]) in kinds_grown.get(k[0], ())]
     same_result = old["mr_result"] == new["mr_result"]
     if same_result and not flips and not gone and not came:
@@ -128,7 +128,9 @@ def main(argv=None) -> int:
         o, n = old_rows.get(cid), new_rows.get(cid)
         if o is not None and o["mr_id"] == "*":
             continue
-        cat, why = classify(cid, a.scanner, o, n, delta, vocab, set(a.bug_fix), pn, grown, shrunk)
+        sj = Path(a.new) / "cases" / cid / "scope.json"
+        out_scope = {(c, r) for c, r, _ in json.loads(sj.read_text(encoding="utf-8"))["out_of_control_scope"]} if sj.exists() else set()
+        cat, why = classify(cid, a.scanner, o, n, delta, vocab, set(a.bug_fix), pn, grown, shrunk, out_scope)
         scored.append({"case_id": cid, "mr_id": (n or o)["mr_id"], "old": o["mr_result"] if o else None, "new": n["mr_result"] if n else None,
                        "category": cat, "reason": why})
     by = Counter((s["mr_id"], s["category"]) for s in scored)

@@ -1,0 +1,20 @@
+{
+  "mr": "MR-08",
+  "params": {
+    "rolebinding": [
+      "rbac.authorization.k8s.io",
+      "RoleBinding",
+      "lab-a",
+      "app-binding"
+    ],
+    "subject_index": 0,
+    "serviceaccount": "app",
+    "from_namespace": "lab-a"
+  },
+  "operation": "rbac.shift_serviceaccount_subject_namespace",
+  "rolebinding": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+  "from_namespace": "lab-a",
+  "to_namespace": "lab-a-shifted",
+  "added": "ServiceAccount/lab-a-shifted/app",
+  "object_mapping": "identity"
+}

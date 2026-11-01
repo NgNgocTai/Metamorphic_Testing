@@ -1,0 +1,15 @@
+--- source/bundle.yaml
++++ followup/bundle.yaml
+@@ -25,9 +25,9 @@
+   name: reader-binding
+   namespace: lab-c
+ subjects:
+-- kind: ServiceAccount
+-  name: reader
+-  namespace: lab-c
++- kind: User
++  apiGroup: rbac.authorization.k8s.io
++  name: system:serviceaccount:lab-c:reader
+ roleRef:
+   apiGroup: rbac.authorization.k8s.io
+   kind: Role

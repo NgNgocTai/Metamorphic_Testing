@@ -1,0 +1,31 @@
+{
+  "case_id": "MR-06__pod-hostnet__355c0e2f74",
+  "result": "PASS",
+  "reason": "all 1 comparison(s) satisfy 'pass_to_fail'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "PASS",
+    "relation": "pass_to_fail",
+    "reason": "all 1 comparison(s) satisfy 'pass_to_fail'",
+    "counts": {
+      "ok": 1,
+      "violation": 0,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "KSV-0009",
+        "resource": "Pod/lab-h/web",
+        "source": "PASS",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "inferred_pass",
+        "role": "property",
+        "tier": "WEAK",
+        "note": "PASS inferred (absence of an attributed FAIL)",
+        "engaged": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+req  grp  status                     MR (coverage, origin)              title
+R01  K01  COVERED                    MR-04 (full, retrospective)        privileged containers are disallowed
+R02  K01  PARTIAL                    MR-06 (partial, retrospective)     host namespaces are not shared
+R03  K01  DERIVABLE_NOT_IMPLEMENTED  -                                  hostPath volumes are forbidden
+R04  K01  DERIVABLE_NOT_IMPLEMENTED  -                                  hostPorts are disallowed or restricted
+R05  K01  NOT_FEASIBLE               -                                  added capabilities stay within the allowed list
+R06  K02  COVERED                    MR-02 (full, empirical)            a RoleBinding grants a Role from its own namespace
+R07  K02  DERIVABLE_NOT_IMPLEMENTED  -                                  avoid wildcard permissions
+R08  K02  COVERED                    MR-09 (full, prospective)          get, list and watch on Secrets all reveal Secret contents
+R09  K02  NOT_FEASIBLE               -                                  assign permissions at namespace level
+R10  K02  DERIVABLE_NOT_IMPLEMENTED  -                                  no one is bound to system:masters
+
+N = 10 requirements (K01: 5, K02: 5)
+with a full MR: 3/10 | with a partial MR only: 1/10 | derivable, not implemented: 4/10 | not feasible: 2/10 (CONTRACT_NOT_READ, RELATION_NOT_SUPPORTED)
+MRs NOT attached to any of these requirements (origin sanity/empirical/semantic, or the requirement is not in this list): MR-01, MR-03, MR-05, MR-07, MR-08
+'covered' here means an MR exists and passes the STRUCTURAL gate; none is independently reviewed and none has independent evaluation.

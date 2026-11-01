@@ -1,0 +1,4 @@
+run_id,case_id,mr_id,scanner,control,resource,role,source_verdict,followup_verdict,basis,outcome,tier,engaged,reason,note
+kubescape-20261101T201454,MR-09__rbac-secrets-reader__98f6269e80,MR-09,kubescape,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+kubescape-20261101T201454,MR-09__rbac-secrets-reader__f8dfd35941,MR-09,kubescape,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+kubescape-20261101T201454,MR-09__rbac-secrets-reader__8581c64811,MR-09,kubescape,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,PASS,explicit,violation,INFORMATIVE,True,FAIL->PASS but relation requires equality,

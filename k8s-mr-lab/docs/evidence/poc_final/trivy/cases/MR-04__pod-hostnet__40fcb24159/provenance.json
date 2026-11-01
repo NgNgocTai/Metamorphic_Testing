@@ -1,0 +1,26 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "trivy-20261101T195954",
+  "seed_id": "pod-hostnet",
+  "mr_id": "MR-04",
+  "mr_spec_digest": "a546e11c7e",
+  "params": {
+    "workload": [
+      "",
+      "Pod",
+      "lab-h",
+      "web"
+    ],
+    "container_index": 0
+  },
+  "random_seed": null,
+  "scanner": "trivy",
+  "scanner_version": "0.75.0",
+  "scan_mode": "local-file",
+  "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+  "mapping_digest": "cd60642439",
+  "source_text_sha256": "06c17c57e517e769977c3edde5e6c621239be69191281bb0ea045923d7b801a0",
+  "followup_text_sha256": "2277a2331bdfb87aceb466a895aab03038be83114254992703b2aa1d24ff84bb",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}

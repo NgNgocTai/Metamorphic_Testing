@@ -1,0 +1,13 @@
+{
+  "compared": [
+    [
+      "C-0267",
+      "Pod/lab-c/reader-pod"
+    ],
+    [
+      "C-0272",
+      "Pod/lab-c/reader-pod"
+    ]
+  ],
+  "out_of_control_scope": []
+}

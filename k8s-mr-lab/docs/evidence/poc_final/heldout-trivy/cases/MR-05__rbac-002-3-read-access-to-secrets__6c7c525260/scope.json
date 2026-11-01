@@ -1,0 +1,9 @@
+{
+  "compared": [
+    [
+      "KSV-0113",
+      "Role/kalm-benchmark/rbac-002-3-secret-read-watch@rbac.authorization.k8s.io"
+    ]
+  ],
+  "out_of_control_scope": []
+}

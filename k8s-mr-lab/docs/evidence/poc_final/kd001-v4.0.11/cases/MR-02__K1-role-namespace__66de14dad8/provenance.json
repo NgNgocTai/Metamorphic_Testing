@@ -1,0 +1,24 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "kubescape-20261101T201026",
+  "seed_id": "K1-role-namespace",
+  "mr_id": "MR-02",
+  "mr_spec_digest": "9777f9b0f1",
+  "params": {
+    "rolebinding": "app-binding",
+    "namespace": "lab-a",
+    "role": "app-role",
+    "decoy_namespace": "lab-a-decoy",
+    "profile": "wildcard_admin"
+  },
+  "random_seed": null,
+  "scanner": "kubescape",
+  "scanner_version": "v4.0.11",
+  "scan_mode": "local-file",
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "mapping_digest": "cd60642439",
+  "source_text_sha256": "ceb1e878097cc1d11ae088c06ba696d8e0e1f257dc087e6e37f1bb437d048998",
+  "followup_text_sha256": "df9b2efc61df729e09126e286c979f9db89082338b51344705eb80e8fe16b62e",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}

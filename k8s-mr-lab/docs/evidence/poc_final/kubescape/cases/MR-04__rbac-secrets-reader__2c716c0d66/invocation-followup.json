@@ -1,0 +1,26 @@
+{
+  "tool": "kubescape",
+  "version": "v4.0.15",
+  "mode": "local-file",
+  "command": [
+    "kubescape",
+    "scan",
+    "framework",
+    "allcontrols",
+    "--keep-local",
+    "--verbose",
+    "--format",
+    "json",
+    "--output",
+    "runs/final/kubescape/cases/MR-04__rbac-secrets-reader__2c716c0d66/scanner-followup.json",
+    "--use-artifacts-from",
+    "/home/USER/.kubescape",
+    "runs/final/kubescape/cases/MR-04__rbac-secrets-reader__2c716c0d66/followup"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 14730,
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "raw_path": "runs/final/kubescape/cases/MR-04__rbac-secrets-reader__2c716c0d66/scanner-followup.json",
+  "error": null,
+  "stderr_tail": "g\":\"Accessing local objects...\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T20:05:39+07:00\",\"msg\":\"Done accessing local objects\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T20:05:39+07:00\",\"msg\":\"Scanning GitLocal\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T20:05:43+07:00\",\"msg\":\"Done scanning GitLocal\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T20:05:43+07:00\",\"msg\":\"Done aggregating results\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T20:05:43+07:00\",\"msg\":\"Scan results saved\",\"filename\":\"runs/final/kubescape/cases/MR-04__rbac-secrets-reader__2c716c0d66/scanner-followup.json\"}\n\nOverall compliance-score (100- Excellent, 0- All failed): 72\n"
+}

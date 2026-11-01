@@ -1,0 +1,161 @@
+{
+  "case_id": "MR-02__K1-role-namespace__66de14dad8",
+  "result": "VIOLATION",
+  "reason": "2 comparison(s) violate relation 'equal'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "VIOLATION",
+    "relation": "equal",
+    "reason": "2 comparison(s) violate relation 'equal'",
+    "counts": {
+      "ok": 9,
+      "violation": 2,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "C-0267",
+        "resource": "Deployment/lab-a/web@apps",
+        "source": "PASS",
+        "followup": "FAIL",
+        "outcome": "violation",
+        "reason": "PASS->FAIL but relation requires equality",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0272",
+        "resource": "Deployment/lab-a/web@apps",
+        "source": "PASS",
+        "followup": "FAIL",
+        "outcome": "violation",
+        "reason": "PASS->FAIL but relation requires equality",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0015",
+        "resource": "ServiceAccount/lab-a/app",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0015",
+        "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0007",
+        "resource": "ServiceAccount/lab-a/app",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0007",
+        "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0035",
+        "resource": "ServiceAccount/lab-a/app",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0035",
+        "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0053",
+        "resource": "ServiceAccount/lab-a/app",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0053",
+        "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0057",
+        "resource": "Deployment/lab-a/web@apps",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "control",
+        "tier": "CONTROL",
+        "note": "negative control stayed unchanged",
+        "engaged": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "compared": [
+    [
+      "C-0267",
+      "Deployment/lab-a/web@apps"
+    ],
+    [
+      "C-0272",
+      "Deployment/lab-a/web@apps"
+    ]
+  ],
+  "out_of_control_scope": []
+}

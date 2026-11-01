@@ -1,0 +1,13 @@
+{
+  "compared": [
+    [
+      "C-0015",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0267",
+      "Pod/lab-c/reader-pod"
+    ]
+  ],
+  "out_of_control_scope": []
+}

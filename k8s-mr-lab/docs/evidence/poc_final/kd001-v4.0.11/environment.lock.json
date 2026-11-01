@@ -1,0 +1,46 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "scanner": "kubescape",
+  "scanner_version": "v4.0.11",
+  "scan_mode": "local-file",
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "pinned_version": "v4.0.11",
+  "mapping_digest": "cd60642439",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "run_id": "kubescape-20261101T201026",
+  "total_scanner_invocations": 9,
+  "experiment": {
+    "experiment_id": "kd001-v4.0.11",
+    "experiment_type": "historical-defect",
+    "scope_profile": "official",
+    "created": "2026-11-01T20:12:37",
+    "framework_git": {
+      "commit": "b5645f058b5be8581ea5c218b76b57d315b04253",
+      "dirty": false
+    },
+    "schema": {
+      "mapping": "mr-mapping/1",
+      "control_registry": 1
+    },
+    "digests": {
+      "catalog": "497d4a9bd7d2383748ca2f974803b8e87c65d6af27578b1d1a7779d00fa1ec73",
+      "requirements": "6dd8701379d59065c94603dad2fca526bd6bbb501d5c2f186f1b62828fbef304",
+      "properties": "92cef1214c0f2b99eb1198b7b58038d24904db1291940b00b12cd9c0fc730713",
+      "patterns": "d8473a1542af15c5f7e21996e0a6937d58567c52da13a2c6dac48c9cee4392a9",
+      "mapping": "8fa5cba6e4c8dd8e9c3d05ab50339a659f9963e2416b8cecd8003ab2e16f472b",
+      "control_registry": "821ac1ec8043708ab1465ce6e7d0b36a8b77bd58353491f40d49663d8a05175d",
+      "mapping_and_registry": "cd60642439"
+    },
+    "registry_derived_under_policy": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+    "registry_matches_policy": true,
+    "seed_digest": "263c7b27f0377217054cacd4c211e27264f88927eafa5b798b6a53b97b8b6e77",
+    "seed_count": 8,
+    "included_mrs": [
+      {
+        "id": "MR-02",
+        "status": "mvp"
+      }
+    ]
+  }
+}

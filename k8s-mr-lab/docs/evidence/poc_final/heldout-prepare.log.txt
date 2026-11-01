@@ -1,0 +1,3 @@
+freeze 33237d3fa3efe2ab  kalm dac3df5 Mon Jun 15 16:53:21 2026 +0200
+candidates 238  selected 65  unparsable 0
+rbac-applicable: ['rbac-002-1-read-access-to-secrets.yaml', 'rbac-002-2-read-access-to-secrets.yaml', 'rbac-002-3-read-access-to-secrets.yaml', 'rbac-021-1-only-admins-should-be-able-to-create-persis-c893a953.yaml', 'rbac-021-2-only-admins-should-be-able-to-update-persis-c8f17af4.yaml', 'rbac-021-3-only-admins-should-be-able-to-patch-persist-c8a38da5.yaml', 'rbac-024-4-access-to-approval-sub-of-certific-c8d6df8a.yaml', 'rbac-024-7-cluster-access-to-approval-sub-of-c8f934ef.yaml']

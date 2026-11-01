@@ -96,6 +96,33 @@ def kd001(affected: Path, fixed: Path, label: str) -> list[str]:
     return out
 
 
+def kd001_cases(affected: Path, fixed: Path) -> list[str]:
+    """Per case: the MR assessment on both binaries and, for every aggregator key whose verdicts differ, the four verdicts."""
+    ar = {r["case_id"]: r["mr_result"] for r in rows(affected)}
+    fr = {r["case_id"]: r["mr_result"] for r in rows(fixed)}
+    a, f = aggregator_keys(affected), aggregator_keys(fixed)
+    body = []
+    for cid in sorted(c for c in ar if c in fr and ar[c] != "SKIP"):
+        diff = [k for k in sorted(set(a) & set(f)) if k[0] == cid and (a[k]["source_verdict"], a[k]["followup_verdict"]) != (f[k]["source_verdict"], f[k]["followup_verdict"])]
+        shown = "; ".join(f"{k[1]} {k[2].split('@')[0]}: aff {a[k]['source_verdict']}->{a[k]['followup_verdict']} / fix {f[k]['source_verdict']}->{f[k]['followup_verdict']}" for k in diff[:4])
+        body.append([f"`{cid}`", ar[cid], fr[cid], len(diff), shown or "-"])
+    return md(["case", "MR-02 on affected v4.0.11", "MR-02 on fixed v4.0.12", "aggregator keys that differ", "four verdicts (first 4)"], body)
+
+
+def scope_compare(old: Path, new: Path, label: str) -> list[str]:
+    """What a change of comparison scope did to the comparisons of the same cases: nothing conclusive may be lost or flipped."""
+    o = {(r["case_id"], r["control"], r["resource"]): r for r in comps(old)}
+    n = {(r["case_id"], r["control"], r["resource"]): r for r in comps(new)}
+    concl = lambda r: r["source_verdict"] in ("PASS", "FAIL") and r["followup_verdict"] in ("PASS", "FAIL")
+    lost = [k for k, r in o.items() if concl(r) and k not in n]
+    dropped = Counter(k[1] + " on " + k[2].split("/", 1)[0] for k, r in o.items() if not concl(r) and k not in n)
+    flips = [k for k in o if k in n and (o[k]["source_verdict"], o[k]["followup_verdict"]) != (n[k]["source_verdict"], n[k]["followup_verdict"])]
+    added = [k for k in n if k not in o]
+    out = [f"**{label}**: comparisons before {len(o)}, after {len(n)}; conclusive comparisons lost {len(lost)}; verdict flips on common keys {len(flips)}; "
+           f"new keys {len(added)}; inconclusive (no verdict on both sides) keys removed from scope {sum(dropped.values())}", ""]
+    return out + (md(["removed key (control on kind)", "count"], [[k, v] for k, v in dropped.most_common(10)]) if dropped else [])
+
+
 def mutation(pinned: Path, mutant: Path, mr: str) -> list[str]:
     pc = {(c["case_id"], c["control"], c["resource"]): c for c in comps(pinned) if c["mr_id"] == mr}
     mc = {(c["case_id"], c["control"], c["resource"]): c for c in comps(mutant) if c["mr_id"] == mr}
@@ -118,6 +145,7 @@ def main(argv=None) -> int:
     ap.add_argument("--kd-old-fixed")
     ap.add_argument("--mutant")
     ap.add_argument("--mutant-mr", default="MR-09")
+    ap.add_argument("--scope-compare", nargs=3, metavar=("OLD_HELDOUT_KUBESCAPE", "NEW_HELDOUT_KUBESCAPE", "LABEL"))
     ap.add_argument("--heldout-trivy")
     ap.add_argument("--heldout-kubescape")
     ap.add_argument("--out", required=True)
@@ -130,6 +158,7 @@ def main(argv=None) -> int:
         L += ["## MR-02 historical defect (KD-001): affected v4.0.11 vs fixed v4.0.12", ""]
         L += environment(Path(a.kd_affected)) + environment(Path(a.kd_fixed)) + [""]
         L += kd001(Path(a.kd_affected), Path(a.kd_fixed), "official scope (unified)") + [""]
+        L += ["Per case:", ""] + kd001_cases(Path(a.kd_affected), Path(a.kd_fixed)) + [""]
         if a.kd_old_affected and a.kd_old_fixed:
             L += ["Old scope (aggregator controls on the bound Role only), archived evidence:", ""]
             def viol(run):                       # archived runs have results.csv only
@@ -144,6 +173,8 @@ def main(argv=None) -> int:
         if d:
             L += [f"## Independent seeds (Kalm-Benchmark, catalog frozen first): {name}", ""] + environment(Path(d)) + [""] + per_mr(Path(d)) + [""]
             L += [f"Violations ({name}, independent seeds):", ""] + violations(Path(d)) + [""]
+    if a.scope_compare:
+        L += ["## Effect of the control-scope rule on the independent seeds (before vs after, Kubescape)", ""] + scope_compare(Path(a.scope_compare[0]), Path(a.scope_compare[1]), a.scope_compare[2]) + [""]
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text("\n".join(L) + "\n", encoding="utf-8")
     print(f"-> {a.out}")

@@ -1,0 +1,25 @@
+{
+  "compared": [
+    [
+      "KSV-0113",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "KSV-0048",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "KSV-0049",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "KSV-0112",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "KSV-0050",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ]
+  ],
+  "out_of_control_scope": []
+}

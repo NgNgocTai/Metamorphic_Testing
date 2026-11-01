@@ -1,0 +1,20 @@
+{
+  "mr": "MR-08",
+  "params": {
+    "rolebinding": [
+      "rbac.authorization.k8s.io",
+      "RoleBinding",
+      "lab-c",
+      "reader-binding"
+    ],
+    "subject_index": 0,
+    "serviceaccount": "reader",
+    "from_namespace": "lab-c"
+  },
+  "operation": "rbac.shift_serviceaccount_subject_namespace",
+  "rolebinding": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io",
+  "from_namespace": "lab-c",
+  "to_namespace": "lab-c-shifted",
+  "added": "ServiceAccount/lab-c-shifted/reader",
+  "object_mapping": "identity"
+}

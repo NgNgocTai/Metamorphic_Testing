@@ -1,0 +1,21 @@
+[
+  {
+    "op": "change",
+    "path": "rules[0].verbs[0]",
+    "old": "get",
+    "new": "list",
+    "object": "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+  },
+  {
+    "op": "remove_item",
+    "path": "rules[0].verbs[1]",
+    "old": "list",
+    "object": "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+  },
+  {
+    "op": "remove_item",
+    "path": "rules[0].verbs[2]",
+    "old": "watch",
+    "object": "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+  }
+]

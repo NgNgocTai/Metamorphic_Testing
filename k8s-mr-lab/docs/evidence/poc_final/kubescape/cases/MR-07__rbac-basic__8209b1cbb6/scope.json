@@ -1,0 +1,17 @@
+{
+  "compared": [
+    [
+      "C-0015",
+      "Role/lab-a/app-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0007",
+      "Role/lab-a/app-role@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0035",
+      "Role/lab-a/app-role@rbac.authorization.k8s.io"
+    ]
+  ],
+  "out_of_control_scope": []
+}

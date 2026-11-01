@@ -1,0 +1,49 @@
+{
+  "compared": [
+    [
+      "C-0267",
+      "Pod/lab-c/reader-pod"
+    ],
+    [
+      "C-0272",
+      "Pod/lab-c/reader-pod"
+    ],
+    [
+      "C-0015",
+      "ServiceAccount/lab-c/reader"
+    ],
+    [
+      "C-0015",
+      "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0007",
+      "ServiceAccount/lab-c/reader"
+    ],
+    [
+      "C-0007",
+      "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0035",
+      "ServiceAccount/lab-c/reader"
+    ],
+    [
+      "C-0035",
+      "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0053",
+      "ServiceAccount/lab-c/reader"
+    ],
+    [
+      "C-0053",
+      "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+    ],
+    [
+      "C-0057",
+      "Pod/lab-c/reader-pod"
+    ]
+  ],
+  "out_of_control_scope": []
+}

@@ -1,0 +1,108 @@
+{
+  "scanner": "trivy",
+  "cases": {
+    "MR-05__rbac-002-1-read-access-to-secrets__4cf39b21ca": {
+      "family": "trivy:MR-05:FAIL->FAIL",
+      "reproduced": true,
+      "status": "CANDIDATE_REPRODUCED",
+      "confirmed": false,
+      "violating_comparisons": [
+        {
+          "control": "KSV-0113",
+          "resource": "Role/kalm-benchmark/rbac-002-1-secret-read-get@rbac.authorization.k8s.io",
+          "source": "FAIL",
+          "followup": "FAIL",
+          "outcome": "violation",
+          "reason": "FAIL->FAIL but relation requires FAIL->PASS",
+          "basis": "explicit",
+          "role": "property",
+          "tier": "INFORMATIVE",
+          "note": "",
+          "engaged": true
+        }
+      ],
+      "known_issue": null,
+      "known_issue_match": null,
+      "rule_evidence": [
+        {
+          "control": "KSV-0113",
+          "rule_source": "/home/USER/.cache/trivy/policy/content/policies/kubernetes/policies/manage_namespace_secrets.rego",
+          "rule_source_sha256": "8c82dc4b4c904fc6",
+          "property_pattern": "apiGroups",
+          "rule_text_has_apiGroups": false,
+          "matching_lines": [],
+          "join_lines": []
+        }
+      ]
+    },
+    "MR-05__rbac-002-2-read-access-to-secrets__1d3db67a6c": {
+      "family": "trivy:MR-05:FAIL->FAIL",
+      "reproduced": true,
+      "status": "CANDIDATE_REPRODUCED",
+      "confirmed": false,
+      "violating_comparisons": [
+        {
+          "control": "KSV-0113",
+          "resource": "Role/kalm-benchmark/rbac-002-2-secret-read-list@rbac.authorization.k8s.io",
+          "source": "FAIL",
+          "followup": "FAIL",
+          "outcome": "violation",
+          "reason": "FAIL->FAIL but relation requires FAIL->PASS",
+          "basis": "explicit",
+          "role": "property",
+          "tier": "INFORMATIVE",
+          "note": "",
+          "engaged": true
+        }
+      ],
+      "known_issue": null,
+      "known_issue_match": null,
+      "rule_evidence": [
+        {
+          "control": "KSV-0113",
+          "rule_source": "/home/USER/.cache/trivy/policy/content/policies/kubernetes/policies/manage_namespace_secrets.rego",
+          "rule_source_sha256": "8c82dc4b4c904fc6",
+          "property_pattern": "apiGroups",
+          "rule_text_has_apiGroups": false,
+          "matching_lines": [],
+          "join_lines": []
+        }
+      ]
+    },
+    "MR-05__rbac-002-3-read-access-to-secrets__6c7c525260": {
+      "family": "trivy:MR-05:FAIL->FAIL",
+      "reproduced": true,
+      "status": "CANDIDATE_REPRODUCED",
+      "confirmed": false,
+      "violating_comparisons": [
+        {
+          "control": "KSV-0113",
+          "resource": "Role/kalm-benchmark/rbac-002-3-secret-read-watch@rbac.authorization.k8s.io",
+          "source": "FAIL",
+          "followup": "FAIL",
+          "outcome": "violation",
+          "reason": "FAIL->FAIL but relation requires FAIL->PASS",
+          "basis": "explicit",
+          "role": "property",
+          "tier": "INFORMATIVE",
+          "note": "",
+          "engaged": true
+        }
+      ],
+      "known_issue": null,
+      "known_issue_match": null,
+      "rule_evidence": [
+        {
+          "control": "KSV-0113",
+          "rule_source": "/home/USER/.cache/trivy/policy/content/policies/kubernetes/policies/manage_namespace_secrets.rego",
+          "rule_source_sha256": "8c82dc4b4c904fc6",
+          "property_pattern": "apiGroups",
+          "rule_text_has_apiGroups": false,
+          "matching_lines": [],
+          "join_lines": []
+        }
+      ]
+    }
+  },
+  "note": "candidates only - human confirmation required"
+}

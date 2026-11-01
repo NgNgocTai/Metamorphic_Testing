@@ -1,0 +1,14 @@
+{
+  "MR-03__rbac-secrets-reader__b0dae3466a": "cases/MR-03__rbac-secrets-reader__b0dae3466a",
+  "MR-04__K1-role-namespace__58c7412c5a": "cases/MR-04__K1-role-namespace__58c7412c5a",
+  "MR-04__pod-basic__6bee0a076b": "cases/MR-04__pod-basic__6bee0a076b",
+  "MR-04__pod-basic__890173885c": "cases/MR-04__pod-basic__890173885c",
+  "MR-04__pod-hostnet__40fcb24159": "cases/MR-04__pod-hostnet__40fcb24159",
+  "MR-04__rbac-secrets-reader__2c716c0d66": "cases/MR-04__rbac-secrets-reader__2c716c0d66",
+  "MR-04__rbac-workload__58c7412c5a": "cases/MR-04__rbac-workload__58c7412c5a",
+  "MR-05__rbac-secrets-reader__d31cd60ffd": "cases/MR-05__rbac-secrets-reader__d31cd60ffd",
+  "MR-06__pod-hostnet__355c0e2f74": "cases/MR-06__pod-hostnet__355c0e2f74",
+  "MR-09__rbac-secrets-reader__8581c64811": "cases/MR-09__rbac-secrets-reader__8581c64811",
+  "MR-09__rbac-secrets-reader__98f6269e80": "cases/MR-09__rbac-secrets-reader__98f6269e80",
+  "MR-09__rbac-secrets-reader__f8dfd35941": "cases/MR-09__rbac-secrets-reader__f8dfd35941"
+}

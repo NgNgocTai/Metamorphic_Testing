@@ -1,0 +1,199 @@
+{
+  "scanner": "trivy",
+  "verdicts": [
+    {
+      "control": "KSV-0001",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'securityContext.allowPrivilegeEscalation' to false"
+      ]
+    },
+    {
+      "control": "KSV-0003",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should add 'ALL' to 'securityContext.capabilities.drop'"
+      ]
+    },
+    {
+      "control": "KSV-0004",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of 'pod' 'reader-pod' in 'lab-c' namespace should set securityContext.capabilities.drop"
+      ]
+    },
+    {
+      "control": "KSV-0009",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0011",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'resources.limits.cpu'"
+      ]
+    },
+    {
+      "control": "KSV-0012",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'securityContext.runAsNonRoot' to true"
+      ]
+    },
+    {
+      "control": "KSV-0014",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'securityContext.readOnlyRootFilesystem' to true"
+      ]
+    },
+    {
+      "control": "KSV-0015",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'resources.requests.cpu'"
+      ]
+    },
+    {
+      "control": "KSV-0016",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'resources.requests.memory'"
+      ]
+    },
+    {
+      "control": "KSV-0017",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0018",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'resources.limits.memory'"
+      ]
+    },
+    {
+      "control": "KSV-0020",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'securityContext.runAsUser' > 10000"
+      ]
+    },
+    {
+      "control": "KSV-0021",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Container 'main' of Pod 'reader-pod' should set 'securityContext.runAsGroup' > 10000"
+      ]
+    },
+    {
+      "control": "KSV-0030",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'"
+      ]
+    },
+    {
+      "control": "KSV-0048",
+      "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0049",
+      "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0050",
+      "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0104",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "container \"main\" of pod \"reader-pod\" in \"lab-c\" namespace should specify a seccomp profile"
+      ]
+    },
+    {
+      "control": "KSV-0106",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=54",
+        "container should drop all"
+      ]
+    },
+    {
+      "control": "KSV-0112",
+      "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0113",
+      "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+      "status": "FAIL",
+      "evidence": [
+        "line=13",
+        "Role 'reader-role' shouldn't have access to manage secrets in namespace 'lab-c'"
+      ]
+    },
+    {
+      "control": "KSV-0118",
+      "resource": "Pod/lab-c/reader-pod",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "pod reader-pod in lab-c namespace is using the default security context, which allows root privileges"
+      ]
+    }
+  ],
+  "unattributed_failures": [],
+  "notes": []
+}

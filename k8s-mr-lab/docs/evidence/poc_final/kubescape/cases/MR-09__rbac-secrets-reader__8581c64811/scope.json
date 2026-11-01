@@ -1,0 +1,9 @@
+{
+  "compared": [
+    [
+      "C-0015",
+      "Role/lab-c/reader-role@rbac.authorization.k8s.io"
+    ]
+  ],
+  "out_of_control_scope": []
+}

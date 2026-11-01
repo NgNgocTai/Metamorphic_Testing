@@ -1,0 +1,11 @@
+--- source/bundle.yaml
++++ followup/bundle.yaml
+@@ -15,7 +15,7 @@
+     - sleep
+     - '3600'
+     securityContext:
+-      privileged: false
++      privileged: true
+ ---
+ apiVersion: v1
+ kind: Pod

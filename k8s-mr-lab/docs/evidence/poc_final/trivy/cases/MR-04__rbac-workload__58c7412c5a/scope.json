@@ -1,0 +1,9 @@
+{
+  "compared": [
+    [
+      "KSV-0017",
+      "Deployment/lab-a/web@apps"
+    ]
+  ],
+  "out_of_control_scope": []
+}

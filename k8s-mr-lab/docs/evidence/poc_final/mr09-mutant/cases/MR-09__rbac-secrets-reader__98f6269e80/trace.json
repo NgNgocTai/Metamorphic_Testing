@@ -1,0 +1,32 @@
+{
+  "mr": "MR-09",
+  "params": {
+    "role": [
+      "rbac.authorization.k8s.io",
+      "Role",
+      "lab-c",
+      "reader-role"
+    ],
+    "rule_index": 0,
+    "from_verbs": [
+      "get",
+      "list",
+      "watch"
+    ],
+    "to_verbs": [
+      "get"
+    ]
+  },
+  "operation": "rbac.substitute_secret_read_verbs",
+  "role": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+  "rule_index": 0,
+  "from": [
+    "get",
+    "list",
+    "watch"
+  ],
+  "to": [
+    "get"
+  ],
+  "object_mapping": "identity"
+}

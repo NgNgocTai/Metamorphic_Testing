@@ -1,0 +1,34 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "trivy-20261101T195954",
+  "seed_id": "rbac-secrets-reader",
+  "mr_id": "MR-09",
+  "mr_spec_digest": "9e44bced78",
+  "params": {
+    "role": [
+      "rbac.authorization.k8s.io",
+      "Role",
+      "lab-c",
+      "reader-role"
+    ],
+    "rule_index": 0,
+    "from_verbs": [
+      "get",
+      "list",
+      "watch"
+    ],
+    "to_verbs": [
+      "get"
+    ]
+  },
+  "random_seed": null,
+  "scanner": "trivy",
+  "scanner_version": "0.75.0",
+  "scan_mode": "local-file",
+  "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+  "mapping_digest": "cd60642439",
+  "source_text_sha256": "5b7aa1f13ab86f0b5828d90634922d1be115201b52b88fa0378194ef89249768",
+  "followup_text_sha256": "4ddbbc3311a20d28cd930c32cdfd28b99d817e8e7a8170ddbc6d3a9f8adbc07b",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}
