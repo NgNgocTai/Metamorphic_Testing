@@ -1,22 +1,23 @@
-# Kết quả PoC chính thức (khung thống nhất)
+# Kết quả PoC chính thức (khung thống nhất, sau khi sửa phạm vi control)
 
-Viết cho: người đọc cần số liệu và giới hạn của PoC, không cần đọc mã. Đây là **bộ kết quả chính thức duy nhất**. Kết quả của khung cũ chỉ còn là evidence lưu trữ; khác biệt được giải thích ở `MIGRATION_IMPACT_REPORT.md`.
+Viết cho: người đọc cần số liệu và giới hạn của PoC, không cần đọc mã. Đây là **bộ kết quả chính thức duy nhất**. Kết quả của các lượt trước (khung cũ, và lượt thống nhất đầu tiên trước khi sửa phạm vi) chỉ còn là evidence lưu trữ ở `docs/evidence/archive/`; khác biệt được giải thích ở `MIGRATION_IMPACT_REPORT.md`.
 
-Mọi bảng bên dưới do `scripts/poc_tables.py` sinh từ các thư mục run trong `docs/evidence/archive/poc_v2_superseded_2026-11-01/` (mỗi thư mục có `manifest.json` sha256, `environment.lock.json` với khối `experiment`). Chạy từ commit `aa40b76` của nhánh `research/mr-patterns`, cây mã sạch (`dirty: false`), Trivy 0.75.0 (checks bundle `sha256:b591e919…`) và Kubescape v4.0.15 (artifacts `8cfb2323…`), chế độ quét manifest cục bộ, `registry_matches_policy: true`. 9 MR (cả 4 candidate, gọi tường minh), 8 thư mục seed (`seeds/synthetic`, `seeds/historical`, `seeds/candidate`): 7 hợp lệ và 1 cố ý sai; 6 nguồn hợp lệ duy nhất vì `K1-role-namespace` trùng nội dung với `rbac-workload`.
+Mọi bảng bên dưới do `scripts/poc_tables.py` sinh từ các thư mục run trong `docs/evidence/poc_final/` (mỗi thư mục có `manifest.json` sha256; `environment.lock.json` có khối `experiment`). Chạy từ commit `b5645f0` của nhánh `research/mr-patterns` (SHA đầy đủ: `poc_final/source_commit.txt`), cây mã sạch (`dirty: false`), Trivy 0.75.0 (checks bundle `sha256:b591e919…`) và Kubescape v4.0.15 (artifacts `8cfb2323…`), chế độ quét manifest cục bộ, `registry_matches_policy: true`. Hash binary, phiên bản Python và gói: `poc_final/environment.txt`. 9 MR (cả 4 candidate, gọi tường minh), 8 thư mục seed (`seeds/synthetic`, `seeds/historical`, `seeds/candidate`): 7 hợp lệ và 1 cố ý sai; 6 nguồn hợp lệ duy nhất vì `K1-role-namespace` trùng nội dung với `rbac-workload`. Kết quả candidate (MR-06..09) nằm cùng bảng nhưng không thuộc 5 MR cốt lõi của PoC.
 
 ## Đọc thế nào
 
 * `PASS` của MR = quan hệ thỏa trên mọi so sánh có verdict, không có nghĩa scanner đã xác nhận an toàn. `VIOLATION` là **alert**, chưa phải lỗi đã xác nhận.
-* Các cột tier tính trên số **so sánh** (control×resource), không phải số case. `INFORMATIVE`: verdict có thể phản ứng với thứ MR đổi và PASS tường minh; `WEAK`: có PASS suy luận (Trivy); `CONTROL`: đối chứng âm (phải không phản ứng); `UNINFORMATIVE`: bằng nhau theo cấu trúc; `INCONCLUSIVE`: thiếu verdict.
+* Các cột tier tính trên số **so sánh** (control×resource), không phải số case. `INFORMATIVE`: verdict có thể phản ứng với thứ MR đổi và PASS tường minh; `WEAK`: có PASS suy luận (Trivy); `CONTROL`: đối chứng âm; `UNINFORMATIVE`: bằng nhau theo cấu trúc; `INCONCLUSIVE`: thiếu verdict.
+* `SKIP` gồm: precondition không thỏa, MR `unsupported` cho scanner đó, hoặc **không còn khóa so sánh nào** sau khi áp phạm vi của control (`no_comparable_keys`).
 * Trivy PASS là suy luận: 55/237 so sánh của MR-01 và 6/6 của MR-04 là WEAK.
 * Không có số liệu về tỉ lệ phát hiện lỗi hay độ chính xác: chưa có adjudication độc lập và chưa có lỗi đã biết **độc lập** (KD-001 cùng lớp lỗi đã dẫn dắt MR-02).
 
 ## Điểm chính
 
-1. **Một pipeline cho 9 MR trên 2 scanner:** Trivy `PASS 24, SKIP 47, VIOLATION 1, INVALID_SOURCE 1`; Kubescape `PASS 30, SKIP 36, VIOLATION 6, INCONCLUSIVE 3, PARTIAL 1, INVALID_SOURCE 1`. 0 `SCAN_ERROR`, 0 `ENVIRONMENT_MISMATCH`, 0 `INVALID_PAIR`.
-2. **Cảnh báo (alerts):** Trivy 1 (MR-05, `KSV-0113` bỏ qua `apiGroups`, lớp N2); Kubescape 6 = MR-02 ×5 (`C-0267`/`C-0272`, lớp K1: Role cùng tên khác namespace làm workload PASS→FAIL) + MR-07 ×1 (`C-0267` FAIL→PASS khi subject SA viết lại thành `User`; phân loại **UNRESOLVED**). Tất cả `CANDIDATE`, 0 confirmed.
-3. **MR-02 chỉ còn một phạm vi chính thức:** Kubescape (workload + ServiceAccount + RoleBinding cho control aggregator, C-0057 làm đối chứng âm); Trivy khai báo `unsupported`.
-4. **KD-001 (lỗi lịch sử kubescape#2579):** phạm vi chính thức phát hiện sự khác nhau giữa bản lỗi v4.0.11 và bản sửa v4.0.12 (7 so với 5 case VIOLATION; 28 khóa khác nhau, chỉ ở verdict follow-up của `C-0015/0007/0035` trên `ServiceAccount` và `RoleBinding`); phạm vi cũ (Role đích) thì không (5 so với 5).
+1. **Một pipeline cho 9 MR trên 2 scanner:** Trivy `PASS 24, SKIP 47, VIOLATION 1, INVALID_SOURCE 1`; Kubescape `PASS 30, SKIP 37, VIOLATION 6, INCONCLUSIVE 2, PARTIAL 1, INVALID_SOURCE 1`. 0 `SCAN_ERROR`, 0 `ENVIRONMENT_MISMATCH`, 0 `INVALID_PAIR`.
+2. **Cảnh báo (alerts):** Trivy 1 (MR-05, `KSV-0113` bỏ qua `apiGroups`, lớp N2); Kubescape 6 = MR-02 ×5 (`C-0267`/`C-0272`, lớp K1) + MR-07 ×1 (`C-0267` FAIL→PASS khi subject SA viết lại thành `User`; phân loại **UNRESOLVED**). Tất cả `CANDIDATE`, 0 confirmed.
+3. **Sửa phạm vi MR-01 trên control tổng hợp của Kubescape:** đối tượng không thể được control đánh giá (ServiceAccount/Role không được bind) nằm ngoài phạm vi; 0 so sánh có kết luận bị mất, 0 verdict đổi. Trên Kalm-Benchmark MR-01 hết PARTIAL (65 → 0) và INCONCLUSIVE (26 → 0).
+4. **KD-001 (lỗi lịch sử kubescape#2579):** phạm vi MR-02 chính thức phát hiện sự khác nhau giữa bản lỗi v4.0.11 và bản sửa v4.0.12 (7 so với 5 case VIOLATION; 28 khóa khác nhau, chỉ ở verdict follow-up của `C-0015/0007/0035` trên `ServiceAccount` và `RoleBinding`; hai case `rbac-basic` đổi từ VIOLATION sang PASS); phạm vi cũ (Role đích) thì không (5 so với 5).
 5. **Mutation MR-09:** lỗi tiêm vào `C-0015` (bỏ verb `watch`) bị phát hiện ở đúng một case (đích `[watch]`), khớp dự đoán viết trước; đây là 1 mutant, 1 control, **không phải mutation score**.
 
 ---
@@ -27,9 +28,9 @@ Mọi bảng bên dưới do `scripts/poc_tables.py` sinh từ các thư mục r
 
 ## Trivy: all MRs, one pipeline
 
-- scanner `trivy 0.75.0` (local-file), policy digest `sha256:b591e9190`, experiment `poc-v2-baseline` (baseline), scope `official`, registry_matches_policy `True`, framework `aa40b76e34` (dirty `False`), mapping+registry `41831481b8`, seed digest `263c7b27f037`
+- scanner `trivy 0.75.0` (local-file), policy digest `sha256:b591e9190`, experiment `poc-final-baseline` (baseline), scope `official`, registry_matches_policy `True`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `263c7b27f037`
 
-Run directory: `runs/poc_v2/trivy`
+Run directory: `runs/final/trivy`
 
 | MR | PASS | PARTIAL | VIOLATION | SKIP | INVALID_SOURCE | INCONCLUSIVE | INVALID_PAIR | SCAN_ERROR | ENVIRONMENT_MISMATCH | comparisons | INFORMATIVE | WEAK | CONTROL | UNINFORMATIVE | INCONCLUSIVE |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -52,14 +53,14 @@ Violations (Trivy):
 
 ## Kubescape: all MRs, one pipeline
 
-- scanner `kubescape v4.0.15` (local-file), policy digest `8cfb23237b739c20`, experiment `poc-v2-baseline` (baseline), scope `official`, registry_matches_policy `True`, framework `aa40b76e34` (dirty `False`), mapping+registry `41831481b8`, seed digest `263c7b27f037`
+- scanner `kubescape v4.0.15` (local-file), policy digest `8cfb23237b739c20`, experiment `poc-final-baseline` (baseline), scope `official`, registry_matches_policy `True`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `263c7b27f037`
 
-Run directory: `runs/poc_v2/kubescape`
+Run directory: `runs/final/kubescape`
 
 | MR | PASS | PARTIAL | VIOLATION | SKIP | INVALID_SOURCE | INCONCLUSIVE | INVALID_PAIR | SCAN_ERROR | ENVIRONMENT_MISMATCH | comparisons | INFORMATIVE | WEAK | CONTROL | UNINFORMATIVE | INCONCLUSIVE |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | * | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| MR-01 | 12 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 420 | 416 | 0 | 0 | 0 | 4 |
+| MR-01 | 12 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 416 | 416 | 0 | 0 | 0 | 0 |
 | MR-02 | 3 | 0 | 5 | 3 | 0 | 0 | 0 | 0 | 0 | 82 | 76 | 0 | 6 | 0 | 0 |
 | MR-03 | 1 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 5 | 5 | 0 | 0 | 0 | 0 |
 | MR-04 | 6 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 6 | 6 | 0 | 0 | 0 | 0 |
@@ -84,8 +85,8 @@ Violations (Kubescape):
 
 ## MR-02 historical defect (KD-001): affected v4.0.11 vs fixed v4.0.12
 
-- scanner `kubescape v4.0.11` (local-file), policy digest `8cfb23237b739c20`, experiment `kd001-v4.0.11` (historical-defect), scope `official`, registry_matches_policy `True`, framework `aa40b76e34` (dirty `False`), mapping+registry `41831481b8`, seed digest `263c7b27f037`
-- scanner `kubescape v4.0.12` (local-file), policy digest `8cfb23237b739c20`, experiment `kd001-v4.0.12` (historical-defect), scope `official`, registry_matches_policy `True`, framework `aa40b76e34` (dirty `False`), mapping+registry `41831481b8`, seed digest `263c7b27f037`
+- scanner `kubescape v4.0.11` (local-file), policy digest `8cfb23237b739c20`, experiment `kd001-v4.0.11` (historical-defect), scope `official`, registry_matches_policy `True`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `263c7b27f037`
+- scanner `kubescape v4.0.12` (local-file), policy digest `8cfb23237b739c20`, experiment `kd001-v4.0.12` (historical-defect), scope `official`, registry_matches_policy `True`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `263c7b27f037`
 
 **official scope (unified)** keys compared in both runs: 64; keys whose verdicts differ between binaries: 28 (cases 7; controls {'C-0007': 8, 'C-0015': 12, 'C-0035': 8}; kinds {'RoleBinding': 14, 'ServiceAccount': 14}); source verdicts identical on all keys: True
 
@@ -97,13 +98,27 @@ Violations (Kubescape):
 
 MR-02 cases with a VIOLATION: affected 7, fixed 5
 
+Per case:
+
+| case | MR-02 on affected v4.0.11 | MR-02 on fixed v4.0.12 | aggregator keys that differ | four verdicts (first 4) |
+|---|---|---|---|---|
+| `INVALID_SOURCE__invalid-missing-role` | INVALID_SOURCE | INVALID_SOURCE | 0 | - |
+| `MR-02__K1-role-namespace__66de14dad8` | VIOLATION | VIOLATION | 6 | C-0007 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0007 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS; C-0015 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0015 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS |
+| `MR-02__K1-role-namespace__e89cd9e383` | VIOLATION | VIOLATION | 2 | C-0015 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0015 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS |
+| `MR-02__rbac-basic__66de14dad8` | VIOLATION | PASS | 6 | C-0007 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0007 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS; C-0015 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0015 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS |
+| `MR-02__rbac-basic__e89cd9e383` | VIOLATION | PASS | 2 | C-0015 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0015 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS |
+| `MR-02__rbac-secrets-reader__44d79ab8cf` | PASS | PASS | 0 | - |
+| `MR-02__rbac-secrets-reader__bd7af0cb0d` | VIOLATION | VIOLATION | 4 | C-0007 RoleBinding/lab-c/reader-binding: aff PASS->FAIL / fix PASS->PASS; C-0007 ServiceAccount/lab-c/reader: aff PASS->FAIL / fix PASS->PASS; C-0035 RoleBinding/lab-c/reader-binding: aff PASS->FAIL / fix PASS->PASS; C-0035 ServiceAccount/lab-c/reader: aff PASS->FAIL / fix PASS->PASS |
+| `MR-02__rbac-workload__66de14dad8` | VIOLATION | VIOLATION | 6 | C-0007 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0007 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS; C-0015 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0015 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS |
+| `MR-02__rbac-workload__e89cd9e383` | VIOLATION | VIOLATION | 2 | C-0015 RoleBinding/lab-a/app-binding: aff PASS->FAIL / fix PASS->PASS; C-0015 ServiceAccount/lab-a/app: aff PASS->FAIL / fix PASS->PASS |
+
 Old scope (aggregator controls on the bound Role only), archived evidence:
 
 - affected: 5 VIOLATION case(s); fixed: 5; cases violating only under the affected binary: 0
 
 ## MR-09 mutation (C-0015 without the `watch` verb) vs the pinned policy
 
-- scanner `kubescape v4.0.15` (local-file), policy digest `b40d4d31a8d6f3f2`, experiment `mr09-drop-watch-mutant` (mutation), scope `official`, registry_matches_policy `False`, framework `aa40b76e34` (dirty `False`), mapping+registry `41831481b8`, seed digest `263c7b27f037`
+- scanner `kubescape v4.0.15` (local-file), policy digest `b40d4d31a8d6f3f2`, experiment `mr09-drop-watch-mutant` (mutation), scope `official`, registry_matches_policy `False`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `263c7b27f037`
 
 MR-09 results pinned: {'SKIP': 6, 'PASS': 3}; mutant: {'SKIP': 6, 'PASS': 2, 'VIOLATION': 1}; keys compared in both: 3; keys with different verdicts: 1
 
@@ -113,7 +128,7 @@ MR-09 results pinned: {'SKIP': 6, 'PASS': 3}; mutant: {'SKIP': 6, 'PASS': 2, 'VI
 
 ## Independent seeds (Kalm-Benchmark, catalog frozen first): Trivy
 
-- scanner `trivy 0.75.0` (local-file), policy digest `sha256:b591e9190`, experiment `poc-v2-heldout` (baseline), scope `official`, registry_matches_policy `True`, framework `6b65ce87fa` (dirty `True`), mapping+registry `41831481b8`, seed digest `8904fba1c570`
+- scanner `trivy 0.75.0` (local-file), policy digest `sha256:b591e9190`, experiment `poc-v2-heldout` (baseline), scope `official`, registry_matches_policy `True`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `8904fba1c570`
 
 | MR | PASS | PARTIAL | VIOLATION | SKIP | INVALID_SOURCE | INCONCLUSIVE | INVALID_PAIR | SCAN_ERROR | ENVIRONMENT_MISMATCH | comparisons | INFORMATIVE | WEAK | CONTROL | UNINFORMATIVE | INCONCLUSIVE |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -138,40 +153,58 @@ Violations (Trivy, independent seeds):
 
 ## Independent seeds (Kalm-Benchmark, catalog frozen first): Kubescape
 
-- scanner `kubescape v4.0.15` (local-file), policy digest `8cfb23237b739c20`, experiment `poc-v2-heldout` (baseline), scope `official`, registry_matches_policy `True`, framework `6b65ce87fa` (dirty `True`), mapping+registry `41831481b8`, seed digest `8904fba1c570`
+- scanner `kubescape v4.0.15` (local-file), policy digest `8cfb23237b739c20`, experiment `poc-v2-heldout` (baseline), scope `official`, registry_matches_policy `True`, framework `b5645f058b` (dirty `False`), mapping+registry `cd60642439`, seed digest `8904fba1c570`
 
 | MR | PASS | PARTIAL | VIOLATION | SKIP | INVALID_SOURCE | INCONCLUSIVE | INVALID_PAIR | SCAN_ERROR | ENVIRONMENT_MISMATCH | comparisons | INFORMATIVE | WEAK | CONTROL | UNINFORMATIVE | INCONCLUSIVE |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | * | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| MR-01 | 6 | 65 | 0 | 0 | 0 | 26 | 0 | 0 | 0 | 1021 | 657 | 0 | 0 | 0 | 364 |
+| MR-01 | 71 | 0 | 0 | 26 | 0 | 0 | 0 | 0 | 0 | 657 | 657 | 0 | 0 | 0 | 0 |
 | MR-02 | 6 | 0 | 0 | 61 | 0 | 0 | 0 | 0 | 0 | 48 | 48 | 0 | 0 | 0 | 0 |
-| MR-03 | 0 | 0 | 0 | 62 | 0 | 2 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 6 |
+| MR-03 | 0 | 0 | 0 | 64 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | MR-04 | 33 | 0 | 0 | 31 | 0 | 0 | 0 | 0 | 0 | 33 | 33 | 0 | 0 | 0 | 0 |
-| MR-05 | 0 | 0 | 0 | 61 | 0 | 3 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 | 3 |
+| MR-05 | 0 | 0 | 0 | 64 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | MR-06 | 33 | 0 | 0 | 31 | 0 | 0 | 0 | 0 | 0 | 33 | 33 | 0 | 0 | 0 | 0 |
 | MR-07 | 3 | 0 | 0 | 61 | 0 | 0 | 0 | 0 | 0 | 9 | 9 | 0 | 0 | 0 | 0 |
 | MR-08 | 0 | 0 | 0 | 64 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| MR-09 | 0 | 0 | 0 | 61 | 0 | 6 | 0 | 0 | 0 | 6 | 0 | 0 | 0 | 0 | 6 |
+| MR-09 | 0 | 0 | 0 | 67 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 Violations (Kubescape, independent seeds):
 
 _no violation_
 
+## Effect of the control-scope rule on the independent seeds (before vs after, Kubescape)
+
+**Kalm-Benchmark, Kubescape**: comparisons before 1159, after 780; conclusive comparisons lost 0; verdict flips on common keys 0; new keys 0; inconclusive (no verdict on both sides) keys removed from scope 379
+
+| removed key (control on kind) | count |
+|---|---|
+| C-0015 on ServiceAccount | 66 |
+| C-0007 on ServiceAccount | 66 |
+| C-0035 on ServiceAccount | 66 |
+| C-0053 on ServiceAccount | 66 |
+| C-0015 on Role | 27 |
+| C-0007 on Role | 18 |
+| C-0035 on Role | 18 |
+| C-0053 on Role | 17 |
+| C-0015 on ClusterRole | 8 |
+| C-0007 on ClusterRole | 8 |
+
 
 ---
 
-# Ghi chú về lượt chạy độc lập (Kalm-Benchmark) và giới hạn
+# Ghi chú về lượt chạy ngoài (Kalm-Benchmark) và giới hạn
 
-* **Thiết lập:** cùng quy tắc chọn trước như lượt đầu (Kalm-Benchmark commit `dac3df5`, 65 file; `selection.json` giống hệt lượt cũ). Catalog, mapping, registry, scanners, toàn bộ mã đóng băng bằng `freeze.json` trước khi chạy và `FREEZE INTACT` sau khi chạy. Cả 9 MR được gọi tường minh. Lock của lượt này ghi commit `6b65ce8` và `dirty: true`: lý do duy nhất là một sửa đường dẫn chữ trong `scripts/make_evidence_pack.py` chưa commit lúc chạy (không nằm trong danh sách đóng băng, không ảnh hưởng kết quả).
-* **Trivy:** 3 VIOLATION của MR-05 (`rbac-002-1/2/3`, ba biến thể của cùng kịch bản N2: `KSV-0113` vẫn FAIL khi `apiGroups: ["apps"]`), **một họ**, giống lượt cũ. MR-01 91 PASS + 4 INCONCLUSIVE; MR-04 32 PASS + 1 INCONCLUSIVE; MR-06 32 PASS + 1 INCONCLUSIVE; INCONCLUSIVE đều do FAIL không có số dòng (`StartLine=None`) nên không gắn được resource.
-* **Kubescape:** 0 VIOLATION. MR-01: 6 PASS, **65 PARTIAL**, 26 INCONCLUSIVE (lượt cũ: 110 PASS + 29 INCONCLUSIVE tổng thể). PARTIAL là hệ quả **có kiểm chứng** của việc thống nhất registry: `ALL_OF_KIND` của control aggregator nay gồm cả `ServiceAccount`/`RoleBinding` (nơi normalizer thật sự gắn verdict), và một `ServiceAccount` không thuộc bộ ba nào được cả hai phía báo `NOT_EVALUATED` (4 khóa/case). Không khóa nào có mặt ở cả hai lượt bị đổi verdict (`migration_heldout_kubescape.md`: 279 UNCHANGED, 77 EXPECTED_CHANGE, 259 NEW_BEHAVIOR, 0 UNRESOLVED). Đây là **một điểm yếu của phạm vi MR-01**, không phải lỗi scanner: nên thu hẹp `ALL_OF_KIND` vào các đối tượng có verdict ở ít nhất một phía, hoặc tách `judges` khỏi `reports_on` trong registry. Chưa làm vì sẽ đổi định nghĩa phạm vi sau khi đã thấy kết quả.
-* **Áp dụng:** 24%/25% (seed, MR) cho Trivy/Kubescape. MR RBAC hầu như không áp dụng được (Kalm là benchmark đơn-lỗi); K1 không xuất hiện (cần SA + RoleBinding + workload). Đây là hạn chế về seed.
-* Trivy: 247/339 so sánh có kết luận dựa vào PASS suy luận trong lượt cũ; con số của lượt này nằm trong `comparisons.csv` (`basis`).
+* **Đây là external regression, không phải blind held-out cho thay đổi phạm vi:** Kalm-Benchmark chính là dữ liệu làm lộ vấn đề phạm vi MR-01. Giá trị của nó ở đây là kiểm tra sửa phạm vi không làm mất so sánh nào và không đổi verdict nào (bảng "Effect of the control-scope rule" ở trên: 1159 → 780 so sánh, **0** so sánh có kết luận bị mất, **0** verdict đổi, 379 khóa vốn không có verdict ở cả hai phía bị đưa ra ngoài phạm vi). Quy tắc phạm vi được chốt dựa trên báo cáo Kubescape đó (mọi đối tượng trong phạm vi có verdict, không đối tượng ngoài phạm vi nào có), nên số liệu này không độc lập với quy tắc.
+* **Thiết lập:** cùng quy tắc chọn như các lượt trước (Kalm-Benchmark commit `dac3df5`, 65 file, `selection.json` giống hệt), catalog/mapping/registry/mã đóng băng bằng `freeze.json` trước khi chạy (`FREEZE INTACT` sau khi chạy), lock `dirty: false`, cả 9 MR.
+* **Trivy:** 3 VIOLATION MR-05 (`rbac-002-1/2/3`, ba biến thể của một kịch bản N2: `KSV-0113` vẫn FAIL khi `apiGroups: ["apps"]`) → **một họ**. MR-01 91 PASS + 4 INCONCLUSIVE (FAIL không có số dòng, `StartLine=None`).
+* **Kubescape:** 0 VIOLATION; 146 PASS / 146 cặp đã tới scanner có kết luận; MR-01 71 PASS + 26 SKIP (`no_comparable_keys`: manifest chỉ có ServiceAccount/Role không được bind, không có đối tượng nào control có thể đánh giá). MR-03/05/09 trên Role không được bind cũng thành SKIP (trước đây INCONCLUSIVE).
+* **Áp dụng:** 24% (Trivy) / 25% (Kubescape) số (seed, MR). K1 không xuất hiện (cần SA + RoleBinding + workload): hạn chế về seed.
 * **Giới hạn:** một benchmark; 65/238 file không phải mẫu ngẫu nhiên; chưa adjudication thủ công; không dùng làm tỉ lệ phát hiện hay cảnh báo giả.
 
 ## Điều KHÔNG được rút ra từ tài liệu này
 
 * Không có số phát hiện lỗi mới; không có tỉ lệ phát hiện, alert precision hay specificity.
 * KD-001 và mutation MR-09 không phải đánh giá độc lập (lớp lỗi đã dẫn dắt MR-02; mutant chọn từ câu trích yêu cầu, 1 mutant 1 control).
-* MR-07 là quan sát **chưa phân loại**.
-* Mọi property còn `author_reviewed`; chưa có review MR độc lập.
+* Ở KD-001, kết luận ở mức case không đủ: 5/7 case đã VIOLATION ở cả hai bản vì K1 (rego `C-0267/C-0272`) không phải lỗi đã sửa ở v4.0.12; chỉ **khóa aggregator** phân biệt được hai bản.
+* MR-07 là quan sát **chưa phân loại**; MR-08 trên Kubescape còn 5/6 so sánh INCONCLUSIVE (giữ nguyên từ trước).
+* Mọi property còn `author_reviewed`; chưa có review MR độc lập; seed còn ít (6 nguồn duy nhất).

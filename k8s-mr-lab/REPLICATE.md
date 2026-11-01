@@ -78,7 +78,7 @@ $PY scripts/fault_variant_kubescape.py ~/.kubescape out/mut-artifacts --control 
 sed "s#~/.kubescape#$PWD/out/mut-artifacts#" config/scanners.yaml > out/scanners-mutant.yaml
 $PY -m k8s_mr_lab --config out/scanners-mutant.yaml run --scanner kubescape --seeds $SEEDS --mr MR-09 --experiment-type mutation --experiment-id mr09-drop-watch-mutant --out out/mr09-mutant
 # 4. bảng kết quả và tác động migration (sinh từ run, không gõ tay)
-$PY scripts/poc_tables.py --trivy out/trivy --kubescape out/kubescape --kd-affected out/kd001/v4.0.11 --kd-fixed out/kd001/v4.0.12 --mutant out/mr09-mutant --out out/poc_tables.md
+$PY scripts/poc_tables.py --trivy out/trivy --kubescape out/kubescape --kd-affected out/kd001/v4.0.11 --kd-fixed out/kd001/v4.0.12 --mutant out/mr09-mutant --heldout-trivy runs/heldout/trivy --heldout-kubescape runs/heldout/kubescape --out out/poc_tables.md
 $PY scripts/migration_impact.py --scanner kubescape --new out/kubescape --old <thư mục run cũ> ... --out out/migration_kubescape   # run cũ: runs/ và docs/evidence/ (chỉ đọc)
 ```
 Luôn đọc `comparisons.csv` (có `role`, `tier`, `basis`, `engaged`), không chỉ `results.csv` (cột verdict của `results.csv` chỉ điền ở dòng VIOLATION).
@@ -88,31 +88,25 @@ Held-out (manifest bên thứ ba, đóng băng trước): `python scripts/heldou
 
 ```bash
 # so sánh run mới với kết quả chính thức đã commit: cùng case_id phải cùng verdict từng khóa
-$PY scripts/compare_runs.py docs/evidence/poc_v2_2026-11-01/trivy out/trivy
-$PY scripts/compare_runs.py docs/evidence/poc_v2_2026-11-01/kubescape out/kubescape
-# kiểm toàn vẹn gói evidence đã commit: sha256 của từng tệp phải bằng manifest.json cạnh nó
-$PY - <<'EOF'
-import json, hashlib, pathlib
-bad = 0
-for m in pathlib.Path("docs/evidence").rglob("manifest.json"):
-    d = m.parent
-    for rel, v in json.loads(m.read_text())["files"].items():
-        bad += hashlib.sha256((d / rel).read_bytes()).hexdigest() != v["sha256"]
-print("manifest mismatches:", bad)
-EOF
+$PY scripts/compare_runs.py docs/evidence/poc_final/trivy out/trivy
+$PY scripts/compare_runs.py docs/evidence/poc_final/kubescape out/kubescape
+# kiểm toàn vẹn evidence: sha256 của từng tệp (BYTE THÔ) phải bằng manifest.json cạnh nó; script không bao giờ sửa file
+$PY scripts/verify_evidence.py                 # kỳ vọng: 2263+ hash, 0 mismatch; mismatch `line-ending` nghĩa là checkout đã đổi newline
 ```
-`compare_runs.py` so các dòng có mặt ở cả hai. Evidence cũ (PoC trước khi thống nhất: `runs/trivy`, `runs/kubescape`, `docs/evidence/*` trừ `poc_v2_2026-11-01`) là tư liệu kiểm toán, **không** phải baseline để so; tác động của việc thống nhất: `docs/poc/MIGRATION_IMPACT_REPORT.md`.
+Evidence được commit là `-text` (`.gitattributes`: `k8s-mr-lab/docs/evidence/** -text`): Git không đổi CRLF/LF, nên hash đúng trên Windows, WSL và Linux. Đừng chạy `git add --renormalize` hay tự bật chuyển newline cho thư mục này.
+`compare_runs.py` so các dòng có mặt ở cả hai. Evidence cũ (PoC trước khi thống nhất: `runs/trivy`, `runs/kubescape`, `docs/evidence/archive/`) là tư liệu kiểm toán, **không** phải baseline để so; tác động của việc thống nhất: `docs/poc/MIGRATION_IMPACT_REPORT.md`.
 
-## 8. Kết quả kỳ vọng (từ máy gốc, commit `aa40b76`)
+## 8. Kết quả kỳ vọng (từ máy gốc, commit `b5645f0`)
 
 | Kiểm tra | Kỳ vọng |
 |---|---|
-| `pytest` có scanner | tất cả pass, 0 skip (224 test) |
+| `pytest` có scanner | 236 pass, 0 skip |
 | `k8s-mr-lab versions` | Trivy `OK`, Kubescape `OK` |
-| `mr validate` | 9 MR, 0 error, 0 warning |
-| Baseline 9 MR | Trivy: `PASS 24, SKIP 47, VIOLATION 1, INVALID_SOURCE 1`; Kubescape: `PASS 30, SKIP 36, VIOLATION 6, INCONCLUSIVE 3, PARTIAL 1, INVALID_SOURCE 1` |
+| `mr validate` | 9 MR, 0 error, 5 warning (selector được khai báo nhưng không control nào so sánh) |
+| Baseline 9 MR | Trivy: `PASS 24, SKIP 47, VIOLATION 1, INVALID_SOURCE 1`; Kubescape: `PASS 30, SKIP 37, VIOLATION 6, INCONCLUSIVE 2, PARTIAL 1, INVALID_SOURCE 1` |
 | KD-001 (MR-02) | v4.0.11: `VIOLATION 7, PASS 1`; v4.0.12: `VIOLATION 5, PASS 3`; 28/64 khóa aggregator khác nhau, chỉ ở verdict follow-up |
 | Mutation MR-09 | mutant: `VIOLATION 1, PASS 2` (pinned: `PASS 3`); chỉ case đích `[watch]` |
+| Held-out Kalm (external regression) | Trivy `PASS 163, VIOLATION 3, INCONCLUSIVE 6`; Kubescape `PASS 146`, 0 violation; so với lượt trước khi sửa phạm vi: 0 so sánh có kết luận bị mất |
 | Triage | 7 alert `CANDIDATE_REPRODUCED`, 0 confirmed |
 
 ## 9. Danh sách đối chiếu môi trường mới ↔ gốc

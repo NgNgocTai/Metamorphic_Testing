@@ -35,13 +35,13 @@ OWASP dùng để *chọn thuộc tính cần kiểm thử*, không dùng để 
 
 ## 3. Kết quả — nói đúng những con số này
 
-- Số liệu chính thức duy nhất: `docs/poc/POC_RESULTS.md` (khung thống nhất, sinh từ evidence). 9 MR (5 cốt lõi + 4 candidate) chạy trên **2 scanner thật** (Trivy 0.75.0, Kubescape v4.0.15), 224 test tự động đều pass (3 test integration cần đúng binary scanner).
+- Số liệu chính thức duy nhất: `docs/poc/POC_RESULTS.md` (khung thống nhất, sinh từ evidence). 9 MR (5 cốt lõi + 4 candidate) chạy trên **2 scanner thật** (Trivy 0.75.0, Kubescape v4.0.15), 236 test tự động đều pass (3 test integration cần đúng binary scanner).
 - Mỗi scanner: Trivy 25 cặp, Kubescape 40 cặp hợp lệ đã tới scanner (6 nguồn hợp lệ duy nhất).
 - **7 cảnh báo vi phạm MR = 5 cặp input khác nhau = 3 nhóm** (K1, N2, quan sát MR-07). (Không nói "7 lỗi".)
   - Kubescape MR-07: `C-0267` FAIL→PASS khi subject SA viết lại thành `User` — chưa phân loại.
   - Kubescape: `C-0267/C-0272` ghép Role theo tên, bỏ qua namespace (MR-02).
   - Trivy: `KSV-0113` bỏ qua `apiGroups`: Role chỉ có quyền secrets ở group `apps` vẫn bị báo (MR-05).
-- **Lượt chạy độc lập** (catalog đóng băng, 65 manifest của Kalm-Benchmark do bên thứ ba viết): không quan sát violation nào ở MR-01 và MR-04 (95 và 33 cặp; chưa đủ để nói tỉ lệ cảnh báo giả bằng 0); N2 của Trivy tái hiện trên 3 biến thể của một kịch bản Kalm (vẫn một họ); Kubescape 0 violation. MR RBAC chỉ áp dụng được vài seed vì Kalm thiếu liên kết RBAC. Chạy lại bằng khung thống nhất: MR-01 trên Kubescape có 65 PARTIAL (thêm khóa `ServiceAccount` không có verdict ở cả hai phía; không khóa chung nào đổi verdict) — nói rõ đây là điểm yếu phạm vi MR-01, không phải lỗi scanner. Đây là một mẫu nhỏ, không phải tỉ lệ phát hiện lỗi.
+- **Lượt chạy độc lập** (catalog đóng băng, 65 manifest của Kalm-Benchmark do bên thứ ba viết): không quan sát violation nào ở MR-01 và MR-04 (95 và 33 cặp; chưa đủ để nói tỉ lệ cảnh báo giả bằng 0); N2 của Trivy tái hiện trên 3 biến thể của một kịch bản Kalm (vẫn một họ); Kubescape 0 violation. MR RBAC chỉ áp dụng được vài seed vì Kalm thiếu liên kết RBAC. Chạy lại bằng khung thống nhất đã sửa phạm vi control: MR-01 trên Kubescape từng có 65 PARTIAL vì so cả ServiceAccount không được bind; sau sửa 0 so sánh có kết luận bị mất, 0 verdict đổi — nói rõ đây là external regression (Kalm làm lộ lỗi), không phải held-out mù. Đây là một mẫu nhỏ, không phải tỉ lệ phát hiện lỗi.
 - Hai ứng viên đều **tái hiện được** và có bằng chứng (raw JSON, rule, thí nghiệm đổi từng yếu tố). **Chưa xác nhận chính thức là lỗi.**
 - Đây là kiểm thử **có định hướng**: hai lớp lỗi này đã biết từ trước rồi mới viết MR. **Không phải phát hiện lỗi mới.**
 - **Lỗi lịch sử KD-001 (kubescape#2579):** MR-02 với phạm vi chính thức cho 7 case VIOLATION trên bản lỗi v4.0.11 và 5 trên bản sửa v4.0.12; phạm vi cũ không phân biệt được (5 so với 5). **Mutation:** lỗi tiêm vào `C-0015` bị MR-09 bắt ở đúng một case. Cả hai cùng lớp lỗi/chọn đã dẫn dắt MR nên không phải tỉ lệ phát hiện.

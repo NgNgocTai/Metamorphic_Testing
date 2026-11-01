@@ -9,16 +9,16 @@ Cách phân loại: `scripts/migration_impact.py` so từng case của các lư�
 | Scanner | UNCHANGED | EXPECTED_CHANGE | NEW_BEHAVIOR | BUG_FIX | UNEXPECTED_REGRESSION | UNRESOLVED | BLOCKED |
 |---|---|---|---|---|---|---|---|
 | Trivy 0.75.0 | 57 | 20 | 7 | 0 | 0 | 0 | không |
-| Kubescape v4.0.15 | 60 | 16 | 0 | 0 | 0 | 0 | không |
+| Kubescape v4.0.15 | 59 | 17 | 0 | 0 | 0 | 0 | không |
 
 Lượt chạy độc lập trên Kalm-Benchmark (65 file, cùng selection) so với lượt cũ lưu ở `runs/heldout_poc_v1/`:
 
 | Scanner | UNCHANGED | EXPECTED_CHANGE | NEW_BEHAVIOR | UNEXPECTED_REGRESSION | UNRESOLVED | BLOCKED |
 |---|---|---|---|---|---|---|
 | Trivy 0.75.0 | 350 | 73 | 195 | 0 | 0 | không |
-| Kubescape v4.0.15 | 279 | 77 | 259 | 0 | 0 | không |
+| Kubescape v4.0.15 | 317 | 39 | 259 | 0 | 0 | không |
 
-(NEW_BEHAVIOR của lượt độc lập: MR-06..09 chưa có trong lượt cũ.) (đếm theo case; bảng từng case: `docs/evidence/archive/poc_v2_superseded_2026-11-01/migration_trivy.md`, `migration_kubescape.md`.) **Không có verdict nào của cùng một khóa so sánh thay đổi** giữa hai khung, nên không có hồi quy do scanner hay do pipeline; mọi khác biệt là khác biệt về phạm vi so sánh.
+(NEW_BEHAVIOR của lượt độc lập: MR-06..09 chưa có trong lượt cũ.) (đếm theo case; bảng từng case: `docs/evidence/poc_final/migration_trivy.md`, `migration_kubescape.md`.) **Không có verdict nào của cùng một khóa so sánh thay đổi** giữa hai khung, nên không có hồi quy do scanner hay do pipeline; mọi khác biệt là khác biệt về phạm vi so sánh.
 
 ## 2. Từng thay đổi và nguyên nhân
 
@@ -29,7 +29,7 @@ Lượt chạy độc lập trên Kalm-Benchmark (65 file, cùng selection) so v
 | 3 | MR-02: control aggregator của Kubescape (C-0015/0007/0035/0053) so trên `subject_sa` + `rolebinding` thay cho `bound_role` | Kubescape | 8 (mỗi case: −4 khóa, +8 khóa) | EXPECTED_CHANGE | Phạm vi cũ không quan sát được KD-001 (xem `POC_RESULTS.md`). Kết quả MR-02 trên v4.0.15 **không đổi** (5 VIOLATION như trước, cùng control C-0267/C-0272); chỉ số so sánh tăng 4 → 8 mỗi case |
 | 4 | MR-02: C-0057 chuyển thành `role: control` | Kubescape | 8 (trong dòng 3) | EXPECTED_CHANGE | Không đổi verdict; đối chứng âm có tier `CONTROL` riêng và vi phạm ở đó bị gắn `UNEXPECTED_VIOLATION` |
 | 5 | MR-01 (`ALL_OF_KIND`): control aggregator nay báo cáo trên cả `ServiceAccount`, `RoleBinding`, `ClusterRoleBinding` (registry `reports_on`), mapping cũ ghi `kinds: [Role, ClusterRole]` | Kubescape | 8 | EXPECTED_CHANGE | Normalizer vốn gán verdict của bộ ba (SA, Role, RoleBinding) cho mọi thành viên; registry ghi đúng điều đó thay cho danh sách kind cũ. +4..6 khóa mỗi case, mọi khóa mới đều PASS→PASS, result không đổi |
-| 5b | **Held-out, MR-01 trên Kubescape:** cùng nguyên nhân dòng 5 | Kubescape | 65 PASS → PARTIAL (MR-01) | EXPECTED_CHANGE | Mỗi case có thêm 4 khóa `ServiceAccount` mà cả hai phía báo `NOT_EVALUATED` (SA không thuộc bộ ba nào); checker không bao giờ coi khóa thiếu verdict là PASS nên case thành PARTIAL. Không khóa nào có mặt ở cả hai lượt đổi verdict. **Đây là điểm yếu phạm vi của MR-01 mà việc thống nhất làm lộ ra** (xem `POC_RESULTS.md`), chưa sửa vì sẽ đổi định nghĩa phạm vi sau khi đã thấy kết quả |
+| 5b | **Phạm vi control tổng hợp (`scope_rule`)**: ServiceAccount/Role không được bind nằm ngoài phạm vi của control tổng hợp | Kubescape | so với lượt cũ: held-out 29 case INCONCLUSIVE → SKIP (MR-01 ×24, MR-05 ×3, MR-03 ×2), repo seeds 1 case MR-01 INCONCLUSIVE → SKIP; so với lượt thống nhất đầu tiên: held-out MR-01 65 PARTIAL → PASS và 26 INCONCLUSIVE → SKIP, MR-09 6 INCONCLUSIVE → SKIP | EXPECTED_CHANGE | Lượt thống nhất đầu tiên cho MR-01 65 PARTIAL vì đưa ServiceAccount không được bind vào `ALL_OF_KIND` (cả hai phía `NOT_EVALUATED`). Quy tắc phạm vi sửa điều đó: 0 so sánh có kết luận bị mất, 0 verdict đổi (`POC_RESULTS.md`); các khóa bỏ đi đều có trong `scope.json` của case. Held-out Kubescape MR-01 nay giống lượt cũ (UNCHANGED 317) |
 | 6 | MR-08: Trivy khai báo `unsupported` (trước đó chỉ vắng) | Trivy | 7 | NEW_BEHAVIOR | Lượt cũ không chạy MR-08 trên Trivy; nay có 7 dòng `SKIP` kèm lý do |
 
 Phần còn lại của UNCHANGED (Trivy 57, Kubescape 60) gồm toàn bộ MR-03, MR-04, MR-05, MR-06, MR-09 và phần lớn MR-01/07/08: cùng case, cùng verdict nguồn và follow-up, cùng kết quả, từng khóa một.

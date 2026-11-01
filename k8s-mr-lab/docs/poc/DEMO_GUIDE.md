@@ -27,3 +27,7 @@ Viết cho: người trình bày PoC trước giảng viên. Mọi lệnh chạy
 * **PASS nghĩa là gì?** Quan hệ MR thỏa. Với Trivy, PASS là suy luận (`basis = inferred_pass`, tier WEAK).
 * **Vì sao MR-02 không có phạm vi Trivy?** Mọi check Trivy được ánh xạ chỉ nhìn đúng document nó đánh giá, nên không thể quan sát một Role không liên quan; khai báo `unsupported` với lý do thay vì so sánh những thứ không thể phản ứng.
 * **Con số cũ đâu?** Giữ ở evidence và lịch sử git để kiểm toán; báo cáo tác động migration giải thích từng khác biệt.
+
+## Bổ sung: phạm vi MR-01 (nếu được hỏi về PARTIAL trên Kalm)
+
+Mở mục "Effect of the control-scope rule" trong `POC_RESULTS.md`: 1159 → 780 so sánh, 0 so sánh có kết luận bị mất, 0 verdict đổi. Nói rõ: lượt Kalm là external regression (chính nó làm lộ vấn đề), và quy tắc phạm vi suy ra từ đối tượng nguồn, không từ output scanner.

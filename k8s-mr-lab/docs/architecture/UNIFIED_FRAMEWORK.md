@@ -47,6 +47,20 @@ Một bộ luật cho mọi MR:
 3. **Vai trò**: `property` phải quan sát được thay đổi (Trivy `judged_object`: kind bị đổi ∩ kind của target ∩ `reports_on`; Kubescape `all_matched_kinds`: kind bị đổi ∩ `reads`); `control` phải **không** quan sát được (nếu quan sát được thì đó là so sánh property bị gán nhãn sai).
 4. Một control không có hai vai trò khác nhau trong cùng (MR, scanner).
 
+### Phạm vi của control: "không thể đánh giá" khác "không được đánh giá"
+
+Registry mô tả mỗi control bằng `reads` (kind nó nạp vào đầu vào), `reports_on` (kind mà verdict của nó có thể gắn vào) và, với control tổng hợp (aggregator của Kubescape), một `scope_rule` có tên (`rbac_triple_member`): trong các kind được tổng hợp (`ServiceAccount`, `Role`, `ClusterRole`, `RoleBinding`, `ClusterRoleBinding`), control chỉ **đánh giá được** những đối tượng nằm trong một chuỗi subject → binding → role của chính bundle. Quy tắc nằm ở `checker.SCOPE_RULES` (dùng chung, không có ngoại lệ theo MR) và được suy ra từ đối tượng nguồn, không từ output của scanner.
+
+| Tình huống | Xử lý |
+|---|---|
+| Đối tượng ngoài phạm vi của control (ServiceAccount hay Role không được bind) | không so sánh; ghi vào `scope.json` của case (`out_of_control_scope`) |
+| Trong phạm vi nhưng scanner không đánh giá ở cả hai phía | giữ nguyên khóa, `INCONCLUSIVE` (không bao giờ PASS) |
+| Có verdict ở một phía, thiếu ở phía kia | `INCONCLUSIVE`, hiện rõ |
+| Có verdict ở cả hai phía | so quan hệ: thỏa hoặc `VIOLATION` |
+| MR có `all_failures` | mọi FAIL ở một trong hai báo cáo vẫn được so, kể cả ngoài phạm vi đã phân giải |
+
+Quy tắc được kiểm trên báo cáo Kubescape thật của Kalm-Benchmark: mọi đối tượng trong phạm vi đều có verdict, không đối tượng ngoài phạm vi nào có verdict (0 ngoại lệ trên 408 cặp đối tượng×control). `mr validate` từ chối `scope_rule` không có trong `SCOPE_RULES` và cảnh báo selector được MR khai báo nhưng không control nào so sánh.
+
 Đây là điều kiện **cần**, không phải đủ, để control phụ thuộc thật vào trường bị đổi (xem `docs/INFORMATIVE_COMPARISON_ANALYSIS.md`).
 
 ## 4. Một pipeline thực thi

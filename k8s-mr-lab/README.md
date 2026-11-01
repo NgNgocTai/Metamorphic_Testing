@@ -129,6 +129,6 @@ k8s-mr-lab seeds coverage --roots seeds/synthetic seeds/historical seeds/candida
 | `docs/EVIDENCE_SHARING_AUDIT.md`, `scripts/sanitize_evidence.py` | what in the repository is personal, and the public copy |
 | `docs/archive/NEXT_STAGE_RESEARCH_REPORT.md`, `REPLICATE.md` | this stage's report; reproduce from a clean machine |
 
-Evidence is under `docs/evidence/*/` with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
+Official evidence is `docs/evidence/poc_final/` (earlier experiments: `docs/evidence/archive/`), each directory with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
 `results.csv` (whose verdict columns are filled only for VIOLATION rows). Tools: `scripts/compare_runs.py`,
 `scripts/snapshot_mr_behavior.py`, `scripts/package_run_evidence.py`, `scripts/fault_variant_kubescape.py`.
