@@ -42,6 +42,8 @@ PY=~/mrlab-venv/bin/python
 | Trivy checks bundle | `sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058`, tải 2026-10-28 (`~/.cache/trivy/policy/metadata.json`) | tải một lần bởi Trivy; chạy với `--skip-check-update` để đóng băng. **BLOCKER:** bundle mới tải sau ngày đó sẽ khác; chưa có bản lưu trữ cố định ngoài máy gốc |
 | Kubescape artifacts | `8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150` (gộp `allcontrols.json`, `controls-inputs.json`, `exceptions.json` trong `~/.kubescape`) | `kubescape download artifacts` (mặc định lưu `~/.kubescape`). **BLOCKER:** nội dung phụ thuộc thời điểm tải |
 
+**Snapshot một phần:** `docs/evidence/poc_final/policy_snapshot/` lưu đúng 15 file policy (rego của Trivy, JSON control của Kubescape) mà registry được sinh từ đó, đã đối chiếu với `source_sha256` trong `config/control-registry.yaml`. Đủ để kiểm chứng *nội dung từng control đã dùng* và để đọc hợp đồng của chúng; **chưa** đủ để dựng lại toàn bộ bundle (Trivy `allcontrols`-tương đương, `controls-inputs.json`, `exceptions.json`), nên digest bundle đầy đủ vẫn chưa tái dựng được từ con số không. Đây là giới hạn đã biết của PoC.
+
 Nếu digest trên máy mới khác: **đó là một experiment track khác**; runner từ chối so sánh hai lần quét khác digest (`ENVIRONMENT_MISMATCH`). Đừng trộn kết quả hai track.
 
 ## 5. Kiểm tra phần mềm
@@ -81,6 +83,7 @@ $PY -m k8s_mr_lab --config out/scanners-mutant.yaml run --scanner kubescape --se
 $PY scripts/poc_tables.py --trivy out/trivy --kubescape out/kubescape --kd-affected out/kd001/v4.0.11 --kd-fixed out/kd001/v4.0.12 --mutant out/mr09-mutant --heldout-trivy runs/heldout/trivy --heldout-kubescape runs/heldout/kubescape --out out/poc_tables.md
 $PY scripts/migration_impact.py --scanner kubescape --new out/kubescape --old <thư mục run cũ> ... --out out/migration_kubescape   # run cũ: runs/ và docs/evidence/ (chỉ đọc)
 ```
+**Script portable:** `OUT=out/repro KUBESCAPE_4_0_11=<binary> KUBESCAPE_4_0_12=<binary> bash scripts/reproduce_official.sh` chạy kiểm tra, baseline, KD-001 và mutation MR-09 từ checkout sạch; dừng ở lỗi đầu tiên, kiểm dependency, không xóa gì và từ chối ghi vào thư mục không rỗng. `docs/evidence/poc_final/run_official_experiments.sh` chỉ là **bản ghi lịch sử** các lệnh đã dùng (đường dẫn máy gốc, không fail-fast). Held-out Kalm chạy riêng bằng `heldout_prepare.py` + `heldout_run.sh` như dưới.
 Luôn đọc `comparisons.csv` (có `role`, `tier`, `basis`, `engaged`), không chỉ `results.csv` (cột verdict của `results.csv` chỉ điền ở dòng VIOLATION).
 Held-out (manifest bên thứ ba, đóng băng trước): `python scripts/heldout_prepare.py` rồi `bash scripts/heldout_run.sh` (cần `~/Kalm-Benchmark`).
 

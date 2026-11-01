@@ -201,6 +201,11 @@ _no violation_
 * **Áp dụng:** 24% (Trivy) / 25% (Kubescape) số (seed, MR). K1 không xuất hiện (cần SA + RoleBinding + workload): hạn chế về seed.
 * **Giới hạn:** một benchmark; 65/238 file không phải mẫu ngẫu nhiên; chưa adjudication thủ công; không dùng làm tỉ lệ phát hiện hay cảnh báo giả.
 
+## Ghi chú về `mr validate` và MR-08
+
+* **5 cảnh báo `mr validate`** (MR-02 `bound_role`; MR-03, MR-05 `subject_sa`; MR-07 `rolebinding`, `subject_sa`) là selector mà MR vẫn phân giải được (đối tượng của thuộc tính, dùng khi dựng key và kiểm điều kiện) nhưng không control nào được ánh xạ so sánh trên chúng. Chúng **không** thuộc phạm vi so sánh và không phải lỗi; mình giữ lại thay vì bóp `targets()` chỉ để đạt 0 cảnh báo.
+* **MR-08 trên Kubescape (5/6 so sánh INCONCLUSIVE):** nguyên nhân là điều kiện nền của quan hệ `fail_to_pass` không thỏa, không phải thiếu output thô. Ở `rbac-secrets-reader`, `C-0267` FAIL→PASS đúng kỳ vọng nhưng `C-0272` PASS→PASS (nguồn không FAIL). Ở `rbac-workload` và `K1-role-namespace`, cả `C-0267` và `C-0272` đều PASS ở nguồn. Đây là giới hạn về tính áp dụng của MR-08 trên seed/control hiện có; muốn đánh giá cần thêm seed có nguồn FAIL ở workload-level.
+
 ## Điều KHÔNG được rút ra từ tài liệu này
 
 * Không có số phát hiện lỗi mới; không có tỉ lệ phát hiện, alert precision hay specificity.
