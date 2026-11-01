@@ -17,6 +17,7 @@ hand-written, so the file is regenerated, never edited. Fields per control:
                        verdict to every member of the triple)
                    Kubescape, other: the workload kinds of `match` when it has any, else `match`
   reports_on_rule  names the rule above that was applied
+  scope_rule       (aggregators) `rbac_triple_member`: of the aggregated kinds only members of a binding chain are judged (checker.SCOPE_RULES)
 It also records the policy digest the registry was derived under (`derived_under`); a run on different artifacts is flagged in its lock.
 """
 from __future__ import annotations
@@ -77,8 +78,11 @@ def kubescape_entry(artifacts: Path, control: str) -> dict:
     else:
         wl = [k for k in match if k in WORKLOAD]
         reports, rule = (wl, "workload_kinds_of_match") if wl else (match, "match")
-    return {"title": d["name"], "source": f.name, "source_sha256": sha(f), "scope": "all_matched_kinds", "aggregator": aggregator,
-            "reads": match, "reports_on": reports, "reports_on_rule": rule}
+    entry = {"title": d["name"], "source": f.name, "source_sha256": sha(f), "scope": "all_matched_kinds", "aggregator": aggregator,
+             "reads": match, "reports_on": reports, "reports_on_rule": rule}
+    if aggregator:       # an aggregator judges subject-role-rolebinding chains: an unbound Role/ServiceAccount is outside its scope
+        entry["scope_rule"] = "rbac_triple_member"
+    return entry
 
 
 def main(argv=None) -> int:

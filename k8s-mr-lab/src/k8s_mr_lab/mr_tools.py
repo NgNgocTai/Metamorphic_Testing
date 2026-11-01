@@ -14,7 +14,7 @@ from types import SimpleNamespace
 import yaml
 
 from .bundles import BundleError, load_bundle
-from .checker import ALL_OF_KIND, RELATIONS
+from .checker import ALL_OF_KIND, RELATIONS, SCOPE_RULES
 from .registry import MR_ID, PolicyMapping, load_catalog, read_specs
 from .transforms.base import IMPLEMENTATIONS, MetamorphicRelation
 from .validation import validate_source
@@ -155,9 +155,23 @@ def check_mapping(specs: list[dict], mapping: PolicyMapping) -> list[str]:
                 if role == "control" and can_observe:
                     bad.append(f"{tag}: role control but the control can observe what the MR touches {touches}; it is a property comparison")
     for sc in SCANNERS:
+        for c, meta in (registry.get(sc) or {}).items():
+            if meta.get("scope_rule") and meta["scope_rule"] not in SCOPE_RULES:
+                bad.append(f"control-registry: {sc}/{c} names unknown scope_rule {meta['scope_rule']!r} (known: {sorted(SCOPE_RULES)})")
         for c in sorted(set(registry.get(sc) or {}) - used[sc]):
             bad.append(f"control-registry: {sc}/{c} is not used by any mapping entry (orphan; regenerate the registry)")
     return bad
+
+
+def mapping_warnings(specs: list[dict], mapping: PolicyMapping) -> list[str]:
+    """A selector an MR can resolve but no scanner mapping compares is not an error (it may be kept for future controls), but it is
+    never part of the comparison scope: say so instead of letting the catalog suggest otherwise."""
+    out: list[str] = []
+    for s in specs:
+        used = {e.target for sc in SCANNERS for e in mapping.entries(s["id"], sc)}
+        for t in sorted(set(s["targets"]) - used - {ALL_OF_KIND}):
+            out.append(f"{s['id']}: declared target '{t}' is resolved by the MR but compared by no mapped control (outside the comparison scope)")
+    return out
 
 
 def check_traceability(specs: list[dict], properties: list[dict], patterns: list[dict], mapping: PolicyMapping) -> list[str]:
@@ -283,7 +297,7 @@ def cmd_validate(a, catalog_path: str, mapping: PolicyMapping) -> int:
     problems = check_traceability(specs, load_properties(a.properties), load_patterns(a.patterns), mapping)
     problems += check_template(specs, load_template_elements(a.patterns))
     seeds = seed_paths(a.seeds)
-    warnings: list[str] = []
+    warnings: list[str] = mapping_warnings(specs, mapping)
     for mr in catalog.values():
         try:
             errs, warns, n = exercise(mr, seeds, mapping)

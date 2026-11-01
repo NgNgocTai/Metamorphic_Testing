@@ -17,6 +17,7 @@ controls:
       - ServiceAccount
       reports_on_rule: aggregator_subject_role_rolebinding
       scope: all_matched_kinds
+      scope_rule: rbac_triple_member
       source: c-0007.json
       source_sha256: 30fff2f9e3c13bf9d8cf51aa4abf97616454db7467ba6ebc8d8dadb9086ead17
       title: Roles with delete capabilities
@@ -35,6 +36,7 @@ controls:
       - ServiceAccount
       reports_on_rule: aggregator_subject_role_rolebinding
       scope: all_matched_kinds
+      scope_rule: rbac_triple_member
       source: c-0015.json
       source_sha256: 7bddccd6885b986ba8537ad2005bf97c0fd2534c8269840107aee3d6200829fe
       title: List Kubernetes secrets
@@ -53,6 +55,7 @@ controls:
       - ServiceAccount
       reports_on_rule: aggregator_subject_role_rolebinding
       scope: all_matched_kinds
+      scope_rule: rbac_triple_member
       source: c-0035.json
       source_sha256: 79f6cd8942f394b15284e8373cbd163e89a8f2d03acf042cc429447935b01874
       title: Administrative Roles
@@ -94,6 +97,7 @@ controls:
       - ServiceAccount
       reports_on_rule: aggregator_subject_role_rolebinding
       scope: all_matched_kinds
+      scope_rule: rbac_triple_member
       source: c-0053.json
       source_sha256: 94c7eccb2bde0a18231fbdb044f4a0e246abdfe17eb9ac2d2ed4e2d67f535ee3
       title: Access container service account

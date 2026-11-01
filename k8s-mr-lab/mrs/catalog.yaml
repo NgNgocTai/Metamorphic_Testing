@@ -42,7 +42,7 @@ mrs:
     template: {preconditions: [P-REF], followup: [G-ADD]}
     property: effective permissions of the ServiceAccount bound by a namespaced RoleBinding
     relation: equal
-    scope: controls on the bound Role and its workload; NEVER the added decoy Role
+    scope: "Kubescape only. The workloads that run as the target ServiceAccount (C-0267, C-0272) and, for the aggregating RBAC controls, the target ServiceAccount and its RoleBinding; NEVER the added decoy Role. The bound Role is unchanged and is not compared. Trivy: no mapped check can observe the change (unsupported)"
     preconditions:
       - RoleBinding points at a Role in its own namespace
       - a ServiceAccount subject that exists in the bundle

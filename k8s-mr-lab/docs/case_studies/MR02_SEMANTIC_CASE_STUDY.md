@@ -53,10 +53,10 @@ phép biến đổi không thêm binding, nhưng ảnh hưởng việc diễn gi
 
 | Scanner | Control | Target | Cam kết của control | `equal` đúng nếu |
 |---|---|---|---|---|
-| Trivy | KSV-0113/0048/0049/0112/0050 | `bound_role` | đánh giá **chính Role đó** (rego chỉ đọc rule của Role được xét) | Role đích không đổi ⇒ verdict không đổi |
-| Kubescape | C-0015/0007/0035/0053 | `bound_role` | control RBAC theo subject, Role đích không đổi | scanner ghép binding–Role đúng |
+| Trivy | KSV-0113/0048/0049/0112/0050 | — (`unsupported`) | mỗi check chỉ đánh giá document của chính nó; MR-02 chỉ thêm một Role không liên quan nên không check nào quan sát được thay đổi | không so sánh: một so sánh như vậy bằng nhau theo cấu trúc (UNINFORMATIVE), không phải bằng chứng về scanner |
+| Kubescape | C-0015/0007/0035/0053 | `subject_sa`, `rolebinding` | control RBAC dạng aggregator gắn verdict của bộ ba (SA, RoleBinding, Role) cho từng thành viên; Role đích không đổi nên **không** so sánh Role | scanner ghép binding–Role đúng namespace (lỗi KD-001 chỉ lộ ở SA và RoleBinding) |
 | Kubescape | C-0267/C-0272 | `workload` | "workload dùng SA có role takeover/administrative" | scanner ghép binding–Role **đúng namespace** |
-| Kubescape | C-0057 | `workload` | container privileged (không liên quan RBAC) | luôn đúng; đóng vai trò đối chứng |
+| Kubescape | C-0057 | `workload` (`role: control`) | container privileged (không liên quan RBAC) | luôn đúng; đối chứng âm, không được phản ứng |
 
 Dòng C-0267/C-0272 là nơi quan hệ MR thực sự thử scanner: nếu scanner ghép Role theo **tên** mà bỏ qua namespace, nó coi Role
 decoy là Role của binding và verdict đổi. Đó chính là hiện tượng đã quan sát (mục 6).

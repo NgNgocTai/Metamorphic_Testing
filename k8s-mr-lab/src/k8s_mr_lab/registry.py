@@ -64,6 +64,10 @@ class PolicyMapping:
         """control -> kinds its verdicts attach to (registry `reports_on`)."""
         return {c: list(m.get("reports_on") or []) for c, m in ((self.registry.get("controls") or {}).get(scanner) or {}).items()}
 
+    def scope_rules(self, scanner: str) -> dict[str, str]:
+        """control -> contract rule naming which objects of its kinds it can judge (registry `scope_rule`)."""
+        return {c: m["scope_rule"] for c, m in ((self.registry.get("controls") or {}).get(scanner) or {}).items() if m.get("scope_rule")}
+
     def control_meta(self, scanner: str, control: str) -> dict:
         return ((self.registry.get("controls") or {}).get(scanner) or {}).get(control) or {}
 

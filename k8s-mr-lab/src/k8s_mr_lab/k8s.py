@@ -58,6 +58,28 @@ def sa_subjects(rb: dict) -> list[tuple[str, str]]:
             if s.get("kind") == "ServiceAccount" and s.get("name")]
 
 
+def rbac_triple_members(bundle: ConfigBundle) -> set[ResKey]:
+    """Objects that take part in at least one subject -> (Cluster)RoleBinding -> (Cluster)Role chain of the bundle: the bindings
+    whose roleRef resolves inside the bundle, that Role/ClusterRole, and the ServiceAccount objects named as subjects.
+    This is what an aggregating RBAC control (Kubescape `subject-role-rolebinding`) can judge; an unbound Role or ServiceAccount
+    is never a member."""
+    out: set[ResKey] = set()
+    for b in bundle.of_kind("RoleBinding", "ClusterRoleBinding"):
+        ref = b.get("roleRef") or {}
+        bns = obj_key(b)[2]
+        target = (bundle.find("Role", bns, ref.get("name", "")) if ref.get("kind") == "Role"
+                  else bundle.find("ClusterRole", "", ref.get("name", "")))
+        if target is None:
+            continue
+        out |= {obj_key(b), obj_key(target)}
+        for s in b.get("subjects") or []:
+            if s.get("kind") == "ServiceAccount" and s.get("name"):
+                sa = bundle.find("ServiceAccount", s.get("namespace") or bns, s["name"])
+                if sa is not None:
+                    out.add(obj_key(sa))
+    return out
+
+
 def sa_key(ns: str, name: str) -> ResKey:
     return ("", "ServiceAccount", ns, name)
 

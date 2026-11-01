@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Callable
 
 from .bundles import ConfigBundle, obj_key
+from .k8s import rbac_triple_members
 from .model import (CONCLUSIVE, EQUAL, FAIL, FAIL_TO_PASS, PASS, PASS_TO_FAIL, R_INCONCLUSIVE, R_PARTIAL, R_PASS,
                     R_SKIP, R_VIOLATION, Assessment, KeyResult, NormalizedReport, ResKey)
 from .transforms.base import MetamorphicRelation
@@ -14,10 +15,20 @@ if TYPE_CHECKING:
 ALL_OF_KIND = "ALL_OF_KIND"
 Key = tuple[str, ResKey]
 
+# Named contract rules a control registry entry may declare (`scope_rule`): the objects of the rule's kinds the control CAN judge in a
+# given bundle. An object outside the rule is out of the control's scope (never compared, recorded in scope.json); an object inside
+# it that the scanner does not evaluate is a missing verdict and stays INCONCLUSIVE.
+SCOPE_RULES: dict[str, tuple[frozenset[str], Callable[[ConfigBundle], set[ResKey]]]] = {
+    "rbac_triple_member": (frozenset({"ServiceAccount", "Role", "ClusterRole", "RoleBinding", "ClusterRoleBinding"}), rbac_triple_members),
+}
+
 
 def static_keys(mr: MetamorphicRelation, entries: list[MappingEntry], control_kinds: dict[str, list[str]],
-                source: ConfigBundle, params: dict) -> list[Key]:
-    """Comparison keys derivable before scanning: mapped controls x target resources (kind-filtered)."""
+                source: ConfigBundle, params: dict, scope_rules: dict[str, str] | None = None,
+                excluded: list | None = None) -> list[Key]:
+    """Comparison keys derivable before scanning: mapped controls x target resources, filtered by the kinds the control reports on
+    and by its `scope_rule` (control -> rule name). Keys dropped by a scope rule are appended to `excluded` as (control, key, rule)."""
+    members: dict[str, set[ResKey]] = {}
     targets = mr.targets(source, params)
     undeclared = set(targets) - set(mr.spec["targets"])
     if undeclared:
@@ -26,9 +37,19 @@ def static_keys(mr: MetamorphicRelation, entries: list[MappingEntry], control_ki
     for e in entries:
         kinds = control_kinds.get(e.control)
         cands = [obj_key(o) for o in source.objects] if e.target == ALL_OF_KIND else targets.get(e.target, [])
+        rule = (scope_rules or {}).get(e.control)
         for k in cands:
-            if (kinds is None or k[1] in kinds) and (e.control, k) not in keys:
-                keys.append((e.control, k))
+            if not (kinds is None or k[1] in kinds) or (e.control, k) in keys:
+                continue
+            if rule:
+                rkinds, fn = SCOPE_RULES[rule]
+                if k[1] in rkinds:
+                    ms = members.setdefault(rule, fn(source))
+                    if k not in ms:
+                        if excluded is not None and (e.control, k, rule) not in excluded:
+                            excluded.append((e.control, k, rule))
+                        continue
+            keys.append((e.control, k))
     return keys
 
 

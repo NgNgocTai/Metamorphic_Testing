@@ -67,6 +67,7 @@ class Runner:
         self._cache: dict[str, Scan] = {}
         self.total_invocations = 0
         self.kinds = mapping.control_kinds(scanner.name)
+        self.scope_rules = mapping.scope_rules(scanner.name)
 
     # ------------------------------------------------------------------ scanning
     def _scan(self, bundle: ConfigBundle, workdir: Path, name: str) -> tuple[Scan, bool]:
@@ -115,7 +116,10 @@ class Runner:
             return self._finish(cr, cdir, t0)
 
         entries = self.mapping.entries(mr.id, self.scanner.name)
-        static = static_keys(mr, entries, self.kinds, source, params)
+        excluded: list = []
+        static = static_keys(mr, entries, self.kinds, source, params, self.scope_rules, excluded)
+        (cdir / "scope.json").write_text(json.dumps({"compared": [[c, fmt_key(k)] for c, k in static],
+                                                     "out_of_control_scope": [[c, fmt_key(k), r] for c, k, r in excluded]}, indent=2), encoding="utf-8")
         if not static and not mr.all_failures:
             cr.result, cr.reason = R_SKIP, "no_mapped_control_applies_to_this_seed"
             return self._finish(cr, cdir, t0)
