@@ -1,0 +1,44 @@
+{
+  "case_id": "MR-05__rbac-secrets-reader__d31cd60ffd",
+  "result": "PASS",
+  "reason": "all 2 comparison(s) satisfy 'fail_to_pass'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "PASS",
+    "relation": "fail_to_pass",
+    "reason": "all 2 comparison(s) satisfy 'fail_to_pass'",
+    "counts": {
+      "ok": 2,
+      "violation": 0,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "C-0015",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0267",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "FAIL",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      }
+    ]
+  }
+}

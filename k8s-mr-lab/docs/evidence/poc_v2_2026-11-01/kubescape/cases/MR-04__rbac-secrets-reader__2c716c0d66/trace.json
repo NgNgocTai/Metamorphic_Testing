@@ -1,0 +1,16 @@
+{
+  "mr": "MR-04",
+  "params": {
+    "workload": [
+      "",
+      "Pod",
+      "lab-c",
+      "reader-pod"
+    ],
+    "container_index": 0
+  },
+  "operation": "pod.set_privileged_true",
+  "workload": "Pod/lab-c/reader-pod",
+  "path": "spec.containers[0].securityContext.privileged",
+  "object_mapping": "identity"
+}

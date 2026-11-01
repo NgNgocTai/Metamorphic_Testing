@@ -1,0 +1,21 @@
+--- source/bundle.yaml
++++ followup/bundle.yaml
+@@ -27,7 +27,7 @@
+ subjects:
+ - kind: ServiceAccount
+   name: reader
+-  namespace: lab-c
++  namespace: lab-c-shifted
+ roleRef:
+   apiGroup: rbac.authorization.k8s.io
+   kind: Role
+@@ -48,3 +48,9 @@
+     - '3600'
+     securityContext:
+       privileged: false
++---
++apiVersion: v1
++kind: ServiceAccount
++metadata:
++  name: reader
++  namespace: lab-c-shifted

@@ -1,0 +1,1087 @@
+{
+  "scanner": "kubescape",
+  "verdicts": [
+    {
+      "control": "C-0001",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "NOT_EVALUATED",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-identify-blocklisted-image-registries-v1']"
+      ]
+    },
+    {
+      "control": "C-0002",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['exec-into-container-v1']"
+      ]
+    },
+    {
+      "control": "C-0002",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['exec-into-container-v1']"
+      ]
+    },
+    {
+      "control": "C-0002",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['exec-into-container-v1']"
+      ]
+    },
+    {
+      "control": "C-0004",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resources-memory-limit-and-request']"
+      ]
+    },
+    {
+      "control": "C-0007",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-excessive-delete-rights-v1']"
+      ]
+    },
+    {
+      "control": "C-0007",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-excessive-delete-rights-v1']"
+      ]
+    },
+    {
+      "control": "C-0007",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-excessive-delete-rights-v1']"
+      ]
+    },
+    {
+      "control": "C-0009",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resource-policies']"
+      ]
+    },
+    {
+      "control": "C-0012",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-credentials-in-env-var']"
+      ]
+    },
+    {
+      "control": "C-0013",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['non-root-containers']"
+      ]
+    },
+    {
+      "control": "C-0014",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-access-dashboard-wl-v1']"
+      ]
+    },
+    {
+      "control": "C-0014",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-access-dashboard-subject-v1']"
+      ]
+    },
+    {
+      "control": "C-0014",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-access-dashboard-subject-v1']"
+      ]
+    },
+    {
+      "control": "C-0014",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-access-dashboard-subject-v1']"
+      ]
+    },
+    {
+      "control": "C-0015",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-list-get-secrets-v1']"
+      ]
+    },
+    {
+      "control": "C-0015",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-list-get-secrets-v1']"
+      ]
+    },
+    {
+      "control": "C-0015",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-list-get-secrets-v1']"
+      ]
+    },
+    {
+      "control": "C-0016",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-allow-privilege-escalation']"
+      ]
+    },
+    {
+      "control": "C-0017",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['immutable-container-filesystem']"
+      ]
+    },
+    {
+      "control": "C-0018",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['configured-readiness-probe']"
+      ]
+    },
+    {
+      "control": "C-0020",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['alert-mount-potential-credentials-paths']"
+      ]
+    },
+    {
+      "control": "C-0030",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['ingress-and-egress-blocked']"
+      ]
+    },
+    {
+      "control": "C-0031",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-delete-k8s-events-v1']"
+      ]
+    },
+    {
+      "control": "C-0031",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-delete-k8s-events-v1']"
+      ]
+    },
+    {
+      "control": "C-0031",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-delete-k8s-events-v1']"
+      ]
+    },
+    {
+      "control": "C-0034",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['automount-service-account']"
+      ]
+    },
+    {
+      "control": "C-0034",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=737080056/api=/v1/lab-a/ServiceAccount/app",
+        "rules=['automount-service-account']"
+      ]
+    },
+    {
+      "control": "C-0035",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-list-all-cluster-admins-v1']"
+      ]
+    },
+    {
+      "control": "C-0035",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-list-all-cluster-admins-v1']"
+      ]
+    },
+    {
+      "control": "C-0035",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-list-all-cluster-admins-v1']"
+      ]
+    },
+    {
+      "control": "C-0037",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-update-configmap-v1']"
+      ]
+    },
+    {
+      "control": "C-0037",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-update-configmap-v1']"
+      ]
+    },
+    {
+      "control": "C-0037",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-update-configmap-v1']"
+      ]
+    },
+    {
+      "control": "C-0038",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['host-pid-ipc-privileges']"
+      ]
+    },
+    {
+      "control": "C-0041",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['host-network-access']"
+      ]
+    },
+    {
+      "control": "C-0044",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['container-hostPort']"
+      ]
+    },
+    {
+      "control": "C-0045",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['alert-rw-hostpath']"
+      ]
+    },
+    {
+      "control": "C-0046",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['insecure-capabilities']"
+      ]
+    },
+    {
+      "control": "C-0048",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['alert-any-hostpath']"
+      ]
+    },
+    {
+      "control": "C-0050",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resources-cpu-limit-and-request']"
+      ]
+    },
+    {
+      "control": "C-0053",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['access-container-service-account-v1']"
+      ]
+    },
+    {
+      "control": "C-0053",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['access-container-service-account-v1']"
+      ]
+    },
+    {
+      "control": "C-0053",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['access-container-service-account-v1']"
+      ]
+    },
+    {
+      "control": "C-0055",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['linux-hardening']"
+      ]
+    },
+    {
+      "control": "C-0056",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['configured-liveness-probe']"
+      ]
+    },
+    {
+      "control": "C-0057",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-privilege-escalation']"
+      ]
+    },
+    {
+      "control": "C-0061",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['pods-in-default-namespace']"
+      ]
+    },
+    {
+      "control": "C-0062",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['sudo-in-container-entrypoint']"
+      ]
+    },
+    {
+      "control": "C-0063",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-portforward-v1']"
+      ]
+    },
+    {
+      "control": "C-0063",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-portforward-v1']"
+      ]
+    },
+    {
+      "control": "C-0063",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-portforward-v1']"
+      ]
+    },
+    {
+      "control": "C-0065",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-impersonate-users-groups-v1']"
+      ]
+    },
+    {
+      "control": "C-0065",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-impersonate-users-groups-v1']"
+      ]
+    },
+    {
+      "control": "C-0065",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-impersonate-users-groups-v1']"
+      ]
+    },
+    {
+      "control": "C-0074",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['containers-mounting-docker-socket']"
+      ]
+    },
+    {
+      "control": "C-0075",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['image-pull-policy-is-not-set-to-always']"
+      ]
+    },
+    {
+      "control": "C-0076",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['label-usage-for-resources']"
+      ]
+    },
+    {
+      "control": "C-0077",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['k8s-common-labels-usage']"
+      ]
+    },
+    {
+      "control": "C-0078",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "NOT_EVALUATED",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['container-image-repository-v1']"
+      ]
+    },
+    {
+      "control": "C-0186",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-list-get-secrets-v1']"
+      ]
+    },
+    {
+      "control": "C-0186",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-list-get-secrets-v1']"
+      ]
+    },
+    {
+      "control": "C-0186",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-list-get-secrets-v1']"
+      ]
+    },
+    {
+      "control": "C-0187",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-list-all-cluster-admins-v1']"
+      ]
+    },
+    {
+      "control": "C-0187",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-list-all-cluster-admins-v1']"
+      ]
+    },
+    {
+      "control": "C-0187",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-list-all-cluster-admins-v1']"
+      ]
+    },
+    {
+      "control": "C-0188",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-pod']"
+      ]
+    },
+    {
+      "control": "C-0188",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-pod']"
+      ]
+    },
+    {
+      "control": "C-0188",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-pod']"
+      ]
+    },
+    {
+      "control": "C-0190",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['automount-service-account']"
+      ]
+    },
+    {
+      "control": "C-0190",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=737080056/api=/v1/lab-a/ServiceAccount/app",
+        "rules=['automount-service-account']"
+      ]
+    },
+    {
+      "control": "C-0191",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-bind-escalate', 'rule-can-impersonate-users-groups-v1']"
+      ]
+    },
+    {
+      "control": "C-0191",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-bind-escalate', 'rule-can-impersonate-users-groups-v1']"
+      ]
+    },
+    {
+      "control": "C-0191",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-bind-escalate', 'rule-can-impersonate-users-groups-v1']"
+      ]
+    },
+    {
+      "control": "C-0207",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-secrets-in-env-var']"
+      ]
+    },
+    {
+      "control": "C-0210",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['set-seccomp-profile-RuntimeDefault']"
+      ]
+    },
+    {
+      "control": "C-0211",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-privilege-escalation', 'immutable-container-filesystem', 'non-root-containers', 'drop-capability-netraw', 'set-seLinuxOptions', 'set-seccomp-profile', 'set-procmount-default', 'set-fsgroup-value', 'set-fsgroupchangepolicy-value', 'set-sysctls-params', 'set-supplementalgroups-values', 'rule-allow-privilege-escalation', 'set-gmsacredentialspecname-value', 'set-hostprocess-true', 'set-runasusername-value']"
+      ]
+    },
+    {
+      "control": "C-0236",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "NOT_EVALUATED",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['verify-image-signature']"
+      ]
+    },
+    {
+      "control": "C-0237",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['has-image-signature']"
+      ]
+    },
+    {
+      "control": "C-0255",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['workload-mounted-secrets']"
+      ]
+    },
+    {
+      "control": "C-0257",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['workload-mounted-pvc']"
+      ]
+    },
+    {
+      "control": "C-0258",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['workload-mounted-configmap']"
+      ]
+    },
+    {
+      "control": "C-0259",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['rule-credentials-in-env-var']"
+      ]
+    },
+    {
+      "control": "C-0260",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['ensure_network_policy_configured_in_labels']"
+      ]
+    },
+    {
+      "control": "C-0261",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['serviceaccount-token-mount']"
+      ]
+    },
+    {
+      "control": "C-0262",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['anonymous-access-enabled']"
+      ]
+    },
+    {
+      "control": "C-0267",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['workload-with-cluster-takeover-roles']"
+      ]
+    },
+    {
+      "control": "C-0268",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resources-cpu-requests']"
+      ]
+    },
+    {
+      "control": "C-0269",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resources-memory-requests']"
+      ]
+    },
+    {
+      "control": "C-0270",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resources-cpu-limits']"
+      ]
+    },
+    {
+      "control": "C-0271",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['resources-memory-limits']"
+      ]
+    },
+    {
+      "control": "C-0272",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['workload-with-administrative-roles']"
+      ]
+    },
+    {
+      "control": "C-0275",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['host-pid-privileges']"
+      ]
+    },
+    {
+      "control": "C-0276",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['host-ipc-privileges']"
+      ]
+    },
+    {
+      "control": "C-0278",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-pv']"
+      ]
+    },
+    {
+      "control": "C-0278",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-pv']"
+      ]
+    },
+    {
+      "control": "C-0278",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-pv']"
+      ]
+    },
+    {
+      "control": "C-0279",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-access-proxy-subresource']"
+      ]
+    },
+    {
+      "control": "C-0279",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-access-proxy-subresource']"
+      ]
+    },
+    {
+      "control": "C-0279",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-access-proxy-subresource']"
+      ]
+    },
+    {
+      "control": "C-0280",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-approve-cert-signing-request']"
+      ]
+    },
+    {
+      "control": "C-0280",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-approve-cert-signing-request']"
+      ]
+    },
+    {
+      "control": "C-0280",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-approve-cert-signing-request']"
+      ]
+    },
+    {
+      "control": "C-0281",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-modify-admission-webhooks']"
+      ]
+    },
+    {
+      "control": "C-0281",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-modify-admission-webhooks']"
+      ]
+    },
+    {
+      "control": "C-0281",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-modify-admission-webhooks']"
+      ]
+    },
+    {
+      "control": "C-0282",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-service-account-token']"
+      ]
+    },
+    {
+      "control": "C-0282",
+      "resource": "RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-service-account-token']"
+      ]
+    },
+    {
+      "control": "C-0282",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...rization.k8s.io/v1/lab-a/RoleBinding/app-binding",
+        "rules=['rule-can-create-service-account-token']"
+      ]
+    },
+    {
+      "control": "C-0292",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['detect-nginx-ingress-controller-eol']"
+      ]
+    },
+    {
+      "control": "C-0293",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['service-with-no-workload']"
+      ]
+    },
+    {
+      "control": "C-0294",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['deprecated-service-account-field']"
+      ]
+    },
+    {
+      "control": "C-0295",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['duplicate-env-var']"
+      ]
+    },
+    {
+      "control": "C-0296",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['mismatching-selector']"
+      ]
+    },
+    {
+      "control": "C-0299",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['dangling-networkpolicy']"
+      ]
+    },
+    {
+      "control": "C-0300",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['hpa-has-target']"
+      ]
+    },
+    {
+      "control": "C-0305",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['no-rolling-update-strategy']"
+      ]
+    },
+    {
+      "control": "C-0306",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "NOT_EVALUATED",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['image-not-pinned-to-digest']"
+      ]
+    },
+    {
+      "control": "C-0307",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=787412913/api=apps/v1/lab-a/Deployment/web",
+        "rules=['non-existent-service-account']"
+      ]
+    },
+    {
+      "control": "C-0307",
+      "resource": "ServiceAccount/lab-a/app",
+      "status": "PASS",
+      "evidence": [
+        "resourceID=...path=737080056/api=/v1/lab-a/ServiceAccount/app",
+        "rules=['non-existent-service-account']"
+      ]
+    }
+  ],
+  "unattributed_failures": [],
+  "notes": []
+}

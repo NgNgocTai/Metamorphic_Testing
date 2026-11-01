@@ -1,0 +1,9 @@
+[
+  {
+    "op": "change",
+    "path": "spec.hostNetwork",
+    "old": false,
+    "new": true,
+    "object": "Pod/lab-h/web"
+  }
+]

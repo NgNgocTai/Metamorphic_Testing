@@ -1,0 +1,254 @@
+run_id,case_id,mr_id,scanner,control,resource,role,source_verdict,followup_verdict,basis,outcome,tier,engaged,reason,note
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0017,Pod/lab-a/demo,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0017,Pod/lab-a/plain,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0001,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0001,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0003,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0003,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0004,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0004,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0011,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0011,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0012,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0012,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0014,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0014,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0015,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0015,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0016,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0016,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0018,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0018,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0020,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0020,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0021,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0021,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0030,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0030,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0104,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0104,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0106,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0106,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0118,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__39ef56d618,MR-01,trivy,KSV-0118,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0017,Pod/lab-a/demo,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0017,Pod/lab-a/plain,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0001,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0001,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0003,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0003,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0004,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0004,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0011,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0011,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0012,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0012,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0014,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0014,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0015,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0015,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0016,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0016,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0018,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0018,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0020,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0020,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0021,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0021,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0030,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0030,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0104,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0104,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0106,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0106,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0118,Pod/lab-a/demo,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-basic__83181ed25b,MR-01,trivy,KSV-0118,Pod/lab-a/plain,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-04__pod-basic__6bee0a076b,MR-04,trivy,KSV-0017,Pod/lab-a/demo,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-04__pod-basic__890173885c,MR-04,trivy,KSV-0017,Pod/lab-a/demo,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__39ef56d618,MR-01,trivy,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__39ef56d618,MR-01,trivy,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__39ef56d618,MR-01,trivy,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__39ef56d618,MR-01,trivy,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__39ef56d618,MR-01,trivy,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__83181ed25b,MR-01,trivy,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__83181ed25b,MR-01,trivy,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__83181ed25b,MR-01,trivy,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__83181ed25b,MR-01,trivy,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-basic__83181ed25b,MR-01,trivy,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-no-binding__39ef56d618,MR-01,trivy,KSV-0113,Role/lab-a/lonely@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-no-binding__39ef56d618,MR-01,trivy,KSV-0048,Role/lab-a/lonely@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-no-binding__39ef56d618,MR-01,trivy,KSV-0049,Role/lab-a/lonely@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-no-binding__39ef56d618,MR-01,trivy,KSV-0112,Role/lab-a/lonely@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-no-binding__39ef56d618,MR-01,trivy,KSV-0050,Role/lab-a/lonely@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0017,Pod/lab-c/reader-pod,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0001,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0003,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0004,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0011,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0012,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0014,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0015,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0016,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0018,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0020,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0021,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0030,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0104,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0106,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__39ef56d618,MR-01,trivy,KSV-0118,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0017,Pod/lab-c/reader-pod,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0001,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0003,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0004,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0011,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0012,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0014,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0015,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0016,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0018,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0020,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0021,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0030,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0104,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0106,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-secrets-reader__83181ed25b,MR-01,trivy,KSV-0118,Pod/lab-c/reader-pod,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,trivy,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,trivy,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,trivy,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,trivy,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-04__rbac-secrets-reader__2c716c0d66,MR-04,trivy,KSV-0017,Pod/lab-c/reader-pod,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-05__rbac-secrets-reader__d31cd60ffd,MR-05,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,violation,INFORMATIVE,True,FAIL->FAIL but relation requires FAIL->PASS,
+trivy-20261101T165244,MR-09__rbac-secrets-reader__98f6269e80,MR-09,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-09__rbac-secrets-reader__f8dfd35941,MR-09,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-09__rbac-secrets-reader__8581c64811,MR-09,trivy,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0017,Deployment/lab-a/web@apps,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0001,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0003,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0004,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0011,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0012,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0014,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0015,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0016,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0018,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0020,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0021,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0030,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0104,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0106,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__39ef56d618,MR-01,trivy,KSV-0118,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0017,Deployment/lab-a/web@apps,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0001,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0003,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0004,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0011,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0012,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0014,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0015,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0016,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0018,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0020,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0021,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0030,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0104,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0106,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__rbac-workload__83181ed25b,MR-01,trivy,KSV-0118,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-04__rbac-workload__58c7412c5a,MR-04,trivy,KSV-0017,Deployment/lab-a/web@apps,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0017,Deployment/lab-a/web@apps,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0001,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0003,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0004,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0011,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0012,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0014,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0015,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0016,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0018,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0020,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0021,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0030,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0104,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0106,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__39ef56d618,MR-01,trivy,KSV-0118,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0017,Deployment/lab-a/web@apps,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0001,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0003,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0004,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0011,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0012,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0014,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0015,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0016,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0018,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0020,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0021,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0030,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0104,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0106,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__K1-role-namespace__83181ed25b,MR-01,trivy,KSV-0118,Deployment/lab-a/web@apps,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-04__K1-role-namespace__58c7412c5a,MR-04,trivy,KSV-0017,Deployment/lab-a/web@apps,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0017,Pod/lab-h/web,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0001,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0003,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0004,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0011,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0012,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0014,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0015,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0016,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0018,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0020,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0021,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0030,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0104,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0106,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__39ef56d618,MR-01,trivy,KSV-0118,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0017,Pod/lab-h/web,property,PASS,PASS,inferred_pass,ok,WEAK,False,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0001,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0003,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0004,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0011,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0012,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0014,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0015,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0016,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0018,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0020,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0021,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0030,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0104,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0106,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-01__pod-hostnet__83181ed25b,MR-01,trivy,KSV-0118,Pod/lab-h/web,property,FAIL,FAIL,explicit,ok,INFORMATIVE,True,,
+trivy-20261101T165244,MR-04__pod-hostnet__40fcb24159,MR-04,trivy,KSV-0017,Pod/lab-h/web,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)
+trivy-20261101T165244,MR-06__pod-hostnet__355c0e2f74,MR-06,trivy,KSV-0009,Pod/lab-h/web,property,PASS,FAIL,inferred_pass,ok,WEAK,True,,PASS inferred (absence of an attributed FAIL)

@@ -1,0 +1,70 @@
+{
+  "case_id": "MR-01__rbac-no-binding__39ef56d618",
+  "result": "INCONCLUSIVE",
+  "reason": "no conclusive comparison (all verdicts missing or baseline unmet)",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "INCONCLUSIVE",
+    "relation": "equal",
+    "reason": "no conclusive comparison (all verdicts missing or baseline unmet)",
+    "counts": {
+      "ok": 0,
+      "violation": 0,
+      "inconclusive": 4
+    },
+    "comparisons": [
+      {
+        "control": "C-0015",
+        "resource": "Role/lab-a/lonely@rbac.authorization.k8s.io",
+        "source": "NOT_EVALUATED",
+        "followup": "NOT_EVALUATED",
+        "outcome": "inconclusive",
+        "reason": "source_verdict_not_evaluated",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INCONCLUSIVE",
+        "note": "source_verdict_not_evaluated",
+        "engaged": false
+      },
+      {
+        "control": "C-0007",
+        "resource": "Role/lab-a/lonely@rbac.authorization.k8s.io",
+        "source": "NOT_EVALUATED",
+        "followup": "NOT_EVALUATED",
+        "outcome": "inconclusive",
+        "reason": "source_verdict_not_evaluated",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INCONCLUSIVE",
+        "note": "source_verdict_not_evaluated",
+        "engaged": false
+      },
+      {
+        "control": "C-0035",
+        "resource": "Role/lab-a/lonely@rbac.authorization.k8s.io",
+        "source": "NOT_EVALUATED",
+        "followup": "NOT_EVALUATED",
+        "outcome": "inconclusive",
+        "reason": "source_verdict_not_evaluated",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INCONCLUSIVE",
+        "note": "source_verdict_not_evaluated",
+        "engaged": false
+      },
+      {
+        "control": "C-0053",
+        "resource": "Role/lab-a/lonely@rbac.authorization.k8s.io",
+        "source": "NOT_EVALUATED",
+        "followup": "NOT_EVALUATED",
+        "outcome": "inconclusive",
+        "reason": "source_verdict_not_evaluated",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INCONCLUSIVE",
+        "note": "source_verdict_not_evaluated",
+        "engaged": false
+      }
+    ]
+  }
+}

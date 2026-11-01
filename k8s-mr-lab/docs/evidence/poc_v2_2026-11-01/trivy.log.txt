@@ -1,0 +1,75 @@
+*      invalid-missing-role   INVALID_SOURCE invalid-missing-role  missing dependency: RoleBinding lab-a/app-binding -> Role lab-a/missing-role
+MR-01  pod-basic              PASS           39ef56d618  all 32 comparison(s) satisfy 'equal'
+MR-01  pod-basic              PASS           83181ed25b  all 32 comparison(s) satisfy 'equal'
+MR-02  pod-basic              SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  pod-basic              SKIP                 skip  no_rule_with_two_or_more_distinct_verbs
+MR-04  pod-basic              PASS           6bee0a076b  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-04  pod-basic              PASS           890173885c  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-05  pod-basic              SKIP                 skip  no_role_whose_only_rule_reads_core_secrets
+MR-06  pod-basic              SKIP                 skip  no_workload_with_explicit_hostnetwork_false
+MR-07  pod-basic              SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  pod-basic              SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  pod-basic              SKIP                 skip  no_role_with_a_core_secrets_rule_using_only_get_list_watch
+MR-01  rbac-basic             PASS           39ef56d618  all 5 comparison(s) satisfy 'equal'
+MR-01  rbac-basic             PASS           83181ed25b  all 5 comparison(s) satisfy 'equal'
+MR-02  rbac-basic             SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  rbac-basic             SKIP                 skip  no_rule_with_two_or_more_distinct_verbs
+MR-04  rbac-basic             SKIP                 skip  no_container_with_explicit_privileged_false
+MR-05  rbac-basic             SKIP                 skip  no_role_whose_only_rule_reads_core_secrets
+MR-06  rbac-basic             SKIP                 skip  no_workload_with_explicit_hostnetwork_false
+MR-07  rbac-basic             SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  rbac-basic             SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  rbac-basic             SKIP                 skip  no_role_with_a_core_secrets_rule_using_only_get_list_watch
+MR-01  rbac-no-binding        PASS           39ef56d618  all 5 comparison(s) satisfy 'equal'
+MR-02  rbac-no-binding        SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  rbac-no-binding        SKIP                 skip  no_rule_with_two_or_more_distinct_verbs
+MR-04  rbac-no-binding        SKIP                 skip  no_container_with_explicit_privileged_false
+MR-05  rbac-no-binding        SKIP                 skip  no_role_whose_only_rule_reads_core_secrets
+MR-06  rbac-no-binding        SKIP                 skip  no_workload_with_explicit_hostnetwork_false
+MR-07  rbac-no-binding        SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  rbac-no-binding        SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  rbac-no-binding        SKIP                 skip  no_role_with_a_core_secrets_rule_using_only_get_list_watch
+MR-01  rbac-secrets-reader    PASS           39ef56d618  all 21 comparison(s) satisfy 'equal'
+MR-01  rbac-secrets-reader    PASS           83181ed25b  all 21 comparison(s) satisfy 'equal'
+MR-02  rbac-secrets-reader    SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  rbac-secrets-reader    PASS           b0dae3466a  all 5 comparison(s) satisfy 'equal'
+MR-04  rbac-secrets-reader    PASS           2c716c0d66  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-05  rbac-secrets-reader    VIOLATION      d31cd60ffd  1 comparison(s) violate relation 'fail_to_pass'
+MR-06  rbac-secrets-reader    SKIP                 skip  no_workload_with_explicit_hostnetwork_false
+MR-07  rbac-secrets-reader    SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  rbac-secrets-reader    SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  rbac-secrets-reader    PASS           98f6269e80  all 1 comparison(s) satisfy 'equal'
+MR-09  rbac-secrets-reader    PASS           f8dfd35941  all 1 comparison(s) satisfy 'equal'
+MR-09  rbac-secrets-reader    PASS           8581c64811  all 1 comparison(s) satisfy 'equal'
+MR-01  rbac-workload          PASS           39ef56d618  all 21 comparison(s) satisfy 'equal'
+MR-01  rbac-workload          PASS           83181ed25b  all 21 comparison(s) satisfy 'equal'
+MR-02  rbac-workload          SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  rbac-workload          SKIP                 skip  no_rule_with_two_or_more_distinct_verbs
+MR-04  rbac-workload          PASS           58c7412c5a  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-05  rbac-workload          SKIP                 skip  no_role_whose_only_rule_reads_core_secrets
+MR-06  rbac-workload          SKIP                 skip  no_workload_with_explicit_hostnetwork_false
+MR-07  rbac-workload          SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  rbac-workload          SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  rbac-workload          SKIP                 skip  no_role_with_a_core_secrets_rule_using_only_get_list_watch
+MR-01  K1-role-namespace      PASS           39ef56d618  all 21 comparison(s) satisfy 'equal'
+MR-01  K1-role-namespace      PASS           83181ed25b  all 21 comparison(s) satisfy 'equal'
+MR-02  K1-role-namespace      SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  K1-role-namespace      SKIP                 skip  no_rule_with_two_or_more_distinct_verbs
+MR-04  K1-role-namespace      PASS           58c7412c5a  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-05  K1-role-namespace      SKIP                 skip  no_role_whose_only_rule_reads_core_secrets
+MR-06  K1-role-namespace      SKIP                 skip  no_workload_with_explicit_hostnetwork_false
+MR-07  K1-role-namespace      SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  K1-role-namespace      SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  K1-role-namespace      SKIP                 skip  no_role_with_a_core_secrets_rule_using_only_get_list_watch
+MR-01  pod-hostnet            PASS           39ef56d618  all 16 comparison(s) satisfy 'equal'
+MR-01  pod-hostnet            PASS           83181ed25b  all 16 comparison(s) satisfy 'equal'
+MR-02  pod-hostnet            SKIP                 skip  mr_not_mapped_for_scanner
+MR-03  pod-hostnet            SKIP                 skip  no_rule_with_two_or_more_distinct_verbs
+MR-04  pod-hostnet            PASS           40fcb24159  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-05  pod-hostnet            SKIP                 skip  no_role_whose_only_rule_reads_core_secrets
+MR-06  pod-hostnet            PASS           355c0e2f74  all 1 comparison(s) satisfy 'pass_to_fail'
+MR-07  pod-hostnet            SKIP                 skip  mr_not_mapped_for_scanner
+MR-08  pod-hostnet            SKIP                 skip  mr_not_mapped_for_scanner
+MR-09  pod-hostnet            SKIP                 skip  no_role_with_a_core_secrets_rule_using_only_get_list_watch
+
+trivy 0.75.0 [local-file]: {'INVALID_SOURCE': 1, 'PASS': 24, 'SKIP': 47, 'VIOLATION': 1}; scanner invocations: 28; -> runs/poc_v2/trivy

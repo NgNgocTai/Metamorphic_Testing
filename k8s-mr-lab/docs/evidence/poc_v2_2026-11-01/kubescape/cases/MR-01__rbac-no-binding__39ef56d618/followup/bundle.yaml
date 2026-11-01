@@ -1,0 +1,12 @@
+rules:
+- verbs:
+  - get
+  resources:
+  - configmaps
+  apiGroups:
+  - ''
+metadata:
+  namespace: lab-a
+  name: lonely
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1

@@ -1,0 +1,21 @@
+# Scanner pins. Versions are the ones shipped in the project's Ubuntu 24.04 (WSL) environment.
+# The runner REFUSES to compare two scans whose version/mode/policy digest differ (ENVIRONMENT_MISMATCH).
+trivy:
+  binary: trivy
+  version: "0.75.0"            # `trivy --version`
+  mode: local-file             # `trivy config <dir>`: manifest scan, no cluster
+  timeout_s: 120
+  accepted_exit_codes: [0]     # observed on every real run: Trivy exits 0 even with failures
+  cache_dir: ~/.cache/trivy    # checks bundle is read from here; --skip-check-update keeps it frozen
+  flags: [config, --skip-check-update, --skip-version-check, --include-non-failures, --format, json]
+
+kubescape:
+  binary: kubescape
+  version: "v4.0.15"           # `kubescape version`
+  mode: local-file             # `kubescape scan framework allcontrols <dir>`: manifest scan, no cluster
+  timeout_s: 180
+  accepted_exit_codes: [0]     # observed on every real run: Kubescape exits 0 even with failed controls
+  artifacts_dir: /home/USER/kd-mutants/mr09-drop-watch  # frameworks/controls loaded offline via --use-artifacts-from
+  framework: allcontrols
+  env:
+    KUBESCAPE_SKIP_UPDATE_CHECK: "true"

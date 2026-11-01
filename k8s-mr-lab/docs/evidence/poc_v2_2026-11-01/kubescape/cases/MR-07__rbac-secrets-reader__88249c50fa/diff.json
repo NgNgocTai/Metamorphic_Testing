@@ -1,0 +1,28 @@
+[
+  {
+    "op": "add_field",
+    "path": "subjects[0].apiGroup",
+    "new": "rbac.authorization.k8s.io",
+    "object": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+  },
+  {
+    "op": "change",
+    "path": "subjects[0].kind",
+    "old": "ServiceAccount",
+    "new": "User",
+    "object": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+  },
+  {
+    "op": "change",
+    "path": "subjects[0].name",
+    "old": "reader",
+    "new": "system:serviceaccount:lab-c:reader",
+    "object": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+  },
+  {
+    "op": "remove_field",
+    "path": "subjects[0].namespace",
+    "old": "lab-c",
+    "object": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io"
+  }
+]

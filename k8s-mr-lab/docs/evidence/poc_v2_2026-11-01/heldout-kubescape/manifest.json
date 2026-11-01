@@ -1,0 +1,34 @@
+{
+  "source_run": "kubescape",
+  "selected_by": {
+    "mr": [],
+    "result": [
+      "VIOLATION",
+      "SCAN_ERROR"
+    ]
+  },
+  "n_cases": 0,
+  "sanitized": true,
+  "files": {
+    "comparisons.csv": {
+      "sha256": "16e16181e01694dbe1c297c3f88875380083119dc7002d3d2ceee2995459e9fc",
+      "bytes": 319761
+    },
+    "environment.lock.json": {
+      "sha256": "668e294615dc613e10598eedb7651b697ee7f7b708bef2076f763c74cdd232b4",
+      "bytes": 2314
+    },
+    "results.csv": {
+      "sha256": "d1ba1c1796ac025afeeef676b979fcd168c64354400924cf352ebbbf9798c0ac",
+      "bytes": 293849
+    },
+    "results.json": {
+      "sha256": "62c61486e703fec1ed7e8c27ad6e8a0f6c024214a299dca4f59340f0c2b0c7f6",
+      "bytes": 1387411
+    },
+    "triage.json": {
+      "sha256": "e142cce0d1b628508c751b0a48927abc9f1f44c9dd95fa775c71f96cd0234ad9",
+      "bytes": 102
+    }
+  }
+}

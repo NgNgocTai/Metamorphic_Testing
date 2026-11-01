@@ -1,0 +1,24 @@
+--- source/bundle.yaml
++++ followup/bundle.yaml
+@@ -1,12 +1,12 @@
+-apiVersion: rbac.authorization.k8s.io/v1
+-kind: Role
+-metadata:
+-  name: lonely
+-  namespace: lab-a
+ rules:
+-- apiGroups:
+-  - ''
++- verbs:
++  - get
+   resources:
+   - configmaps
+-  verbs:
+-  - get
++  apiGroups:
++  - ''
++metadata:
++  namespace: lab-a
++  name: lonely
++kind: Role
++apiVersion: rbac.authorization.k8s.io/v1

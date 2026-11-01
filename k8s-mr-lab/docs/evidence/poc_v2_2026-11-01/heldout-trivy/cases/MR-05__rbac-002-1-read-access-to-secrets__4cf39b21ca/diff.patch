@@ -1,0 +1,11 @@
+--- source/bundle.yaml
++++ followup/bundle.yaml
+@@ -21,7 +21,7 @@
+   namespace: kalm-benchmark
+ rules:
+ - apiGroups:
+-  - ''
++  - apps
+   resources:
+   - secrets
+   verbs:

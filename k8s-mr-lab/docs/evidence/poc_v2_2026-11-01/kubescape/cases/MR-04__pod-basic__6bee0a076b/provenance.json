@@ -1,0 +1,26 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "kubescape-20261101T165418",
+  "seed_id": "pod-basic",
+  "mr_id": "MR-04",
+  "mr_spec_digest": "a546e11c7e",
+  "params": {
+    "workload": [
+      "",
+      "Pod",
+      "lab-a",
+      "demo"
+    ],
+    "container_index": 0
+  },
+  "random_seed": null,
+  "scanner": "kubescape",
+  "scanner_version": "v4.0.15",
+  "scan_mode": "local-file",
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "mapping_digest": "41831481b8",
+  "source_text_sha256": "fcd5a941c3f9f56ed0f883e0b5a87a1d11864089fa50c1b6f3fcaeb865b96ae7",
+  "followup_text_sha256": "d33c760338ce8e39bd83ac38fdff0c6c521d83adcfc215c8dea2d5f563851aa9",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}

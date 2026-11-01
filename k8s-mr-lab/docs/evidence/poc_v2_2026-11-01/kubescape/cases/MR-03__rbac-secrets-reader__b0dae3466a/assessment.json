@@ -1,0 +1,83 @@
+{
+  "case_id": "MR-03__rbac-secrets-reader__b0dae3466a",
+  "result": "PASS",
+  "reason": "all 5 comparison(s) satisfy 'equal'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "PASS",
+    "relation": "equal",
+    "reason": "all 5 comparison(s) satisfy 'equal'",
+    "counts": {
+      "ok": 5,
+      "violation": 0,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "C-0015",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0007",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0035",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0267",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0272",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      }
+    ]
+  }
+}

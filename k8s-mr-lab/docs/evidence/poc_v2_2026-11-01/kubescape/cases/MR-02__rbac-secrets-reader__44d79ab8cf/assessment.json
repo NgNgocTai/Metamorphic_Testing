@@ -1,0 +1,161 @@
+{
+  "case_id": "MR-02__rbac-secrets-reader__44d79ab8cf",
+  "result": "PASS",
+  "reason": "all 11 comparison(s) satisfy 'equal'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "PASS",
+    "relation": "equal",
+    "reason": "all 11 comparison(s) satisfy 'equal'",
+    "counts": {
+      "ok": 11,
+      "violation": 0,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "C-0267",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0272",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0015",
+        "resource": "ServiceAccount/lab-c/reader",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0015",
+        "resource": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0007",
+        "resource": "ServiceAccount/lab-c/reader",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0007",
+        "resource": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0035",
+        "resource": "ServiceAccount/lab-c/reader",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0035",
+        "resource": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": false
+      },
+      {
+        "control": "C-0053",
+        "resource": "ServiceAccount/lab-c/reader",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0053",
+        "resource": "RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "property",
+        "tier": "INFORMATIVE",
+        "note": "",
+        "engaged": true
+      },
+      {
+        "control": "C-0057",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit",
+        "role": "control",
+        "tier": "CONTROL",
+        "note": "negative control stayed unchanged",
+        "engaged": false
+      }
+    ]
+  }
+}

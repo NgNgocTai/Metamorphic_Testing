@@ -1,0 +1,26 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "kubescape-20261101T165418",
+  "seed_id": "rbac-workload",
+  "mr_id": "MR-04",
+  "mr_spec_digest": "a546e11c7e",
+  "params": {
+    "workload": [
+      "apps",
+      "Deployment",
+      "lab-a",
+      "web"
+    ],
+    "container_index": 0
+  },
+  "random_seed": null,
+  "scanner": "kubescape",
+  "scanner_version": "v4.0.15",
+  "scan_mode": "local-file",
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "mapping_digest": "41831481b8",
+  "source_text_sha256": "ceb1e878097cc1d11ae088c06ba696d8e0e1f257dc087e6e37f1bb437d048998",
+  "followup_text_sha256": "51158d8e398749d1ebe796d99df0a502b882ba92b8179ff466ce0d6f17e8c2b4",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}

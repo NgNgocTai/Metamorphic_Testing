@@ -1,0 +1,26 @@
+{
+  "tool": "kubescape",
+  "version": "v4.0.11",
+  "mode": "local-file",
+  "command": [
+    "/home/USER/kd-bins/kubescape-4.0.11",
+    "scan",
+    "framework",
+    "allcontrols",
+    "--keep-local",
+    "--verbose",
+    "--format",
+    "json",
+    "--output",
+    "runs/poc_v2/kd001/v4.0.11/cases/MR-02__rbac-basic__e89cd9e383/scanner-followup.json",
+    "--use-artifacts-from",
+    "/home/USER/.kubescape",
+    "runs/poc_v2/kd001/v4.0.11/cases/MR-02__rbac-basic__e89cd9e383/followup"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 3396,
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "raw_path": "runs/poc_v2/kd001/v4.0.11/cases/MR-02__rbac-basic__e89cd9e383/scanner-followup.json",
+  "error": null,
+  "stderr_tail": ",\"msg\":\"Accessing local objects...\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T16:58:54+07:00\",\"msg\":\"Done accessing local objects\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T16:58:54+07:00\",\"msg\":\"Scanning GitLocal\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T16:58:54+07:00\",\"msg\":\"Done scanning GitLocal\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T16:58:54+07:00\",\"msg\":\"Done aggregating results\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T16:58:54+07:00\",\"msg\":\"Scan results saved\",\"filename\":\"runs/poc_v2/kd001/v4.0.11/cases/MR-02__rbac-basic__e89cd9e383/scanner-followup.json\"}\n\nOverall compliance-score (100- Excellent, 0- All failed): 93\n"
+}

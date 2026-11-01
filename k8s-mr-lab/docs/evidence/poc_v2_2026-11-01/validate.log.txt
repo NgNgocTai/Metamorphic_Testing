@@ -1,0 +1,13 @@
+MR-01  yaml-key-order               exercised 13 case(s) on 8 seed(s)  OK
+MR-02  add-unbound-same-name-role   exercised  8 case(s) on 8 seed(s)  OK
+MR-03  split-rule-verbs             exercised  1 case(s) on 8 seed(s)  OK
+MR-04  privileged-flip              exercised  6 case(s) on 8 seed(s)  OK
+MR-05  api-group-switch             exercised  1 case(s) on 8 seed(s)  OK
+MR-06  host-network-flip            exercised  1 case(s) on 8 seed(s)  OK
+MR-07  sa-subject-as-user           exercised  4 case(s) on 8 seed(s)  OK
+MR-08  sa-subject-namespace-shift   exercised  3 case(s) on 8 seed(s)  OK
+MR-09  secrets-read-verb-substitution exercised  3 case(s) on 8 seed(s)  OK
+skipped invalid seed(s) (never fed to an MR): invalid-missing-role
+
+9 MR(s), 0 error(s), 0 warning(s)
+STRUCTURAL gate only; it does not prove an MR is semantically valid. Complete docs/MR_SEMANTIC_REVIEW_CHECKLIST.md before relying on it.

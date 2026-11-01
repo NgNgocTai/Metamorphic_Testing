@@ -1,0 +1,9 @@
+{
+  "mr": "MR-01",
+  "params": {
+    "mode": "reverse"
+  },
+  "operation": "yaml.reorder_mapping_keys",
+  "mode": "reverse",
+  "object_mapping": "identity"
+}

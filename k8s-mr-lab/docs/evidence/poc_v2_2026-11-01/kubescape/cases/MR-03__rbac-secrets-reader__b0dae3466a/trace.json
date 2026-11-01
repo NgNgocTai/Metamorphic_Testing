@@ -1,0 +1,17 @@
+{
+  "mr": "MR-03",
+  "params": {
+    "role": [
+      "rbac.authorization.k8s.io",
+      "Role",
+      "lab-c",
+      "reader-role"
+    ],
+    "rule_index": 0
+  },
+  "operation": "rbac.split_rule_verbs",
+  "role": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+  "rule_index": 0,
+  "pieces": 3,
+  "object_mapping": "identity"
+}
