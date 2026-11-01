@@ -1,0 +1,11 @@
+--- source/bundle.yaml
++++ followup/bundle.yaml
+@@ -4,7 +4,7 @@
+   name: web
+   namespace: lab-h
+ spec:
+-  hostNetwork: false
++  hostNetwork: true
+   containers:
+   - name: app
+     image: nginx:1.27

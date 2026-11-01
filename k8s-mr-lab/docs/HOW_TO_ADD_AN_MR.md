@@ -5,7 +5,9 @@ bước 1–6.
 
 ```bash
 k8s-mr-lab mr list                       # xem catalog, pattern, scanner đã ánh xạ
-k8s-mr-lab mr scaffold MR-07 host-pid-flip --pattern KP3   # sinh khung code + stub catalog
+k8s-mr-lab mr scaffold MR-07 host-pid-flip --pattern KP3   # khung code theo pattern (KP3: ControlledChange; KP1/KP2: tự cài) + stub catalog
+# scaffold từ chối id sai định dạng/đã tồn tại và pattern lạ. Vì transforms/ được import cả thư mục, sau scaffold phải
+# thêm ngay mục catalog; nếu chưa, load_catalog() báo 'implemented but missing from catalog'.
 ```
 
 1. **Property.** Thêm (hoặc chọn) mục trong `mrs/security_properties.yaml`. Mỗi tham chiếu phải có `verified: true|false`.
@@ -19,15 +21,16 @@ k8s-mr-lab mr scaffold MR-07 host-pid-flip --pattern KP3   # sinh khung code + s
    `@implements("MR-07")`. Không đăng ký ở đâu khác (không sửa `registry.py`, `runner.py`, `checker.py`).
 4. **Test.** Một positive, một counterexample (precondition từ chối hoặc `INVALID_PAIR`), và "source không bị sửa".
    Mẫu: `tests/unit/test_mr_framework.py` (MR-06).
-5. **Gate.** `k8s-mr-lab mr validate` kiểm schema, truy vết (pattern/property tồn tại, relation hợp pattern), rồi **chạy MR
-   trên mọi seed**: transform không sửa source, xác định (chạy 2 lần cho cùng kết quả), cặp hợp lệ, target trong mapping
-   có tồn tại. Schema hợp lệ không đủ để coi MR là đúng.
+5. **Cổng cấu trúc (structural gate).** `k8s-mr-lab mr validate` kiểm schema (kiểu dữ liệu từng trường), truy vết (pattern/property
+   tồn tại, relation và base class hợp pattern, mapping đủ `control`/`target`), rồi **chạy MR trên mọi seed hợp lệ**
+   (seed INVALID_SOURCE bị bỏ qua và được liệt kê): transform không sửa source, xác định, cặp hợp lệ, target trong mapping có
+   tồn tại. Lệnh này **không** chứng minh MR đúng về ngữ nghĩa: hoàn thành `MR_SEMANTIC_REVIEW_CHECKLIST.md`.
 6. **Mapping.** Chỉ sau khi đã đọc control của đúng phiên bản scanner (Trivy: `~/.cache/trivy/policy/content/policies/kubernetes/policies/*.rego`,
    metadata `custom.id` và `input.selector.subtypes`; Kubescape: `~/.kubescape/c-XXXX.json`, `rules[].match`): thêm vào
    `config/policy-mapping.yaml` (controls + kinds + target). Đây là bước duy nhất cần kiến thức về scanner. Seed cho MR
    candidate đặt trong `seeds/candidate/<tên>/` để không đổi baseline; `mr validate` đã gồm thư mục này.
 7. **Chạy thật.** `k8s-mr-lab run --scanner trivy --seeds seeds/synthetic --out runs/x --mr MR-07`, rồi
-   `triage`. Vi phạm chỉ là *ứng viên* cho tới khi tái hiện và đối chiếu ground truth. Đổi `status` thành
+   `triage`. Đọc `comparisons.csv` chứ không chỉ `results.csv` (cột verdict của `results.csv` chỉ điền khi có VIOLATION). Vi phạm chỉ là *ứng viên* cho tới khi tái hiện và đối chiếu ground truth. Đổi `status` thành
    `mvp_conditional` khi xong; candidate không chạy trong run mặc định.
 8. `k8s-mr-lab mr trace --out docs/MR_TRACEABILITY.md` để cập nhật ma trận truy vết.
 

@@ -1,0 +1,81 @@
+{
+  "case_id": "MR-02__rbac-secrets-reader__bd7af0cb0d",
+  "result": "VIOLATION",
+  "reason": "1 comparison(s) violate relation 'equal'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "VIOLATION",
+    "relation": "equal",
+    "reason": "1 comparison(s) violate relation 'equal'",
+    "counts": {
+      "ok": 6,
+      "violation": 1,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "C-0267",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0272",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "PASS",
+        "followup": "FAIL",
+        "outcome": "violation",
+        "reason": "PASS->FAIL but relation requires equality",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0057",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0015",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0007",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0035",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0053",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      }
+    ]
+  }
+}

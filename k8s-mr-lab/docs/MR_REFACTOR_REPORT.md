@@ -5,14 +5,14 @@
 | Kiểm tra | Kết quả |
 |---|---|
 | Unit tests trước refactor | 80 passed, 3 skipped |
-| Unit tests sau refactor (Windows) | 111 passed, 3 skipped (31 test mới; 1 test cũ sửa, xem 4) |
-| Toàn bộ test trong WSL với Trivy 0.75.0 + Kubescape v4.0.15 thật | **114 passed, 0 skipped** (3 integration test chạy trên scanner thật) |
-| Chạy lại pipeline thật trên toàn bộ seed (`run --scanner trivy|kubescape`, 2026-11-01) so với run PoC đã lưu (`runs/trivy`, `runs/kubescape`) | **Trivy 41/41 dòng, Kubescape 41/41 dòng giống hệt** (kết quả MR, verdict nguồn/follow-up, trạng thái cặp, lý do skip, sha256 văn bản source và follow-up). Tái lập bằng `scripts/compare_runs.py`; bản lưu: `docs/evidence/mr_patterns_verification/` |
+| Unit tests sau refactor (Windows) | 125 passed, 3 skipped (45 test mới; 1 test cũ sửa, xem 4) |
+| Toàn bộ test trong WSL với Trivy 0.75.0 + Kubescape v4.0.15 thật | **128 passed, 0 skipped** (3 integration test chạy trên scanner thật) |
+| Chạy lại pipeline thật trên toàn bộ seed (`run --scanner trivy|kubescape`, 2026-11-01) so với run PoC đã lưu (`runs/trivy`, `runs/kubescape`) | **`results.csv`: 41/41 dòng mỗi scanner giống hệt. `comparisons.csv` (verdict từng cặp control×resource): Trivy 256/256, Kubescape 386/386 giống hệt.** `results.csv` chỉ có verdict nguồn/follow-up ở dòng VIOLATION, nên verdict của các dòng PASS được đối chiếu qua `comparisons.csv`. Tái lập bằng `scripts/compare_runs.py` (kiểm trùng key, số dòng, cả hai file). Bản lưu tự chứa: `docs/evidence/mr_patterns_verification/` (xem 8) |
 | `tests/golden`, scanner pins và seed PoC so với `poc-v1.0.0` | Giữ nguyên; `config/policy-mapping.yaml` bổ sung control/mapping MR-06 và `seeds/candidate/pod-hostnet` là seed DEV mới, nằm ngoài tập seed PoC |
 | Fingerprint hành vi MR-01..05 trên 7 seed (applicable, tham số, trace, sha256 follow-up, pair status, targets, mapping, relation) | **Giống hệt** (`scripts/snapshot_mr_behavior.py`; baseline: `docs/baseline/mr_behavior_poc_v1.json`, 28 case) |
 | Chưa chạy | `capture_golden.py` (ghi đè golden nên cố ý không chạy; chỉ kiểm import). Chạy lại triage/minimize để tái hiện reproducer K1/N2: không chạy, nhưng họ K1 vẫn xuất hiện nguyên vẹn (5 VIOLATION Kubescape giống hệt PoC) |
 
-Fingerprint chứng minh *sinh follow-up và kiểm tra cặp* không đổi; hai lần chạy scanner thật ở trên chứng minh *kết quả scan và phán định MR* không đổi trên 41+41 phép so sánh. Hai run này dùng `mapping_digest` cũ (`d36741f032`), tức là trước khi thêm mapping MR-06. Phạm vi kết luận: 8 seed hiện có, hai scanner đã pin; không suy rộng sang seed khác.
+Fingerprint chứng minh *sinh follow-up và kiểm tra cặp* không đổi; hai lần chạy scanner thật ở trên chứng minh *kết quả scan và phán định MR* không đổi trên 256 (Trivy) + 386 (Kubescape) phép so sánh control×resource. Hai run này dùng `mapping_digest` cũ (`d36741f032`), tức là trước khi thêm mapping MR-06. Phạm vi kết luận: 8 seed hiện có, hai scanner đã pin; không suy rộng sang seed khác.
 
 ## 2. Thay đổi
 
@@ -97,3 +97,21 @@ Chưa điền: NSA/CISA, ATT&CK, và CIS cho các control còn lại (không tì
 4. `runner.run_pair` dài nhưng không tách (xem Audit 3.3).
 5. Chưa chạy `mr validate` trong CI; `docs/MR_TRACEABILITY.md` sinh tay bằng `mr trace`.
 6. Chưa chạy lại triage/minimize và ablation probes sau refactor (kết quả run đã giống hệt, nên rủi ro thấp, nhưng chưa kiểm).
+
+## 8. Review độc lập 2026-11-01: kiểm tra từng nhận định và xử lý
+
+Từng nhận định được tái hiện bằng lệnh/code trước khi sửa. Tất cả đều đúng.
+
+| Mức | Nhận định | Xác minh | Xử lý |
+|---|---|---|---|
+| P1 | `--mr MR-99` chạy thành công với 0 test | Tái hiện: `generate --mr MR-99` thoát 0, "generated 0 follow-ups" | `active_mrs` ném `UnknownMRError`; `generate` và `run` thoát mã 2 và in ID sai. Test: `test_unknown_mr_id_fails_fast` |
+| P1 | Evidence mới không tự chứa | Đúng: chỉ có `results.csv` + lock; `results.csv` để trống verdict ở dòng PASS (`report.case_row` chỉ điền từ violation đầu tiên) | `scripts/package_run_evidence.py` đóng gói `comparisons.csv`, `results.json`, lock và toàn bộ thư mục case (bundle nguồn/follow-up, diff, trace, assessment, **raw scanner JSON**) cho mọi case VIOLATION và MR-06, kèm `manifest.json` (sha256) và `case_index.json` (đường dẫn tương đối). Từ chối đóng gói run thiếu file |
+| (mới) | Báo cáo trước của tôi nói "verdict nguồn/follow-up giống hệt" trên 41 dòng | **Sai/thổi phồng**: phép so `results.csv` chỉ so verdict ở dòng VIOLATION | Đã chạy lại và so thêm `comparisons.csv` (256/256, 386/386). Câu cũ đã sửa ở bảng mục 1 |
+| P2 | `mr validate` chỉ là cổng cấu trúc | Đúng | In rõ "STRUCTURAL gate only" sau mỗi lần chạy; thêm `MR_SEMANTIC_REVIEW_CHECKLIST.md` (8 mục, tách khỏi cổng tự động) |
+| P2 | Seed không hợp lệ vẫn được tính là exercised | Đúng (`exercise` không gọi `validate_source`) | Seed INVALID_SOURCE bị bỏ qua và được liệt kê. Test: `test_exercise_skips_invalid_sources` |
+| P2 | `scaffold --pattern` luôn sinh KP3 | Đúng | Khung theo `base_class` của pattern (KP3: `ControlledChange`; KP1/KP2: lớp tự cài); từ chối id sai định dạng/đã tồn tại và pattern lạ mà không ghi file; cảnh báo rõ rằng phải thêm mục catalog ngay vì `transforms/` được import cả thư mục |
+| P2 | Schema nông | Đúng | Kiểm kiểu (chuỗi/danh sách không rỗng, `all_failures` boolean, định dạng id), `base_class` của pattern khớp implementation, mapping phải đủ `control`/`target`. **Việc này bắt được 2 lỗi YAML thật**: một mục `limits` của MR-05 (có từ PoC) và một của MR-06 bị parse thành dict vì chứa `: `; đã bọc nháy, nội dung giữ nguyên |
+| P3 | `compare_runs.py` bỏ sót key trùng | Đúng | Báo lỗi key trùng, số dòng khác, dòng thiếu; so thêm `comparisons.csv`. Test: `test_compare_runs_rejects_duplicates_and_count_mismatch` |
+
+Giữ nguyên: scanner adapters, normalizers, golden, ngữ nghĩa MR-01..05 (snapshot hành vi vẫn **giống hệt** baseline), MR-06 ở `candidate`, chưa merge.
+Lưu ý khi chia sẻ: raw scanner JSON trong `docs/evidence/mr_patterns_verification/` chứa đường dẫn cục bộ (`/home/<user>/...`) ở 28 file; xem lại trước khi gửi ra ngoài. Các đường dẫn tuyệt đối trong `raw_output_paths` của CSV mô tả máy đã chạy; dùng `case_index.json`.
