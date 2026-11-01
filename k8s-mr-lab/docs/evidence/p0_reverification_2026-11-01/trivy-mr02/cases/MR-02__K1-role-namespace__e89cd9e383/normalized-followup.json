@@ -1,0 +1,239 @@
+{
+  "scanner": "trivy",
+  "verdicts": [
+    {
+      "control": "KSV-0001",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'securityContext.allowPrivilegeEscalation' to false"
+      ]
+    },
+    {
+      "control": "KSV-0003",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should add 'ALL' to 'securityContext.capabilities.drop'"
+      ]
+    },
+    {
+      "control": "KSV-0004",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of 'deployment' 'web' in 'lab-a' namespace should set securityContext.capabilities.drop"
+      ]
+    },
+    {
+      "control": "KSV-0009",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0011",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'resources.limits.cpu'"
+      ]
+    },
+    {
+      "control": "KSV-0012",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'securityContext.runAsNonRoot' to true"
+      ]
+    },
+    {
+      "control": "KSV-0014",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'securityContext.readOnlyRootFilesystem' to true"
+      ]
+    },
+    {
+      "control": "KSV-0015",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'resources.requests.cpu'"
+      ]
+    },
+    {
+      "control": "KSV-0016",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'resources.requests.memory'"
+      ]
+    },
+    {
+      "control": "KSV-0017",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0018",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'resources.limits.memory'"
+      ]
+    },
+    {
+      "control": "KSV-0020",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'securityContext.runAsUser' > 10000"
+      ]
+    },
+    {
+      "control": "KSV-0021",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Container 'web' of Deployment 'web' should set 'securityContext.runAsGroup' > 10000"
+      ]
+    },
+    {
+      "control": "KSV-0030",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "Either Pod or Container should set 'securityContext.seccompProfile.type' to 'RuntimeDefault'"
+      ]
+    },
+    {
+      "control": "KSV-0048",
+      "resource": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0048",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0049",
+      "resource": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0049",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0050",
+      "resource": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0050",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0104",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "container \"web\" of deployment \"web\" in \"lab-a\" namespace should specify a seccomp profile"
+      ]
+    },
+    {
+      "control": "KSV-0106",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=51",
+        "container should drop all"
+      ]
+    },
+    {
+      "control": "KSV-0112",
+      "resource": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0112",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0113",
+      "resource": "Role/lab-a-decoy/app-role@rbac.authorization.k8s.io",
+      "status": "FAIL",
+      "evidence": [
+        "line=62",
+        "Role 'app-role' shouldn't have access to manage secrets in namespace 'lab-a-decoy'"
+      ]
+    },
+    {
+      "control": "KSV-0113",
+      "resource": "Role/lab-a/app-role@rbac.authorization.k8s.io",
+      "status": "PASS",
+      "evidence": [
+        "pass_inferred: no FAIL attributed to this resource while the check has a (file-level) PASS entry; absence of FAIL, not proof of evaluation"
+      ]
+    },
+    {
+      "control": "KSV-0118",
+      "resource": "Deployment/lab-a/web@apps",
+      "status": "FAIL",
+      "evidence": [
+        "line=48",
+        "deployment web in lab-a namespace is using the default security context, which allows root privileges"
+      ]
+    }
+  ],
+  "unattributed_failures": [],
+  "notes": []
+}

@@ -1,0 +1,63 @@
+{
+  "case_id": "MR-02__rbac-secrets-reader__bd7af0cb0d",
+  "result": "PASS",
+  "reason": "all 5 comparison(s) satisfy 'equal'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "PASS",
+    "relation": "equal",
+    "reason": "all 5 comparison(s) satisfy 'equal'",
+    "counts": {
+      "ok": 5,
+      "violation": 0,
+      "inconclusive": 0
+    },
+    "comparisons": [
+      {
+        "control": "KSV-0113",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "explicit"
+      },
+      {
+        "control": "KSV-0048",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "inferred_pass"
+      },
+      {
+        "control": "KSV-0049",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "inferred_pass"
+      },
+      {
+        "control": "KSV-0112",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "inferred_pass"
+      },
+      {
+        "control": "KSV-0050",
+        "resource": "Role/lab-c/reader-role@rbac.authorization.k8s.io",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "ok",
+        "reason": "",
+        "basis": "inferred_pass"
+      }
+    ]
+  }
+}

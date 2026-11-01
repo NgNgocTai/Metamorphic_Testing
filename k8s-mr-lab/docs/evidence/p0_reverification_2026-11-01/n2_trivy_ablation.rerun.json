@@ -1,0 +1,102 @@
+{
+  "scanner": "trivy (+ kubescape for contrast)",
+  "version": "0.75.0",
+  "kubescape_version": "v4.0.15",
+  "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+  "target": "Role lab-c/reader-role",
+  "note": "the Role has exactly one rule in every variant, so no other rule/binding can grant the same permission",
+  "variants": {
+    "A_source_core_group_secrets": {
+      "trivy_KSV-0113": "FAIL",
+      "trivy_raw_fail_entries": [
+        {
+          "Type": "Kubernetes Security Check",
+          "ID": "KSV-0113",
+          "Title": "Manage namespace secrets",
+          "Description": "Viewing secrets at the namespace scope can lead to escalation if another service account in that namespace has a higher privileged rolebinding or clusterrolebinding bound.",
+          "Message": "Role 'reader-role' shouldn't have access to manage secrets in namespace 'lab-c'",
+          "Namespace": "builtin.kubernetes.KSV113",
+          "Query": "data.builtin.kubernetes.KSV113.deny",
+          "Resolution": "Manage namespace secrets are not allowed. Remove resource 'secrets' from role",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv-0113",
+          "References": [
+            "https://kubernetes.io/docs/concepts/security/rbac-good-practices/",
+            "https://avd.aquasec.com/misconfig/ksv-0113"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Kubernetes",
+            "Service": "general",
+            "StartLine": 13,
+            "EndLine": 20
+          }
+        }
+      ],
+      "kubescape_C-0015": "FAIL"
+    },
+    "B_candidate_apiGroup_apps_secrets": {
+      "trivy_KSV-0113": "FAIL",
+      "trivy_raw_fail_entries": [
+        {
+          "Type": "Kubernetes Security Check",
+          "ID": "KSV-0113",
+          "Title": "Manage namespace secrets",
+          "Description": "Viewing secrets at the namespace scope can lead to escalation if another service account in that namespace has a higher privileged rolebinding or clusterrolebinding bound.",
+          "Message": "Role 'reader-role' shouldn't have access to manage secrets in namespace 'lab-c'",
+          "Namespace": "builtin.kubernetes.KSV113",
+          "Query": "data.builtin.kubernetes.KSV113.deny",
+          "Resolution": "Manage namespace secrets are not allowed. Remove resource 'secrets' from role",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv-0113",
+          "References": [
+            "https://kubernetes.io/docs/concepts/security/rbac-good-practices/",
+            "https://avd.aquasec.com/misconfig/ksv-0113"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Kubernetes",
+            "Service": "general",
+            "StartLine": 13,
+            "EndLine": 20
+          }
+        }
+      ],
+      "kubescape_C-0015": "PASS"
+    },
+    "C_apiGroup_nonexistent_secrets": {
+      "trivy_KSV-0113": "FAIL",
+      "trivy_raw_fail_entries": [
+        {
+          "Type": "Kubernetes Security Check",
+          "ID": "KSV-0113",
+          "Title": "Manage namespace secrets",
+          "Description": "Viewing secrets at the namespace scope can lead to escalation if another service account in that namespace has a higher privileged rolebinding or clusterrolebinding bound.",
+          "Message": "Role 'reader-role' shouldn't have access to manage secrets in namespace 'lab-c'",
+          "Namespace": "builtin.kubernetes.KSV113",
+          "Query": "data.builtin.kubernetes.KSV113.deny",
+          "Resolution": "Manage namespace secrets are not allowed. Remove resource 'secrets' from role",
+          "Severity": "MEDIUM",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ksv-0113",
+          "References": [
+            "https://kubernetes.io/docs/concepts/security/rbac-good-practices/",
+            "https://avd.aquasec.com/misconfig/ksv-0113"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Kubernetes",
+            "Service": "general",
+            "StartLine": 13,
+            "EndLine": 20
+          }
+        }
+      ],
+      "kubescape_C-0015": "PASS"
+    },
+    "D_apiGroup_apps_deployments_get(no secrets)": {
+      "trivy_KSV-0113": "PASS",
+      "trivy_raw_fail_entries": [],
+      "kubescape_C-0015": "PASS"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "kubescape-20261101T114158",
+  "seed_id": "rbac-secrets-reader",
+  "mr_id": "MR-02",
+  "mr_spec_digest": "3767f8ae4d",
+  "params": {
+    "rolebinding": "reader-binding",
+    "namespace": "lab-c",
+    "role": "reader-role",
+    "decoy_namespace": "lab-c-decoy",
+    "profile": "wildcard_admin"
+  },
+  "random_seed": null,
+  "scanner": "kubescape",
+  "scanner_version": "v4.0.15",
+  "scan_mode": "local-file",
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "mapping_digest": "97f3fb6a97",
+  "source_text_sha256": "5b7aa1f13ab86f0b5828d90634922d1be115201b52b88fa0378194ef89249768",
+  "followup_text_sha256": "d2f12e30763de59c3ecc4043a20f2c162da2275fa7ef633aed8beb3e49d400e1",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}
