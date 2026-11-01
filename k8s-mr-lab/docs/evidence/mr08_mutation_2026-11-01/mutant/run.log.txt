@@ -1,0 +1,10 @@
+*      invalid-missing-role   INVALID_SOURCE invalid-missing-role  missing dependency: RoleBinding lab-a/app-binding -> Role lab-a/missing-role
+MR-08  pod-basic              SKIP                 skip  no_sole_binding_of_a_serviceaccount_used_by_a_workload
+MR-08  rbac-basic             SKIP                 skip  no_sole_binding_of_a_serviceaccount_used_by_a_workload
+MR-08  rbac-no-binding        SKIP                 skip  no_sole_binding_of_a_serviceaccount_used_by_a_workload
+MR-08  rbac-secrets-reader    VIOLATION      c217801ae8  1 comparison(s) violate relation 'fail_to_pass'
+MR-08  rbac-workload          INCONCLUSIVE   fd7f8544bc  no conclusive comparison (all verdicts missing or baseline unmet)
+MR-08  K1-role-namespace      INCONCLUSIVE   fd7f8544bc  no conclusive comparison (all verdicts missing or baseline unmet)
+MR-08  pod-hostnet            SKIP                 skip  no_sole_binding_of_a_serviceaccount_used_by_a_workload
+
+kubescape v4.0.15 [local-file]: {'INVALID_SOURCE': 1, 'SKIP': 4, 'VIOLATION': 1, 'INCONCLUSIVE': 2}; scanner invocations: 4; -> <REPO>/runs/_mut8/mutant

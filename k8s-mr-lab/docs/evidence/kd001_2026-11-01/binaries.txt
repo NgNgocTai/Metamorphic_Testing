@@ -1,0 +1,8 @@
+v4.0.11 sha256: 9f3fd186dfddd9147668b520a0ca7a513e1ff74ee399047c91d29420b0e5c0a9 size 262032010
+Your current version is: v4.0.11
+Build commit: 8fb2eb1db185637c5ea5365dd4c05bea4f165741
+Build date: 2026-07-22T14:16:46Z
+v4.0.12 sha256: 58e9840d26a3d37fc86dd1b9ee41b085ec7d3e67a56833b66d2a716792af61fa size 267054045
+Your current version is: v4.0.12
+Build commit: 469969f6bebf46bef5e808b91a4bb46fb2bbf4ed
+Build date: 2026-08-12T08:21:03Z

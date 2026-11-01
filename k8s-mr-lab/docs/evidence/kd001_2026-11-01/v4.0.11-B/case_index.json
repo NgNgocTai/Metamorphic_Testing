@@ -1,0 +1,9 @@
+{
+  "MR-02__K1-role-namespace__66de14dad8": "cases/MR-02__K1-role-namespace__66de14dad8",
+  "MR-02__K1-role-namespace__e89cd9e383": "cases/MR-02__K1-role-namespace__e89cd9e383",
+  "MR-02__rbac-basic__66de14dad8": "cases/MR-02__rbac-basic__66de14dad8",
+  "MR-02__rbac-basic__e89cd9e383": "cases/MR-02__rbac-basic__e89cd9e383",
+  "MR-02__rbac-secrets-reader__bd7af0cb0d": "cases/MR-02__rbac-secrets-reader__bd7af0cb0d",
+  "MR-02__rbac-workload__66de14dad8": "cases/MR-02__rbac-workload__66de14dad8",
+  "MR-02__rbac-workload__e89cd9e383": "cases/MR-02__rbac-workload__e89cd9e383"
+}

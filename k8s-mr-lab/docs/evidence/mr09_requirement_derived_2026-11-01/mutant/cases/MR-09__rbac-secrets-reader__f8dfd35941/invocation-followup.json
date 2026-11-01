@@ -1,0 +1,26 @@
+{
+  "tool": "kubescape",
+  "version": "v4.0.15",
+  "mode": "local-file",
+  "command": [
+    "kubescape",
+    "scan",
+    "framework",
+    "allcontrols",
+    "--keep-local",
+    "--verbose",
+    "--format",
+    "json",
+    "--output",
+    "<REPO>/runs/_mut9/mutant/cases/MR-09__rbac-secrets-reader__f8dfd35941/scanner-followup.json",
+    "--use-artifacts-from",
+    "<REPO>/runs/_mut9/ks-drop-watch",
+    "<REPO>/runs/_mut9/mutant/cases/MR-09__rbac-secrets-reader__f8dfd35941/followup"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 11105,
+  "policy_digest": "b40d4d31a8d6f3f2d1932c14d59c895b4b056e71ad0a752bd46f47be48a02ab8",
+  "raw_path": "<REPO>/runs/_mut9/mutant/cases/MR-09__rbac-secrets-reader__f8dfd35941/scanner-followup.json",
+  "error": null,
+  "stderr_tail": "fo\",\"ts\":\"2026-11-01T15:35:58+07:00\",\"msg\":\"Done accessing local objects\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T15:35:58+07:00\",\"msg\":\"Scanning GitLocal\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T15:36:04+07:00\",\"msg\":\"Done scanning GitLocal\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T15:36:04+07:00\",\"msg\":\"Done aggregating results\"}\n{\"level\":\"info\",\"ts\":\"2026-11-01T15:36:04+07:00\",\"msg\":\"Scan results saved\",\"filename\":\"<REPO>/runs/_mut9/mutant/cases/MR-09__rbac-secrets-reader__f8dfd35941/scanner-followup.json\"}\n\nOverall compliance-score (100- Excellent, 0- All failed): 72\n"
+}

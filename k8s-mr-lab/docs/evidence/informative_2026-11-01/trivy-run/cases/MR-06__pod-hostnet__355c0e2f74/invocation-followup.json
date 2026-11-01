@@ -1,0 +1,25 @@
+{
+  "tool": "trivy",
+  "version": "0.75.0",
+  "mode": "local-file",
+  "command": [
+    "trivy",
+    "config",
+    "--skip-check-update",
+    "--skip-version-check",
+    "--include-non-failures",
+    "--format",
+    "json",
+    "--cache-dir",
+    "/home/USER/.cache/trivy",
+    "--output",
+    "<REPO>/runs/_inf/trivy/cases/MR-06__pod-hostnet__355c0e2f74/scanner-followup.json",
+    "<REPO>/runs/_inf/trivy/cases/MR-06__pod-hostnet__355c0e2f74/followup"
+  ],
+  "exit_code": 0,
+  "elapsed_ms": 4289,
+  "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+  "raw_path": "<REPO>/runs/_inf/trivy/cases/MR-06__pod-hostnet__355c0e2f74/scanner-followup.json",
+  "error": null,
+  "stderr_tail": "2026-11-01T14:53:30+07:00\tINFO\t[misconfig] Misconfiguration scanning is enabled\n2026-11-01T14:53:30+07:00\tINFO\t[checks-client] No downloadable checks were loaded as --skip-check-update is enabled, loading from existing cache...\n2026-11-01T14:53:33+07:00\tINFO\tDetected config files\tnum=1\n"
+}

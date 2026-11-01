@@ -1,0 +1,769 @@
+scanner,case_id,mr_id,control,resource,source,followup,outcome,basis,changed,tier,note,engaged
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0017,Deployment/lab-a/web@apps,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0001,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0003,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0011,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0012,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0014,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0015,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0020,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0021,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0104,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0106,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__39ef56d618,MR-01,KSV-0118,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0017,Deployment/lab-a/web@apps,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0001,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0003,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0011,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0012,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0014,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0015,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0020,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0021,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0104,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0106,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__K1-role-namespace__83181ed25b,MR-01,KSV-0118,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0017,Pod/lab-a/demo,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0017,Pod/lab-a/plain,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0001,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0001,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0003,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0003,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0004,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0004,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0011,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0011,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0012,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0012,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0014,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0014,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0015,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0015,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0016,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0016,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0018,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0018,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0020,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0020,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0021,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0021,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0030,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0030,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0104,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0104,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0106,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0106,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0118,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__39ef56d618,MR-01,KSV-0118,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0017,Pod/lab-a/demo,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0017,Pod/lab-a/plain,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0001,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0001,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0003,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0003,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0004,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0004,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0011,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0011,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0012,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0012,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0014,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0014,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0015,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0015,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0016,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0016,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0018,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0018,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0020,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0020,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0021,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0021,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0030,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0030,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0104,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0104,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0106,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0106,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0118,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-basic__83181ed25b,MR-01,KSV-0118,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0017,Pod/lab-h/web,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0001,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0003,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0004,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0011,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0012,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0014,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0015,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0016,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0018,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0020,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0021,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0030,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0104,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0106,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__39ef56d618,MR-01,KSV-0118,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0017,Pod/lab-h/web,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0001,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0003,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0004,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0011,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0012,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0014,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0015,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0016,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0018,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0020,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0021,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0030,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0104,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0106,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__pod-hostnet__83181ed25b,MR-01,KSV-0118,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-basic__39ef56d618,MR-01,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__39ef56d618,MR-01,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__39ef56d618,MR-01,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__39ef56d618,MR-01,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__39ef56d618,MR-01,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__83181ed25b,MR-01,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__83181ed25b,MR-01,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__83181ed25b,MR-01,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__83181ed25b,MR-01,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-basic__83181ed25b,MR-01,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-no-binding__39ef56d618,MR-01,KSV-0113,Role/lab-a/lonely@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-no-binding__39ef56d618,MR-01,KSV-0048,Role/lab-a/lonely@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-no-binding__39ef56d618,MR-01,KSV-0049,Role/lab-a/lonely@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-no-binding__39ef56d618,MR-01,KSV-0112,Role/lab-a/lonely@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-no-binding__39ef56d618,MR-01,KSV-0050,Role/lab-a/lonely@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0017,Pod/lab-c/reader-pod,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0001,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0003,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0004,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0011,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0012,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0014,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0015,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0016,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0018,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0020,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0021,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0030,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0104,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0106,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__39ef56d618,MR-01,KSV-0118,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0017,Pod/lab-c/reader-pod,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0001,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0003,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0004,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0011,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0012,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0014,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0015,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0016,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0018,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0020,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0021,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0030,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0104,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0106,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-secrets-reader__83181ed25b,MR-01,KSV-0118,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0017,Deployment/lab-a/web@apps,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0001,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0003,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0011,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0012,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0014,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0015,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0020,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0021,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0104,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0106,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__39ef56d618,MR-01,KSV-0118,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0017,Deployment/lab-a/web@apps,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,*,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0001,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0003,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0011,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0012,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0014,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0015,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0020,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0021,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0104,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0106,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-01__rbac-workload__83181ed25b,MR-01,KSV-0118,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+trivy,MR-02__K1-role-namespace__66de14dad8,MR-02,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__66de14dad8,MR-02,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__66de14dad8,MR-02,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__66de14dad8,MR-02,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__66de14dad8,MR-02,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__e89cd9e383,MR-02,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__e89cd9e383,MR-02,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__e89cd9e383,MR-02,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__e89cd9e383,MR-02,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__K1-role-namespace__e89cd9e383,MR-02,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__66de14dad8,MR-02,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__66de14dad8,MR-02,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__66de14dad8,MR-02,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__66de14dad8,MR-02,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__66de14dad8,MR-02,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__e89cd9e383,MR-02,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__e89cd9e383,MR-02,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__e89cd9e383,MR-02,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__e89cd9e383,MR-02,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-basic__e89cd9e383,MR-02,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,True
+trivy,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,True
+trivy,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__66de14dad8,MR-02,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__66de14dad8,MR-02,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__66de14dad8,MR-02,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__66de14dad8,MR-02,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__66de14dad8,MR-02,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__e89cd9e383,MR-02,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__e89cd9e383,MR-02,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__e89cd9e383,MR-02,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__e89cd9e383,MR-02,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-02__rbac-workload__e89cd9e383,MR-02,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+trivy,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c/reader-role@rbac.authorization.k8s.io,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c/reader-role@rbac.authorization.k8s.io,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c/reader-role@rbac.authorization.k8s.io,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,Role/lab-c/reader-role@rbac.authorization.k8s.io,WEAK,PASS inferred (absence of an attributed FAIL),False
+trivy,MR-04__K1-role-namespace__58c7412c5a,MR-04,KSV-0017,Deployment/lab-a/web@apps,PASS,FAIL,ok,inferred_pass,Deployment/lab-a/web@apps,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-04__pod-basic__6bee0a076b,MR-04,KSV-0017,Pod/lab-a/demo,PASS,FAIL,ok,inferred_pass,Pod/lab-a/demo,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-04__pod-basic__890173885c,MR-04,KSV-0017,Pod/lab-a/demo,PASS,FAIL,ok,inferred_pass,Pod/lab-a/demo,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-04__pod-hostnet__40fcb24159,MR-04,KSV-0017,Pod/lab-h/web,PASS,FAIL,ok,inferred_pass,Pod/lab-h/web,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-04__rbac-secrets-reader__2c716c0d66,MR-04,KSV-0017,Pod/lab-c/reader-pod,PASS,FAIL,ok,inferred_pass,Pod/lab-c/reader-pod,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-04__rbac-workload__58c7412c5a,MR-04,KSV-0017,Deployment/lab-a/web@apps,PASS,FAIL,ok,inferred_pass,Deployment/lab-a/web@apps,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-05__rbac-secrets-reader__d31cd60ffd,MR-05,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,violation,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+trivy,MR-06__pod-hostnet__355c0e2f74,MR-06,KSV-0009,Pod/lab-h/web,PASS,FAIL,ok,inferred_pass,Pod/lab-h/web,WEAK,PASS inferred (absence of an attributed FAIL),True
+trivy,MR-07__K1-role-namespace__8209b1cbb6,MR-07,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__K1-role-namespace__8209b1cbb6,MR-07,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__K1-role-namespace__8209b1cbb6,MR-07,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__K1-role-namespace__8209b1cbb6,MR-07,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__K1-role-namespace__8209b1cbb6,MR-07,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-basic__8209b1cbb6,MR-07,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-basic__8209b1cbb6,MR-07,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-basic__8209b1cbb6,MR-07,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-basic__8209b1cbb6,MR-07,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-basic__8209b1cbb6,MR-07,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-secrets-reader__88249c50fa,MR-07,KSV-0113,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,True
+trivy,MR-07__rbac-secrets-reader__88249c50fa,MR-07,KSV-0048,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-secrets-reader__88249c50fa,MR-07,KSV-0049,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-secrets-reader__88249c50fa,MR-07,KSV-0112,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-secrets-reader__88249c50fa,MR-07,KSV-0050,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-workload__8209b1cbb6,MR-07,KSV-0113,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-workload__8209b1cbb6,MR-07,KSV-0048,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-workload__8209b1cbb6,MR-07,KSV-0049,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-workload__8209b1cbb6,MR-07,KSV-0112,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+trivy,MR-07__rbac-workload__8209b1cbb6,MR-07,KSV-0050,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,inferred_pass,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0267,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0009,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0013,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0017,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0034,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0050,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0053,ServiceAccount/lab-a/app,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0053,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0055,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0056,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0076,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0077,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0190,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0210,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0211,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0237,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0260,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0261,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0268,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0269,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0270,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__39ef56d618,MR-01,C-0271,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0267,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0009,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0013,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0017,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0034,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0050,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0053,ServiceAccount/lab-a/app,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0053,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0055,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0056,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0076,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0077,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0190,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0210,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0211,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0237,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0260,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0261,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0268,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0269,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0270,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__K1-role-namespace__83181ed25b,MR-01,C-0271,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0057,Pod/lab-a/demo,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0057,Pod/lab-a/plain,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0267,Pod/lab-a/demo,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0267,Pod/lab-a/plain,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0272,Pod/lab-a/demo,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0272,Pod/lab-a/plain,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0004,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0004,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0009,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0009,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0013,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0013,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0016,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0016,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0017,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0017,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0018,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0018,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0030,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0030,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0034,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0034,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0050,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0050,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0055,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0055,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0056,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0056,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0073,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0073,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0076,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0076,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0077,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0077,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0190,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0190,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0210,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0210,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0211,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0211,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0237,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0237,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0260,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0260,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0268,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0268,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0269,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0269,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0270,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0270,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0271,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__39ef56d618,MR-01,C-0271,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0057,Pod/lab-a/demo,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0057,Pod/lab-a/plain,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0267,Pod/lab-a/demo,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0267,Pod/lab-a/plain,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0272,Pod/lab-a/demo,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0272,Pod/lab-a/plain,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0004,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0004,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0009,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0009,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0013,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0013,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0016,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0016,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0017,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0017,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0018,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0018,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0030,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0030,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0034,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0034,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0050,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0050,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0055,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0055,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0056,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0056,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0073,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0073,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0076,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0076,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0077,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0077,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0190,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0190,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0210,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0210,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0211,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0211,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0237,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0237,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0260,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0260,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0268,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0268,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0269,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0269,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0270,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0270,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0271,Pod/lab-a/demo,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-basic__83181ed25b,MR-01,C-0271,Pod/lab-a/plain,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0057,Pod/lab-h/web,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0267,Pod/lab-h/web,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0272,Pod/lab-h/web,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0004,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0009,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0013,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0016,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0017,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0018,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0030,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0034,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0050,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0055,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0056,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0073,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0076,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0077,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0190,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0210,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0211,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0237,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0260,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0268,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0269,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0270,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__39ef56d618,MR-01,C-0271,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0057,Pod/lab-h/web,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0267,Pod/lab-h/web,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0272,Pod/lab-h/web,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0004,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0009,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0013,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0016,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0017,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0018,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0030,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0034,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0050,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0055,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0056,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0073,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0076,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0077,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0190,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0210,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0211,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0237,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0260,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0268,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0269,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0270,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__pod-hostnet__83181ed25b,MR-01,C-0271,Pod/lab-h/web,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-basic__39ef56d618,MR-01,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-basic__39ef56d618,MR-01,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-basic__39ef56d618,MR-01,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-basic__39ef56d618,MR-01,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-basic__39ef56d618,MR-01,C-0053,ServiceAccount/lab-a/app,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-basic__39ef56d618,MR-01,C-0053,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-basic__83181ed25b,MR-01,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-basic__83181ed25b,MR-01,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-basic__83181ed25b,MR-01,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-basic__83181ed25b,MR-01,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-basic__83181ed25b,MR-01,C-0053,ServiceAccount/lab-a/app,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-basic__83181ed25b,MR-01,C-0053,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-no-binding__39ef56d618,MR-01,C-0015,Role/lab-a/lonely@rbac.authorization.k8s.io,NOT_EVALUATED,NOT_EVALUATED,inconclusive,explicit,*,INCONCLUSIVE,source_verdict_not_evaluated,False
+kubescape,MR-01__rbac-no-binding__39ef56d618,MR-01,C-0007,Role/lab-a/lonely@rbac.authorization.k8s.io,NOT_EVALUATED,NOT_EVALUATED,inconclusive,explicit,*,INCONCLUSIVE,source_verdict_not_evaluated,False
+kubescape,MR-01__rbac-no-binding__39ef56d618,MR-01,C-0035,Role/lab-a/lonely@rbac.authorization.k8s.io,NOT_EVALUATED,NOT_EVALUATED,inconclusive,explicit,*,INCONCLUSIVE,source_verdict_not_evaluated,False
+kubescape,MR-01__rbac-no-binding__39ef56d618,MR-01,C-0053,Role/lab-a/lonely@rbac.authorization.k8s.io,NOT_EVALUATED,NOT_EVALUATED,inconclusive,explicit,*,INCONCLUSIVE,source_verdict_not_evaluated,False
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0057,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0267,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0272,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0007,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0035,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0053,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0004,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0009,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0013,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0015,ServiceAccount/lab-c/reader,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0015,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0016,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0017,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0018,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0030,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0034,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0050,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0053,ServiceAccount/lab-c/reader,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0053,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0055,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0056,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0073,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0076,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0077,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0186,ServiceAccount/lab-c/reader,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0186,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0186,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0190,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0210,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0211,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0237,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0260,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0261,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0268,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0269,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0270,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__39ef56d618,MR-01,C-0271,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0057,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0267,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0272,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0007,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0035,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0053,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0004,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0009,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0013,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0015,ServiceAccount/lab-c/reader,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0015,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0016,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0017,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0018,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0030,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0034,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0050,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0053,ServiceAccount/lab-c/reader,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0053,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0055,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0056,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0073,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0076,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0077,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0186,ServiceAccount/lab-c/reader,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0186,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0186,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0190,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0210,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0211,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0237,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0260,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0261,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0268,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0269,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0270,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-secrets-reader__83181ed25b,MR-01,C-0271,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0267,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0009,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0013,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0017,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0034,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0050,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0053,ServiceAccount/lab-a/app,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0053,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0055,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0056,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0076,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0077,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0190,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0210,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0211,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0237,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0260,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0261,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0268,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0269,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0270,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__39ef56d618,MR-01,C-0271,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0267,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,*,INFORMATIVE,,False
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0004,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0009,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0013,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0016,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0017,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0018,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0030,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0034,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0050,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0053,ServiceAccount/lab-a/app,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0053,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0055,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0056,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0076,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0077,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0190,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0210,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0211,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0237,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0260,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0261,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0268,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0269,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0270,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-01__rbac-workload__83181ed25b,MR-01,C-0271,Deployment/lab-a/web@apps,FAIL,FAIL,ok,explicit,*,INFORMATIVE,,True
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0267,Deployment/lab-a/web@apps,PASS,FAIL,violation,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0272,Deployment/lab-a/web@apps,PASS,FAIL,violation,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__66de14dad8,MR-02,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0267,Deployment/lab-a/web@apps,PASS,FAIL,violation,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__K1-role-namespace__e89cd9e383,MR-02,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-basic__66de14dad8,MR-02,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-basic__66de14dad8,MR-02,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-basic__66de14dad8,MR-02,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-basic__66de14dad8,MR-02,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-basic__e89cd9e383,MR-02,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-basic__e89cd9e383,MR-02,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-basic__e89cd9e383,MR-02,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-basic__e89cd9e383,MR-02,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0267,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0272,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0057,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0007,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0035,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-secrets-reader__44d79ab8cf,MR-02,C-0053,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0267,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0272,Pod/lab-c/reader-pod,PASS,FAIL,violation,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0057,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0007,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0035,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-secrets-reader__bd7af0cb0d,MR-02,C-0053,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c-decoy/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0267,Deployment/lab-a/web@apps,PASS,FAIL,violation,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0272,Deployment/lab-a/web@apps,PASS,FAIL,violation,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__66de14dad8,MR-02,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0267,Deployment/lab-a/web@apps,PASS,FAIL,violation,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0057,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,UNINFORMATIVE,control cannot observe the changed object,False
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-02__rbac-workload__e89cd9e383,MR-02,C-0053,Role/lab-a/app-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-a-decoy/app-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,C-0007,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,C-0035,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,C-0267,Pod/lab-c/reader-pod,FAIL,FAIL,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-03__rbac-secrets-reader__b0dae3466a,MR-03,C-0272,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-04__K1-role-namespace__58c7412c5a,MR-04,C-0057,Deployment/lab-a/web@apps,PASS,FAIL,ok,explicit,Deployment/lab-a/web@apps,INFORMATIVE,,True
+kubescape,MR-04__pod-basic__6bee0a076b,MR-04,C-0057,Pod/lab-a/demo,PASS,FAIL,ok,explicit,Pod/lab-a/demo,INFORMATIVE,,True
+kubescape,MR-04__pod-basic__890173885c,MR-04,C-0057,Pod/lab-a/demo,PASS,FAIL,ok,explicit,Pod/lab-a/demo,INFORMATIVE,,True
+kubescape,MR-04__pod-hostnet__40fcb24159,MR-04,C-0057,Pod/lab-h/web,PASS,FAIL,ok,explicit,Pod/lab-h/web,INFORMATIVE,,True
+kubescape,MR-04__rbac-secrets-reader__2c716c0d66,MR-04,C-0057,Pod/lab-c/reader-pod,PASS,FAIL,ok,explicit,Pod/lab-c/reader-pod,INFORMATIVE,,True
+kubescape,MR-04__rbac-workload__58c7412c5a,MR-04,C-0057,Deployment/lab-a/web@apps,PASS,FAIL,ok,explicit,Deployment/lab-a/web@apps,INFORMATIVE,,True
+kubescape,MR-05__rbac-secrets-reader__d31cd60ffd,MR-05,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,PASS,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-05__rbac-secrets-reader__d31cd60ffd,MR-05,C-0267,Pod/lab-c/reader-pod,FAIL,PASS,ok,explicit,Role/lab-c/reader-role@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-06__pod-hostnet__355c0e2f74,MR-06,C-0041,Pod/lab-h/web,PASS,FAIL,ok,explicit,Pod/lab-h/web,INFORMATIVE,,True
+kubescape,MR-07__K1-role-namespace__8209b1cbb6,MR-07,C-0267,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__K1-role-namespace__8209b1cbb6,MR-07,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__K1-role-namespace__8209b1cbb6,MR-07,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__K1-role-namespace__8209b1cbb6,MR-07,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__K1-role-namespace__8209b1cbb6,MR-07,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-basic__8209b1cbb6,MR-07,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-basic__8209b1cbb6,MR-07,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-basic__8209b1cbb6,MR-07,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-secrets-reader__88249c50fa,MR-07,C-0267,Pod/lab-c/reader-pod,FAIL,PASS,violation,explicit,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-07__rbac-secrets-reader__88249c50fa,MR-07,C-0272,Pod/lab-c/reader-pod,PASS,PASS,ok,explicit,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-secrets-reader__88249c50fa,MR-07,C-0015,Role/lab-c/reader-role@rbac.authorization.k8s.io,FAIL,FAIL,ok,explicit,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,INFORMATIVE,,True
+kubescape,MR-07__rbac-secrets-reader__88249c50fa,MR-07,C-0007,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-secrets-reader__88249c50fa,MR-07,C-0035,Role/lab-c/reader-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-c/reader-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-workload__8209b1cbb6,MR-07,C-0267,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-workload__8209b1cbb6,MR-07,C-0272,Deployment/lab-a/web@apps,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-workload__8209b1cbb6,MR-07,C-0015,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-workload__8209b1cbb6,MR-07,C-0007,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False
+kubescape,MR-07__rbac-workload__8209b1cbb6,MR-07,C-0035,Role/lab-a/app-role@rbac.authorization.k8s.io,PASS,PASS,ok,explicit,RoleBinding/lab-a/app-binding@rbac.authorization.k8s.io,INFORMATIVE,,False

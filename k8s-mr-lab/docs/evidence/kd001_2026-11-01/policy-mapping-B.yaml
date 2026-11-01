@@ -1,0 +1,266 @@
+version: 1
+controls:
+  trivy:
+    KSV-0017:
+      title: Privileged container
+      kinds:
+      - Pod
+      - Deployment
+      - ReplicaSet
+      - StatefulSet
+      - DaemonSet
+      - CronJob
+      - Job
+      rego: privileged.rego
+    KSV-0113:
+      title: Manage namespace secrets
+      kinds:
+      - Role
+      rego: manage_namespace_secrets.rego
+    KSV-0048:
+      title: Manage workloads and pods
+      kinds:
+      - Role
+      - ClusterRole
+      rego: allowing_to_update_a_malicious_pod.rego
+    KSV-0049:
+      title: Manage configmaps
+      kinds:
+      - Role
+      - ClusterRole
+      rego: manage_configmaps.rego
+    KSV-0112:
+      title: Manage all resources at the namespace
+      kinds:
+      - Role
+      rego: manage_all_resources_at_namespace.rego
+    KSV-0009:
+      title: Access to host network
+      kinds:
+      - Pod
+      - Deployment
+      - ReplicaSet
+      - StatefulSet
+      - DaemonSet
+      - CronJob
+      - Job
+      rego: host_network.rego
+    KSV-0050:
+      title: Privilege escalation via RBAC resources
+      kinds:
+      - Role
+      - ClusterRole
+      rego: manage_kubernetes_rbac_resources.rego
+  kubescape:
+    C-0041:
+      title: HostNetwork access
+      kinds:
+      - Pod
+      - Deployment
+      - ReplicaSet
+      - StatefulSet
+      - DaemonSet
+      - CronJob
+      - Job
+    C-0057:
+      title: Privileged container
+      kinds:
+      - Pod
+      - Deployment
+      - ReplicaSet
+      - StatefulSet
+      - DaemonSet
+      - CronJob
+      - Job
+    C-0267:
+      title: Workload with cluster takeover roles
+      kinds:
+      - Pod
+      - Deployment
+      - ReplicaSet
+      - StatefulSet
+      - DaemonSet
+      - CronJob
+      - Job
+    C-0272:
+      title: Workload with administrative roles
+      kinds:
+      - Pod
+      - Deployment
+      - ReplicaSet
+      - StatefulSet
+      - DaemonSet
+      - CronJob
+      - Job
+    C-0015:
+      title: List Kubernetes secrets
+      kinds:
+      - Role
+      - ClusterRole
+      - ServiceAccount
+      - RoleBinding
+    C-0007:
+      title: Roles with delete capabilities
+      kinds:
+      - Role
+      - ClusterRole
+      - ServiceAccount
+      - RoleBinding
+    C-0035:
+      title: Administrative Roles
+      kinds:
+      - Role
+      - ClusterRole
+      - ServiceAccount
+      - RoleBinding
+    C-0053:
+      title: Access container service account
+      kinds:
+      - Role
+      - ClusterRole
+      - ServiceAccount
+      - RoleBinding
+mrs:
+  MR-01:
+    trivy:
+    - control: KSV-0017
+      target: ALL_OF_KIND
+    - control: KSV-0113
+      target: ALL_OF_KIND
+    - control: KSV-0048
+      target: ALL_OF_KIND
+    - control: KSV-0049
+      target: ALL_OF_KIND
+    - control: KSV-0112
+      target: ALL_OF_KIND
+    - control: KSV-0050
+      target: ALL_OF_KIND
+    kubescape:
+    - control: C-0057
+      target: ALL_OF_KIND
+    - control: C-0267
+      target: ALL_OF_KIND
+    - control: C-0272
+      target: ALL_OF_KIND
+    - control: C-0015
+      target: ALL_OF_KIND
+    - control: C-0007
+      target: ALL_OF_KIND
+    - control: C-0035
+      target: ALL_OF_KIND
+    - control: C-0053
+      target: ALL_OF_KIND
+  MR-02:
+    trivy:
+    - control: KSV-0113
+      target: bound_role
+    - control: KSV-0048
+      target: bound_role
+    - control: KSV-0049
+      target: bound_role
+    - control: KSV-0112
+      target: bound_role
+    - control: KSV-0050
+      target: bound_role
+    kubescape:
+    - control: C-0267
+      target: workload
+    - control: C-0272
+      target: workload
+    - control: C-0057
+      target: workload
+    - control: C-0015
+      target: bound_role
+    - control: C-0007
+      target: bound_role
+    - control: C-0035
+      target: bound_role
+    - control: C-0053
+      target: bound_role
+    - control: C-0015
+      target: subject_sa
+    - control: C-0015
+      target: rolebinding
+    - control: C-0007
+      target: subject_sa
+    - control: C-0007
+      target: rolebinding
+    - control: C-0035
+      target: subject_sa
+    - control: C-0035
+      target: rolebinding
+    - control: C-0053
+      target: subject_sa
+    - control: C-0053
+      target: rolebinding
+  MR-03:
+    trivy:
+    - control: KSV-0113
+      target: bound_role
+    - control: KSV-0048
+      target: bound_role
+    - control: KSV-0049
+      target: bound_role
+    - control: KSV-0112
+      target: bound_role
+    - control: KSV-0050
+      target: bound_role
+    kubescape:
+    - control: C-0015
+      target: bound_role
+    - control: C-0007
+      target: bound_role
+    - control: C-0035
+      target: bound_role
+    - control: C-0267
+      target: workload
+    - control: C-0272
+      target: workload
+  MR-04:
+    trivy:
+    - control: KSV-0017
+      target: workload
+    kubescape:
+    - control: C-0057
+      target: workload
+  MR-05:
+    trivy:
+    - control: KSV-0113
+      target: role_direct
+    kubescape:
+    - control: C-0015
+      target: bound_role
+    - control: C-0267
+      target: workload
+  MR-06:
+    trivy:
+    - control: KSV-0009
+      target: workload
+    kubescape:
+    - control: C-0041
+      target: workload
+  MR-07:
+    kubescape:
+    - control: C-0267
+      target: workload
+    - control: C-0272
+      target: workload
+    - control: C-0015
+      target: bound_role
+    - control: C-0007
+      target: bound_role
+    - control: C-0035
+      target: bound_role
+  MR-08:
+    kubescape:
+    - control: C-0267
+      target: workload
+    - control: C-0272
+      target: workload
+  MR-09:
+    trivy:
+    - control: KSV-0113
+      target: role_direct
+    kubescape:
+    - control: C-0015
+      target: bound_role

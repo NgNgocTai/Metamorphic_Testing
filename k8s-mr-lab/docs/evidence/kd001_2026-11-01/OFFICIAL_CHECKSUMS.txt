@@ -1,0 +1,2 @@
+9f3fd186dfddd9147668b520a0ca7a513e1ff74ee399047c91d29420b0e5c0a9  kubescape_4.0.11_linux_amd64   # from the v4.0.11 release checksums.sha256; equals the downloaded binary
+58e9840d26a3d37fc86dd1b9ee41b085ec7d3e67a56833b66d2a716792af61fa  kubescape_4.0.12_linux_amd64   # from the v4.0.12 release checksums.sha256; equals the downloaded binary

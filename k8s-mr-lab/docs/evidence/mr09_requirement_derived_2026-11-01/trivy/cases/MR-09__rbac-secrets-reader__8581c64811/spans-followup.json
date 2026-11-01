@@ -1,0 +1,1 @@
+[[1, 5, ["", "ServiceAccount", "lab-c", "reader"]], [7, 18, ["rbac.authorization.k8s.io", "Role", "lab-c", "reader-role"]], [20, 32, ["rbac.authorization.k8s.io", "RoleBinding", "lab-c", "reader-binding"]], [34, 48, ["", "Pod", "lab-c", "reader-pod"]]]

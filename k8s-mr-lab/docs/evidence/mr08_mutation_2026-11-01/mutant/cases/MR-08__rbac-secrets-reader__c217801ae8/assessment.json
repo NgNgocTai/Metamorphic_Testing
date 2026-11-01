@@ -1,0 +1,36 @@
+{
+  "case_id": "MR-08__rbac-secrets-reader__c217801ae8",
+  "result": "VIOLATION",
+  "reason": "1 comparison(s) violate relation 'fail_to_pass'",
+  "pair_status": "VALID_PAIR",
+  "assessment": {
+    "result": "VIOLATION",
+    "relation": "fail_to_pass",
+    "reason": "1 comparison(s) violate relation 'fail_to_pass'",
+    "counts": {
+      "ok": 0,
+      "violation": 1,
+      "inconclusive": 1
+    },
+    "comparisons": [
+      {
+        "control": "C-0267",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "FAIL",
+        "followup": "FAIL",
+        "outcome": "violation",
+        "reason": "FAIL->FAIL but relation requires FAIL->PASS",
+        "basis": "explicit"
+      },
+      {
+        "control": "C-0272",
+        "resource": "Pod/lab-c/reader-pod",
+        "source": "PASS",
+        "followup": "PASS",
+        "outcome": "inconclusive",
+        "reason": "baseline_precondition_not_met: source is PASS, relation needs FAIL",
+        "basis": "explicit"
+      }
+    ]
+  }
+}

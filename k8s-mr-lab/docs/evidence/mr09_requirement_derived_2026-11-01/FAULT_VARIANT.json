@@ -1,0 +1,15 @@
+{
+  "source": "/home/USER/.kubescape",
+  "control": "C-0015",
+  "variant": "drop-watch-verb",
+  "patched_files": {
+    "allcontrols.json": 1,
+    "c-0015.json": 1,
+    "mitre.json": 1
+  },
+  "sha256": {
+    "allcontrols.json": "b17085faa4ae390aa58485de82ef9bec769e014701409a5a75449f9621834d6e",
+    "c-0015.json": "409034ae4c17486c81814e3d71388157e29f38ee15c521c248d395a9949175c3",
+    "mitre.json": "b9b409523a15c8abe6ea0a6ff81ff6e370f073164224c5c72161399d4951f00b"
+  }
+}

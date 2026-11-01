@@ -1,0 +1,13 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "scanner": "trivy",
+  "scanner_version": "0.75.0",
+  "scan_mode": "local-file",
+  "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+  "pinned_version": "0.75.0",
+  "mapping_digest": "aa9059545d",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "run_id": "trivy-20261101T153406",
+  "total_scanner_invocations": 4
+}

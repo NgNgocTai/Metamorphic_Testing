@@ -1,0 +1,139 @@
+{
+  "all": {
+    "kubescape/ALL": {
+      "INFORMATIVE": 448,
+      "WEAK": 0,
+      "UNINFORMATIVE": 6,
+      "INCONCLUSIVE": 4,
+      "total": 458,
+      "informative_rate": 0.978
+    },
+    "trivy/ALL": {
+      "INFORMATIVE": 184,
+      "WEAK": 66,
+      "UNINFORMATIVE": 60,
+      "INCONCLUSIVE": 0,
+      "total": 310,
+      "informative_rate": 0.594
+    }
+  },
+  "by_mr": {
+    "kubescape/MR-01": {
+      "INFORMATIVE": 372,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 4,
+      "total": 376,
+      "informative_rate": 0.989
+    },
+    "kubescape/MR-02": {
+      "INFORMATIVE": 44,
+      "WEAK": 0,
+      "UNINFORMATIVE": 6,
+      "INCONCLUSIVE": 0,
+      "total": 50,
+      "informative_rate": 0.88
+    },
+    "kubescape/MR-03": {
+      "INFORMATIVE": 5,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 5,
+      "informative_rate": 1.0
+    },
+    "kubescape/MR-04": {
+      "INFORMATIVE": 6,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 6,
+      "informative_rate": 1.0
+    },
+    "kubescape/MR-05": {
+      "INFORMATIVE": 2,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 2,
+      "informative_rate": 1.0
+    },
+    "kubescape/MR-06": {
+      "INFORMATIVE": 1,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 1,
+      "informative_rate": 1.0
+    },
+    "kubescape/MR-07": {
+      "INFORMATIVE": 18,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 18,
+      "informative_rate": 1.0
+    },
+    "trivy/MR-01": {
+      "INFORMATIVE": 182,
+      "WEAK": 55,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 237,
+      "informative_rate": 0.768
+    },
+    "trivy/MR-02": {
+      "INFORMATIVE": 0,
+      "WEAK": 0,
+      "UNINFORMATIVE": 40,
+      "INCONCLUSIVE": 0,
+      "total": 40,
+      "informative_rate": 0.0
+    },
+    "trivy/MR-03": {
+      "INFORMATIVE": 1,
+      "WEAK": 4,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 5,
+      "informative_rate": 0.2
+    },
+    "trivy/MR-04": {
+      "INFORMATIVE": 0,
+      "WEAK": 6,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 6,
+      "informative_rate": 0.0
+    },
+    "trivy/MR-05": {
+      "INFORMATIVE": 1,
+      "WEAK": 0,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 1,
+      "informative_rate": 1.0
+    },
+    "trivy/MR-06": {
+      "INFORMATIVE": 0,
+      "WEAK": 1,
+      "UNINFORMATIVE": 0,
+      "INCONCLUSIVE": 0,
+      "total": 1,
+      "informative_rate": 0.0
+    },
+    "trivy/MR-07": {
+      "INFORMATIVE": 0,
+      "WEAK": 0,
+      "UNINFORMATIVE": 20,
+      "INCONCLUSIVE": 0,
+      "total": 20,
+      "informative_rate": 0.0
+    }
+  },
+  "weak_but_engaged": {
+    "trivy/MR-04": 6,
+    "trivy/MR-06": 1
+  },
+  "unexpected_violations": []
+}

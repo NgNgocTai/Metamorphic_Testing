@@ -1,0 +1,13 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "scanner": "kubescape",
+  "scanner_version": "v4.0.12",
+  "scan_mode": "local-file",
+  "policy_digest": "8cfb23237b739c2089314ccf61530fbb62a87fb19ff6cd6d9fd252f020b82150",
+  "pinned_version": "v4.0.12",
+  "mapping_digest": "aa9059545d",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "run_id": "kubescape-20261101T154230",
+  "total_scanner_invocations": 9
+}

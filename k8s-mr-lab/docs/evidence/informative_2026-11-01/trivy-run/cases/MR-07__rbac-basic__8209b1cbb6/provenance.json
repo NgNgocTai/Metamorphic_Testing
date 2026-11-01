@@ -1,0 +1,26 @@
+{
+  "framework": "k8s-mr-lab 0.1.0",
+  "run_id": "trivy-20261101T145121",
+  "seed_id": "rbac-basic",
+  "mr_id": "MR-07",
+  "mr_spec_digest": "e92c7ba486",
+  "params": {
+    "rolebinding": [
+      "rbac.authorization.k8s.io",
+      "RoleBinding",
+      "lab-a",
+      "app-binding"
+    ],
+    "subject_index": 0
+  },
+  "random_seed": null,
+  "scanner": "trivy",
+  "scanner_version": "0.75.0",
+  "scan_mode": "local-file",
+  "policy_digest": "sha256:b591e9190cff4aa4e385b1a25bccfd9ecf178d3c77fd194e1410b7ce7e1df058",
+  "mapping_digest": "fbb39e370f",
+  "source_text_sha256": "0fd44d7ef96e8382bf244eaa259bfef70abc62090204b616fc3d5eabc94cf2f6",
+  "followup_text_sha256": "508ff4172f3dcd33345691d2707e035e8cec02c9d6c72d7d792f42b696a751da",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+}

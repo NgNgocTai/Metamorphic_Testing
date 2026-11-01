@@ -1,0 +1,7 @@
+{
+  "MR-06__pod-hostnet__355c0e2f74": "cases/MR-06__pod-hostnet__355c0e2f74",
+  "MR-07__K1-role-namespace__8209b1cbb6": "cases/MR-07__K1-role-namespace__8209b1cbb6",
+  "MR-07__rbac-basic__8209b1cbb6": "cases/MR-07__rbac-basic__8209b1cbb6",
+  "MR-07__rbac-secrets-reader__88249c50fa": "cases/MR-07__rbac-secrets-reader__88249c50fa",
+  "MR-07__rbac-workload__8209b1cbb6": "cases/MR-07__rbac-workload__8209b1cbb6"
+}
