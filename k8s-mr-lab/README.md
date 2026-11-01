@@ -19,8 +19,8 @@ and refuses a binary that is not the pinned version (`SCAN_ERROR`). Both scanner
 
 ```bash
 # inside Ubuntu (WSL); the venv holds PyYAML + pytest only
+cd k8s-mr-lab                                  # the directory containing pyproject.toml (from the repository root)
 python3 -m venv ~/mrlab-venv && ~/mrlab-venv/bin/pip install -e '.[dev]'
-cd k8s-mr-lab                                  # the directory containing pyproject.toml
 PY=~/mrlab-venv/bin/python
 
 $PY -m k8s_mr_lab versions                                   # check the pins
@@ -41,12 +41,20 @@ Independent run on third-party manifests (Kalm-Benchmark) with the catalog froze
 (writes `runs/heldout/freeze.json` + staging), then `bash scripts/heldout_run.sh` (both scanners, triage, report, freeze re-check, ~20 min).
 Research questions: RQ1 Applicability, RQ2 Effectiveness, RQ3 Efficiency & Practicality (no random baseline in scope).
 
-## The MRs (`mrs/catalog.yaml`): 5 frozen PoC MRs + 2 candidates (MR-06, MR-07; opt-in with `--mr`, never in default runs)
+## One framework
+
+One MR declaration (`mrs/catalog.yaml`), one control mapping and scope resolution (`config/policy-mapping.yaml` + the generated
+`config/control-registry.yaml`), one pipeline (`Runner` -> `checker` -> `informative.annotate` -> report). There is no second schema,
+mapping, checker or execution mode; `mr validate` rejects any inconsistency between the three files. Architecture:
+`docs/architecture/UNIFIED_FRAMEWORK.md`; what changed and why: `docs/architecture/LEGACY_TO_UNIFIED_AUDIT.md`,
+`docs/poc/MIGRATION_IMPACT_REPORT.md`; the official PoC result: `docs/poc/POC_RESULTS.md`.
+
+## The MRs (`mrs/catalog.yaml`): 5 frozen PoC MRs + 4 candidates (MR-06..MR-09; opt-in with `--mr`, never in default runs)
 
 | MR | Transformation | Relation | Scope |
 |---|---|---|---|
 | MR-01 | reverse/sort mapping keys | `equal` | all mapped controls + every FAIL in either report |
-| MR-02 | add unbound same-name Role in a fresh namespace | `equal` | bound Role + workload of the bound SA (never the decoy) |
+| MR-02 | add unbound same-name Role in a fresh namespace | `equal` | Kubescape only: workload of the bound SA, and the ServiceAccount + RoleBinding for aggregator controls (never the decoy); Trivy declared `unsupported` |
 | MR-03 | split a multi-verb rule into one rule per verb | `equal` | effective-permission controls |
 | MR-04 | `privileged: false -> true` on one container | `pass_to_fail` | privileged-container control (baseline must be evidenced PASS) |
 | MR-05 | core `secrets` rule moved to apiGroup `apps` | `fail_to_pass` | secrets-read controls (baseline must be evidenced FAIL) |
@@ -71,13 +79,13 @@ A missing finding is never PASS. Verdicts are `PASS | FAIL | NOT_EVALUATED | UNK
 
 ## Layout
 
-`config/` pins + control mapping · `seeds/` synthetic and historical inputs · `mrs/catalog.yaml` ·
+`config/` pins, MR->control mapping, generated control registry · `seeds/` synthetic and historical inputs · `mrs/catalog.yaml` ·
 `src/k8s_mr_lab/` engine · `tests/{unit,golden,integration}` · `scripts/` demo, probes, golden capture ·
 `docs/` · `runs/` generated output (`reproducers/` inside; the numbers are in `runs/summary/REPORT.md`).
 
 Reading order for `docs/`:
 0. `HUONG_DAN_BAO_CAO.md` — understand the project and how to present it (script, demo, likely questions).
-1. `POC_REPORT_FOR_ADVISOR.md` — the report (problem, method, results, limits, next steps).
+1. `poc/POC_REPORT_FOR_ADVISOR.md` — the report (problem, method, results, limits, next steps).
 2. `DEFECT_TRIAGE_RESULTS.md` — the two defect candidates with evidence (adjudication is yours).
 3. `HUONG_DAN_TU_KIEM_TRA.md` — step-by-step to redo the checks yourself.
 4. Reference: `SCANNER_VERSIONS.md` (pins and verified CLI/rule facts), `known_issues.yaml`, `evidence/`.
@@ -95,7 +103,11 @@ k8s-mr-lab mr explain MR-02 --case <case dir>   # a saved case from its evidence
 k8s-mr-lab mr patterns                      # MR x template-element matrix (the MST-wi Table 4 method)
 k8s-mr-lab mr trace                         # property -> pattern -> MR -> control matrix
 k8s-mr-lab mr validate                      # STRUCTURAL gate, no scanner needed (not a semantic proof)
-k8s-mr-lab mr scaffold MR-08 my-mr --pattern KP3
+k8s-mr-lab mr informative --run <run dir with cases/>   # which comparisons could the control observe? (reporting only)
+k8s-mr-lab mr review-packet MR-07 --out docs/review_packets/MR-07.md   # packet for an INDEPENDENT reviewer (decision left blank)
+k8s-mr-lab mr requirements   # requirement -> MR matrix with coverage X/N
+k8s-mr-lab mr scaffold MR-10 my-mr --pattern KP3
+k8s-mr-lab seeds coverage --roots seeds/synthetic seeds/historical seeds/candidate --with-mr   # seed inventory / coverage / select / split
 ```
 
 | Read | For |
@@ -105,9 +117,17 @@ k8s-mr-lab mr scaffold MR-08 my-mr --pattern KP3
 | `docs/MR_DERIVATION_METHODOLOGY.md`, `docs/SECURITY_PROPERTY_DERIVATION_GUIDE.md` | how to derive an MR |
 | `docs/WEB_MST_TO_K8S_METHOD_MAPPING.md` | what is taken from MST-wi, what is ours |
 | `docs/case_studies/MR02_SEMANTIC_CASE_STUDY.md` | a complete worked MR (proof, counterexamples, real evidence) |
-| `docs/HOW_TO_ADD_AN_MR.md`, `docs/MR_SEMANTIC_REVIEW_CHECKLIST.md` | adding and reviewing an MR |
+| `docs/architecture/UNIFIED_FRAMEWORK.md`, `docs/architecture/HOW_TO_EXTEND_UNIFIED_FRAMEWORK.md`, `docs/MR_SEMANTIC_REVIEW_CHECKLIST.md` | the one framework; adding and reviewing an MR |
+| `docs/poc/POC_RESULTS.md`, `docs/poc/MIGRATION_IMPACT_REPORT.md`, `docs/poc/DEMO_GUIDE.md` | official PoC result (generated from evidence), what the migration changed, demo script |
 | `docs/MR_PATTERN_TAXONOMY_V2.md`, `docs/MR_CANDIDATE_EVALUATION.md` | patterns and candidate MRs |
-| `docs/EVALUATION_PROTOCOL_V2.md`, `docs/KNOWN_DEFECT_EVALUATION_PLAN.md` | evaluation design (RQ1-RQ3), mutation, replication package |
+| `docs/EVALUATION_PROTOCOL_V2.md`, `docs/RQ2_EFFECTIVENESS_PROTOCOL.md`, `docs/KNOWN_DEFECT_EVALUATION_PLAN.md`, `docs/KNOWN_DEFECT_CATALOG.md` | evaluation design (RQ1-RQ3), known-defect and mutation protocol |
+| `docs/INFORMATIVE_COMPARISON_ANALYSIS.md`, `docs/MUTATION_GAP_ANALYSIS.md`, `docs/SUBJECT_NAMESPACE_MR_CANDIDATE.md` | when does an MR PASS carry information; the mutation gap and MR-08 |
+| `docs/SEED_COVERAGE_REPORT.md`, `docs/SOURCE_INPUT_GENERATION_V2.md` | seed coverage and input generation |
+| `docs/REQUIREMENTS_TO_MR_MATRIX.md`, `mrs/requirements.yaml`, `docs/MR_DERIVATION_WALKTHROUGH_MR09.md` | PoC stage 1: concrete requirements (K01/K02) -> MR, one MR derived end to end |
+| `docs/KD001_REPRODUCTION.md` | PoC stage 2: known defect kubescape#2579 reproduced on the buggy vs fixed binary |
+| `docs/INDEPENDENT_MR_REVIEW_PROTOCOL.md`, `docs/review_packets/` | independent review of an MR |
+| `docs/EVIDENCE_SHARING_AUDIT.md`, `scripts/sanitize_evidence.py` | what in the repository is personal, and the public copy |
+| `docs/NEXT_STAGE_RESEARCH_REPORT.md`, `REPLICATE.md` | this stage's report; reproduce from a clean machine |
 
 Evidence is under `docs/evidence/*/` with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
 `results.csv` (whose verdict columns are filled only for VIOLATION rows). Tools: `scripts/compare_runs.py`,

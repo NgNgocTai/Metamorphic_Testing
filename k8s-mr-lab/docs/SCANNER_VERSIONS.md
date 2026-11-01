@@ -10,9 +10,9 @@ Chosen rule: **use the versions already installed in the project's Ubuntu 24.04 
 | Kubescape artifacts | `~/.kubescape` (framework `allcontrols`, 290 controls) | sha256 recorded per run in `environment.lock.json` |
 | Mode | local manifest scan for both (no cluster) | `config/scanners.yaml` |
 
-Newer binaries exist elsewhere on the machine (`D:\Code\KLTN\Tools`: trivy 0.76.1, kubescape 4.0.16) and Kubescape
+Newer binaries exist elsewhere on the machine (`<TOOLS_DIR>`: trivy 0.76.1, kubescape 4.0.16) and Kubescape
 reports v4.0.17 as latest. They are deliberately **not** used; a different version means a different experiment
-(re-capture golden files, re-run, compare) and is listed as a follow-up in `POC_REPORT_FOR_ADVISOR.md`.
+(re-capture golden files, re-run, compare) and is listed as a follow-up in `docs/poc/POC_REPORT_FOR_ADVISOR.md`.
 
 ## CLI facts verified with `--help` of the pinned binaries (not assumed)
 

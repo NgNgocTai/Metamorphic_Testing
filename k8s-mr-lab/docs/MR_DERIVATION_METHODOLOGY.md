@@ -32,11 +32,10 @@ MST-wi nhắm CWE của **hệ thống được test**. Ở đây hệ thống �
 |---|---|---|---|
 | Chọn miền rủi ro | OWASP K8s Top 10 **2025**, CWE, CIS, NSA/CISA, ATT&CK | Quyết định property nào đáng kiểm | Chứng minh MR đúng |
 | Chứng minh ngữ nghĩa | Tài liệu Kubernetes (RBAC, PSS, API) | Lập luận phép biến đổi bảo toàn/thay đổi đúng thuộc tính | |
-| Xác định cái gì kiểm được | Tài liệu/mã control đúng phiên bản scanner | `config/policy-mapping.yaml` | Suy diễn từ tên control |
+| Xác định cái gì kiểm được | Tài liệu/mã control đúng phiên bản scanner | `config/control-registry.yaml` (sinh) + `config/policy-mapping.yaml` | Suy diễn từ tên control |
 | Dữ liệu đánh giá | KALM, ISSTA benchmark, seed lịch sử/tổng hợp | Input và đánh giá | Chứng minh MR đúng |
 
-Mỗi tham chiếu trong `security_properties.yaml` có cờ `verified`. `false` nghĩa là chưa đối chiếu nguồn, được hiển thị
-rõ trong ma trận (`mr trace`), không được ngầm tin. Tính đến 2026-11-01 mọi tham chiếu đang có đều `true` (xem Refactor Report §6); CIS chỉ có nhãn của Kubescape cho host network, NSA/CISA và ATT&CK chưa điền.
+Mỗi tham chiếu trong `security_properties.yaml` có cờ `verified`, nghĩa là **đã đối chiếu nguồn gốc của chính tham chiếu đó** (ID/tiêu đề/câu trích khớp), không hơn. Bốn khái niệm tách bạch: `source_verified` (cờ `verified`), `standard_requirement_verified` (chỉ khi đã đọc tài liệu của tiêu chuẩn; hiện chưa có mục nào), `control_mapping_verified` (đọc từ policy đã pin, ghi ở `policy-mapping.yaml` và `MR_CANDIDATE_EVALUATION.md`), `semantic_review_status` (`review_status`). Mục CIS 5.2.5 của SP-POD-HOST-NAMESPACES chỉ là **nhãn trong artifact của Kubescape**, nên là `verified: false` kèm `basis`. NSA/CISA và ATT&CK chưa điền.
 
 OWASP Kubernetes Top 10 2025 (đã kiểm tại kubernetes-top10.owasp.org): K01 Insecure Workload Configurations,
 K02 Overly Permissive Authorization Configurations, K03 Secrets Management Failures, K04 Lack Of Cluster Level Policy

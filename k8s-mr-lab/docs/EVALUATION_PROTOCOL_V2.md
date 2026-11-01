@@ -32,7 +32,7 @@ dùng SA, có wildcard, số rule/verb), chọn tập seed phủ tối đa các 
 **Coverage seed** = `|{giá trị đặc trưng phủ bởi tập seed}| / |{giá trị đặc trưng đã định nghĩa}|` và, theo MR, số seed áp dụng được.
 Không tính coverage trên tập đặc trưng chọn sau khi biết kết quả.
 
-**Bằng chứng seed là điểm yếu (đã thực thi):** thí nghiệm mutant ở §5 cho thấy một lỗi chèn *sống sót* trong cả 46 case; một phần
+**Bằng chứng seed là điểm yếu (đã thực thi):** thí nghiệm mutant ở §5 cho thấy một lỗi chèn *không được kích hoạt* bởi bất kỳ đầu vào nào (30 cặp được quét, 0/404 khóa verdict khác; `MUTATION_GAP_ANALYSIS.md`); một phần
 nguyên nhân là **không seed nào có hai SA cùng tên khác namespace**, tức là seed chưa đủ chứ không chỉ MR chưa đủ.
 
 ## 3. Phân vùng dữ liệu (chống rò rỉ)
@@ -80,7 +80,7 @@ Bản gốc không bị sửa. Trivy: tương tự được (check là rego), **
 | Thí nghiệm | Dự đoán nêu trước | Quan sát |
 |---|---|---|
 | Fix-validation `namespace-fix` trên `C-0267`, chạy MR-02 | 4 violation của C-0267 biến mất; 3 của C-0272 (không vá) còn; chỉ khóa của C-0267 đổi | **đúng**: C-0267 4 → 0; C-0272 3 → 3; 4/50 khóa đổi, toàn bộ ở C-0267; policy digest `777e0574…` ≠ `8cfb2323…` |
-| Mutant `drop-subject-ns` (bỏ so sánh namespace của subject trong C-0267), chạy MR-01..05 + MR-07 | mutant **sống sót** (không MR nào đụng namespace của subject) | **đúng**: 46/46 case cùng kết quả MR, 404/404 khóa verdict giống scanner gốc |
+| Mutant `drop-subject-ns` (bỏ so sánh namespace của subject trong C-0267), chạy MR-01..05 + MR-07 | mutant **sống sót** (không MR nào đụng namespace của subject) | **đúng**: 30 cặp được quét (46 dòng kết quả gồm SKIP) cùng kết quả MR, 0/404 khóa verdict khác scanner gốc ⇒ mutant **không được kích hoạt** |
 
 Diễn giải: (a) với fix-validation, MR-02 *phân biệt đúng control bị lỗi*, nhưng đây là bản vá do tác giả viết, không phải bản vá upstream, nên
 nó chỉ cho thấy "MR nhạy với đúng điều kiện lỗi đó", **không** phải bằng chứng về lỗi thật hoặc về tỉ lệ phát hiện; (b) mutant sống sót cho thấy
@@ -110,7 +110,7 @@ Xem `docs/KNOWN_DEFECT_EVALUATION_PLAN.md`. Tóm tắt: hiện **0 mục `ELIGIB
 | Mapping control, pin scanner | có | `config/*.yaml`, `docs/SCANNER_VERSIONS.md` |
 | Seed (tổng hợp, lịch sử, candidate) | có | `seeds/` ; chọn KALM: `runs/heldout/selection.json` (kèm sha256 từng manifest) |
 | Lock môi trường mỗi run | có | `environment.lock.json` (version, mode, policy digest, mapping digest, python, platform) |
-| Lệnh chạy | một phần | `scripts/demo.sh`, `docs/HOW_TO_ADD_AN_MR.md`; **thiếu** một `REPLICATE.md` chạy từ môi trường sạch |
+| Lệnh chạy | một phần | `scripts/demo.sh`, `docs/architecture/HOW_TO_EXTEND_UNIFIED_FRAMEWORK.md`; **thiếu** một `REPLICATE.md` chạy từ môi trường sạch |
 | Raw kết quả + so sánh đã chuẩn hóa + evidence | có | `docs/evidence/*/` có `manifest.json` (sha256) và `case_index.json` |
 | Script tái lập kiểm | có | `compare_runs.py`, `snapshot_mr_behavior.py`, `package_run_evidence.py`, `fault_variant_kubescape.py`, `triage_probe.py` |
 | Cài scanner pin từ môi trường sạch | **chưa** | script tải đúng phiên bản + kiểm checksum; policy bundle Trivy (digest `b591e919…`) cần nguồn lưu trữ cố định vì tải một lần |

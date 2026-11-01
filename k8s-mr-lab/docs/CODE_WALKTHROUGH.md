@@ -11,10 +11,10 @@ trên nhánh `research/mr-patterns`. Thuật ngữ: **SUT** là scanner (Trivy, 
 | `ConfigBundle` | `bundles.py` | danh sách object đã parse (strict: cấm khóa trùng) + `index()`, `find()`, `of_kind()`, `clone()`, `dump()`, `semantic_digest()`, `text_digest()`, `write()` (ghi và trả `Span` = dòng của từng object) |
 | `MetamorphicRelation` | `transforms/base.py` | một MR thực thi: `applicable`, `generate_parameters`, `transform`, `validate_pair`, `targets`; metadata gắn từ catalog bằng `bind(spec)` |
 | `PerCandidateMR`, `ControlledChange` | `transforms/patterns.py` | khuôn dùng chung cho MR "một case mỗi candidate" và MR "đổi đúng một trường" |
-| `PolicyMapping` | `registry.py` | đọc `config/policy-mapping.yaml`: control nào được so cho MR nào, trên target nào, áp dụng cho kind nào |
+| `PolicyMapping` | `registry.py` | nối `config/policy-mapping.yaml` (MR→control→target, `role`, `reason`, `unsupported`) với `config/control-registry.yaml` (control đọc/báo cáo trên kind nào, sinh từ policy đã pin); `entries()`, `control_kinds()`, `control_meta()`, `digest()` |
 | `ScannerInvocation` | `model.py` | lệnh, exit code, version, mode, policy digest, đường dẫn raw JSON, `error` (có `error` thì là SCAN_ERROR) |
 | `CanonicalVerdict` / `NormalizedReport` | `model.py` | verdict của *một* control trên *một* resource: `PASS / FAIL / NOT_EVALUATED / UNKNOWN / EXCLUDED`, kèm `evidence` |
-| `KeyResult` / `Assessment` | `model.py` | kết quả so sánh từng `(control, resource)` và kết luận của MR cho một cặp |
+| `KeyResult` / `Assessment` | `model.py` | kết quả so sánh từng `(control, resource)` và kết luận của MR cho một cặp; mỗi `KeyResult` mang thêm `role`, `tier`, `note`, `engaged` do `informative.annotate` gắn |
 | `CaseResult` | `runner.py` | một dòng kết quả: MR, seed, params, trạng thái, invocation, thời gian, sha256 |
 
 **Hai tầng trạng thái, không được lẫn:** verdict của scanner (`PASS/FAIL/NOT_EVALUATED` trên một control×resource) và
@@ -63,6 +63,7 @@ sequenceDiagram
             RP->>RP: lỗi invocation → SCAN_ERROR; (version, mode, policy) khác → ENVIRONMENT_MISMATCH
             RP->>CK: check(mr, full_keys(...), r_source, r_followup)
             CK-->>RP: Assessment (PASS / PARTIAL / VIOLATION / INCONCLUSIVE / SKIP)
+            RP->>RP: informative.annotate(): role, tier, engaged cho từng so sánh (không đổi outcome)
             Note over RP: _finish(): assessment.json, provenance.json
         end
     end
@@ -81,17 +82,18 @@ cảnh báo giả), và **hai lần quét khác môi trường không bao giờ 
 | Sinh tham số | `mr.generate_parameters` | bundle → list params | mỗi candidate là một case | trùng case giữa seed giống nhau (xử lý ở khử trùng báo cáo) |
 | Biến đổi | `mr.transform` | (bundle, params) → (follow-up, trace) | không bao giờ sửa source (`clone()`) | sửa nhầm source (gate `mr validate` bắt) |
 | Kiểm cặp | `mr.validate_pair` (KP3: `ControlledChange` + `validation.expect_single_change`) | → `VALID_PAIR / INVALID_PAIR` | chứng minh follow-up khác đúng như MR nói | **chỉ là cấu trúc**, không chứng minh ngữ nghĩa |
-| Scope | `checker.static_keys` (+ `mr.targets`, mapping) | → list `(control, ResKey)` | chỉ so những gì MR cho phép | scope rộng → so cả finding hợp lệ trên object mới (ví dụ Role decoy) |
+| Scope | `checker.static_keys` (+ `mr.targets`, mapping, registry) | → list `(control, ResKey)` | chỉ so những gì MR cho phép; selector chưa khai báo trong catalog → lỗi | scope rộng → so cả finding hợp lệ trên object mới (ví dụ Role decoy) |
 | Quét | `Scanner.execute` (`scanners/base.py`) | thư mục → `ScannerInvocation` + JSON | cùng binary, cùng policy cho cả hai phía | thiếu binary, timeout, JSON hỏng, sai pin → SCAN_ERROR |
 | Chuẩn hóa | `normalize/trivy.py`, `normalize/kubescape.py` | raw JSON → `NormalizedReport` | đưa verdict về `(control, resource)` | Trivy: PASS chỉ là **suy luận** (không có FAIL gắn vào resource); Kubescape: verdict RBAC gộp theo bộ (SA, Role, RoleBinding) |
 | So sánh | `checker._compare` qua `checker.RELATIONS` | hai verdict → ok / violation / inconclusive | quan hệ MR là oracle | verdict thiếu → inconclusive, **không bao giờ** suy thành PASS |
 | Kết luận | `checker.check` | → `Assessment` | có violation → VIOLATION; một phần không có verdict → PARTIAL | failure không gắn được resource → INCONCLUSIVE toàn cặp |
+| Phân tầng | `informative.annotate` | Assessment → thêm `role`, `tier`, `engaged` | tách "quan hệ thỏa" khỏi "verdict có quan sát được thuộc tính" | tier là điều kiện cần, không đủ |
 | Báo cáo | `report.write_run`, `report.case_row` | → CSV/JSON | `results.csv` chỉ điền verdict ở dòng VIOLATION; verdict từng key nằm ở `comparisons.csv` | đọc nhầm `results.csv` như bằng chứng PASS→FAIL |
 | Triage | `triage.triage_run` (+ `minimize_case`, `write_reproducers`) | run dir → `triage.json`, reproducers | chạy lại, gom họ (`family_signature`), đối chiếu `docs/known_issues.yaml` | **không bao giờ** gắn CONFIRMED |
 
 ## 5. Hai loại kiểm tra, khác nhau về bản chất
 
-* **Kiểm tra cấu trúc (máy làm):** `read_specs` (schema), `mr_tools.check_traceability` + `check_template` (truy vết),
+* **Kiểm tra cấu trúc (máy làm):** `read_specs` (schema), `mr_tools.check_traceability` + `check_template` + `check_mapping` (truy vết, mapping/scope/vai trò),
   `mr_tools.exercise` (MR sinh cặp hợp lệ, xác định, không sửa source), `validate_pair` từng cặp.
 * **Lập luận ngữ nghĩa (người làm):** vì sao phép biến đổi giữ nguyên hoặc đổi đúng một thuộc tính Kubernetes, và vì sao
   control được so thật sự cam kết thuộc tính đó. Ghi trong `security_properties.yaml` (trích dẫn có `verified`),
