@@ -94,7 +94,7 @@ def main(argv=None) -> int:
     ap.add_argument("--scanner", required=True)
     ap.add_argument("--new", required=True)
     ap.add_argument("--old", action="append", required=True)
-    ap.add_argument("--old-mapping-rev", default="HEAD")
+    ap.add_argument("--old-mapping-rev", default="4ca941e")
     ap.add_argument("--old-mapping-path", default="k8s-mr-lab/config/policy-mapping.yaml")
     ap.add_argument("--mapping", default="config/policy-mapping.yaml")
     ap.add_argument("--registry", default="config/control-registry.yaml")

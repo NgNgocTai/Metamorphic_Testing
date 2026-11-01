@@ -130,7 +130,9 @@ def main(argv=None) -> int:
         L += kd001(Path(a.kd_affected), Path(a.kd_fixed), "official scope (unified)") + [""]
         if a.kd_old_affected and a.kd_old_fixed:
             L += ["Old scope (aggregator controls on the bound Role only), archived evidence:", ""]
-            viol = lambda run: sorted({r["case_id"] for r in rows(Path(run)) if r["mr_result"] == "VIOLATION"})
+            def viol(run):                       # archived runs have results.csv only
+                with open(Path(run) / "results.csv", encoding="utf-8", newline="") as f:
+                    return sorted({r["case_id"] for r in csv.DictReader(f) if r["mr_result"] == "VIOLATION"})
             L += [f"- affected: {len(viol(a.kd_old_affected))} VIOLATION case(s); fixed: {len(viol(a.kd_old_fixed))}; "
                   f"cases violating only under the affected binary: {len(set(viol(a.kd_old_affected)) - set(viol(a.kd_old_fixed)))}", ""]
     if a.mutant:

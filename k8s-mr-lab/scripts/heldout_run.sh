@@ -5,8 +5,9 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 PY="${PY:-$HOME/mrlab-venv/bin/python}"
 H=runs/heldout
-$PY -m k8s_mr_lab run --scanner trivy     --seeds $H/staging --out $H/trivy     --max-cases 2 | tail -3
-$PY -m k8s_mr_lab run --scanner kubescape --seeds $H/staging --out $H/kubescape --max-cases 2 | tail -3
+MR_ARGS="${MR_ARGS:---mr MR-01 --mr MR-02 --mr MR-03 --mr MR-04 --mr MR-05 --mr MR-06 --mr MR-07 --mr MR-08 --mr MR-09 --experiment-type baseline --experiment-id poc-v2-heldout}"
+$PY -m k8s_mr_lab run --scanner trivy     --seeds $H/staging --out $H/trivy     --max-cases 2 $MR_ARGS | tail -3
+$PY -m k8s_mr_lab run --scanner kubescape --seeds $H/staging --out $H/kubescape --max-cases 2 $MR_ARGS | tail -3
 $PY -m k8s_mr_lab triage --run $H/trivy     | tail -2
 $PY -m k8s_mr_lab triage --run $H/kubescape | tail -2
 $PY -m k8s_mr_lab report --runs $H/trivy $H/kubescape --out $H/summary > /dev/null
