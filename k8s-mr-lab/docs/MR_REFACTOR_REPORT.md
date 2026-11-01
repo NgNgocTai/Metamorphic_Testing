@@ -115,3 +115,20 @@ Từng nhận định được tái hiện bằng lệnh/code trước khi sửa
 
 Giữ nguyên: scanner adapters, normalizers, golden, ngữ nghĩa MR-01..05 (snapshot hành vi vẫn **giống hệt** baseline), MR-06 ở `candidate`, chưa merge.
 Lưu ý khi chia sẻ: raw scanner JSON trong `docs/evidence/mr_patterns_verification/` chứa đường dẫn cục bộ (`/home/<user>/...`) ở 28 file; xem lại trước khi gửi ra ngoài. Các đường dẫn tuyệt đối trong `raw_output_paths` của CSV mô tả máy đã chạy; dùng `case_index.json`.
+
+## 9. Phiên nâng cấp phương pháp 2026-11-01 (sau commit `890f5a8`)
+
+| Hạng mục | Kết quả |
+|---|---|
+| Test Windows (không binary) | **157 passed, 3 skipped** |
+| Test WSL, Trivy 0.75.0 + Kubescape v4.0.15 thật | **160 passed, 0 skipped** |
+| `mr validate` | 7 MR, 0 error, 0 warning (seed invalid được liệt kê và bỏ qua) |
+| Chạy lại pipeline thật so với PoC | 41/41 + 256/256 (Trivy), 41/41 + 386/386 (Kubescape): 0 khác biệt |
+| Triage + ablation chạy lại | giống hệt PoC (6/6 alert; 2 tệp ablation giống hệt byte) |
+| Snapshot hành vi MR-01..05 | IDENTICAL |
+| Gói evidence PoC | 138/138 sha256 khớp |
+
+Thêm mới: MR-07 (candidate), `template:` trong catalog, `mr patterns`, `mr explain`, thuộc tính property (`security_meaning`, `k8s_objects`, `review_status`),
+công cụ `scripts/fault_variant_kubescape.py`, tài liệu phương pháp/đánh giá/case study, evidence ở `docs/evidence/{p0_reverification,mr07_dev,fault_variants}_2026-11-01/`.
+Không thay đổi: adapters, normalizers, checker logic, golden, hành vi MR-01..05, `policy-mapping` của MR cũ. `package_run_evidence.py` sửa để bỏ qua dòng SKIP/INVALID_SOURCE.
+Còn 96 tệp evidence chứa đường dẫn cục bộ `/home/<user>/…` (tăng từ 28 vì có thêm gói evidence); xem lại trước khi chia sẻ.

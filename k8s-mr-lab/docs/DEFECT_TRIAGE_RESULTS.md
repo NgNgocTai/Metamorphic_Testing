@@ -106,3 +106,12 @@ Check phân biệt được *resource* (D PASS) nhưng không phân biệt *API 
 * Không phải blind discovery: MR-02 viết sau khi biết K1; MR-05 viết sau khi biết N2 (guided/regression).
 * Không có số "alert precision" hay "specificity": chưa có adjudication thủ công và chưa có negative case gán nhãn độc lập.
 * 6 dòng alert ≠ 6 bug; 4 input duy nhất; 2 họ nguyên nhân giả định; 0 confirmed.
+
+---
+
+## 4. Chạy lại 2026-11-01 (không đổi kết luận) và hiện tượng mới
+
+* Chạy lại `triage --minimize` và `scripts/triage_probe.py` trên Trivy 0.75.0 / Kubescape v4.0.15 đã pin, trong bản sao cô lập của cây đã commit: trạng thái / họ / `known_issue` của cả 6 alert **giống hệt**; hai tệp ablation **giống hệt byte** bản đã commit. Evidence: `docs/evidence/p0_reverification_2026-11-01/`. K1/N2 vẫn là candidate, **0 confirmed**.
+* Phân loại theo thang của `KNOWN_DEFECT_EVALUATION_PLAN.md §2`: K1, N2 = `SCANNER_DEFECT_CANDIDATE` (chờ adjudication); chưa có mục `CONFIRMED_SCANNER_DEFECT`.
+* **Hiện tượng mới, `UNRESOLVED`:** MR-07 (candidate) trên Kubescape: `C-0267` `Pod/lab-c/reader-pod` FAIL → PASS khi subject `ServiceAccount reader` được viết lại thành `User system:serviceaccount:lab-c:reader`. Rego đã pin chỉ join `subjects[j].kind == "ServiceAccount"`, nên có thể là giới hạn có chủ đích (`POLICY_OR_SCOPE_ISSUE`) hoặc false negative. MR-07 được viết sau khi đọc rego này (dẫn dắt). Evidence: `docs/evidence/mr07_dev_2026-11-01/`; phân tích: `docs/MR_CANDIDATE_EVALUATION.md`.
+* **Thí nghiệm vá/đột biến (Kubescape, bản sao artifacts cô lập):** vá `C-0267` bằng so sánh namespace khiến 4 violation của C-0267 biến mất, 3 của C-0272 còn nguyên; mutant bỏ so sánh namespace của subject sống sót qua cả bộ MR (46/46 case). Bản vá là của tác giả, **không** phải bản sửa upstream. Xem `docs/EVALUATION_PROTOCOL_V2.md §5`.
