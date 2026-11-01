@@ -1,0 +1,9 @@
+*      invalid-missing-role   INVALID_SOURCE invalid-missing-role  missing dependency: RoleBinding lab-a/app-binding -> Role lab-a/missing-role
+MR-07  pod-basic              SKIP                 skip  no_rolebinding_to_local_role_with_explicit_serviceaccount_subject_present_in_bundle
+MR-07  rbac-basic             PASS           8209b1cbb6  all 3 comparison(s) satisfy 'equal'
+MR-07  rbac-no-binding        SKIP                 skip  no_rolebinding_to_local_role_with_explicit_serviceaccount_subject_present_in_bundle
+MR-07  rbac-secrets-reader    VIOLATION      88249c50fa  1 comparison(s) violate relation 'equal'
+MR-07  rbac-workload          PASS           8209b1cbb6  all 5 comparison(s) satisfy 'equal'
+MR-07  K1-role-namespace      PASS           8209b1cbb6  all 5 comparison(s) satisfy 'equal'
+
+kubescape v4.0.15 [local-file]: {'INVALID_SOURCE': 1, 'SKIP': 2, 'PASS': 3, 'VIOLATION': 1}; scanner invocations: 6; -> /tmp/mr07/kubescape

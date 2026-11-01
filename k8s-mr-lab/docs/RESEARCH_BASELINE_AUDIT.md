@@ -17,7 +17,7 @@ Nhánh: `research/mr-patterns`; baseline: tag `poc-v1.0.0` = `b3ff11b` (đã ki�
 | Gói evidence PoC | `zipfile.testzip`, kiểm 138 sha256 trong `MANIFEST.sha256.json` | **xác nhận**: 138/138 khớp, 0 thiếu |
 | Mapping control MR-06 | đọc `host_network.rego` và `c-0041.json` đã pin | khớp (KSV-0009, C-0041) |
 
-Evidence chạy lại: `docs/evidence/p0_reverification_2026-11-01/` (có `p0.log`).
+Evidence chạy lại: `docs/evidence/p0_reverification_2026-11-01/` (có `p0.log.txt`: console output của lần chạy).
 
 ### 1.1 Test (kết thúc phiên)
 
