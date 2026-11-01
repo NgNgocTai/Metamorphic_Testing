@@ -37,8 +37,11 @@ def main(argv: list[str] | None = None) -> int:
     run, out = Path(a.run_dir), Path(a.out_dir)
     results = json.loads((run / "results.json").read_text(encoding="utf-8"))
     cases = results["cases"] if isinstance(results, dict) and "cases" in results else results
+    # SKIP / INVALID_SOURCE rows never produced a pair, so they have no case directory to package
+    no_pair = {"SKIP", "INVALID_SOURCE"}
     chosen = sorted({c["case_id"] for c in cases
-                     if c.get("mr_id") in a.mr or c.get("mr_result", c.get("result")) in a.result})
+                     if c.get("mr_result", c.get("result")) not in no_pair
+                     and (c.get("mr_id") in a.mr or c.get("mr_result", c.get("result")) in a.result)})
     missing = [r for r in RUN_FILES[:4] if not (run / r).exists()]
     if missing:
         print(f"error: run directory lacks {missing}; refusing to package an incomplete run")
