@@ -29,7 +29,7 @@ def add_selection_hashes() -> None:
 
 def wanted() -> list[Path]:
     out: list[Path] = [ROOT / f for f in ["README.md", "mrs/catalog.yaml", "config/scanners.yaml", "config/policy-mapping.yaml",
-                                          "docs/POC_REPORT_FOR_ADVISOR.md", "docs/DEFECT_TRIAGE_RESULTS.md",
+                                          "docs/poc/POC_REPORT_FOR_ADVISOR.md", "docs/DEFECT_TRIAGE_RESULTS.md",
                                           "docs/HUONG_DAN_TU_KIEM_TRA.md", "docs/known_issues.yaml", "docs/SCANNER_VERSIONS.md"]]
     out += sorted((ROOT / "docs/evidence").glob("*.json"))
     for base in ("runs", "runs/heldout"):

@@ -85,6 +85,12 @@ def classify(case_id: str, scanner: str, old: dict | None, new: dict | None, del
             viol = [k for k in explained_came if nc[k][2] == "violation"]
             if viol:
                 return "EXPECTED_CHANGE", f"PASS -> VIOLATION driven only by keys added by the scope extension, e.g. {viol[0]}"
+        if explained_came or explained_gone:
+            # every difference between the two runs is a key added/dropped by a documented scope or registry change and no common
+            # key moved, so the case result can only have changed because of those keys
+            nov = [k for k in explained_came if nc[k][0] not in ("PASS", "FAIL") or nc[k][1] not in ("PASS", "FAIL")]
+            return "EXPECTED_CHANGE", (f"{old['mr_result']} -> {new['mr_result']} only through {len(explained_came)} added and {len(explained_gone)} dropped key(s) "
+                                       f"({len(nov)} added key(s) without a usable verdict); no key present in both runs changed")
         return "UNRESOLVED", f"result {old['mr_result']} -> {new['mr_result']} not explained by the scope change"
     return "EXPECTED_CHANGE", f"{len(explained_gone)} key(s) dropped and {len(explained_came)} key(s) added by the documented scope or registry change; result unchanged"
 
