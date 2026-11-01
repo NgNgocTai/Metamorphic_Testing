@@ -102,7 +102,7 @@ mrs:
     counterexample: with a second rule granting secrets (or a wildcard) the permission survives the change, so the Role is not eligible
     limits:
       - valid only for controls whose documentation covers core Secrets; unrelated controls are not mapped
-      - closed-bundle premise: only bindings present in the bundle are examined for other paths to the same permission (local-file mode); not valid for a live cluster unless the bundle is known to be complete for the subject
+      - "closed-bundle premise: only bindings present in the bundle are examined for other paths to the same permission (local-file mode); not valid for a live cluster unless the bundle is known to be complete for the subject"
 
   - id: MR-06
     name: host-network-flip
@@ -123,4 +123,4 @@ mrs:
     limits:
       - hostPID and hostIPC are separate properties and are not mutated
       - Trivy's PASS on the source is inferred (no FAIL attributed), Kubescape's is explicit
-      - evidence so far: one DEV seed (seeds/candidate/pod-hostnet), n=1 per scanner; no held-out evaluation
+      - "evidence so far: one DEV seed (seeds/candidate/pod-hostnet), n=1 per scanner; no held-out evaluation"

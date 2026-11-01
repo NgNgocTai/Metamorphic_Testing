@@ -1,6 +1,7 @@
 """MR registry. mrs/catalog.yaml is the single source of MR metadata; implementations bind to it with @implements."""
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,6 +14,13 @@ from .transforms.base import IMPLEMENTATIONS, MetamorphicRelation
 REQUIRED_MR_FIELDS = ("id", "name", "category", "status", "pattern", "property_id", "property", "relation", "scope",
                       "preconditions", "transformation", "pair_checks", "counterexample", "limits")
 STATUSES = ("mvp", "mvp_conditional", "candidate")
+TEXT_FIELDS = ("name", "category", "pattern", "property_id", "property", "scope", "transformation", "counterexample")
+LIST_FIELDS = ("preconditions", "pair_checks", "limits")
+MR_ID = re.compile(r"MR-\d{2,}$")
+
+
+class UnknownMRError(ValueError):
+    """A requested MR id is not in the catalog (a run with 0 tests must never look like a valid result)."""
 
 
 @dataclass(frozen=True)
@@ -55,6 +63,16 @@ def read_specs(path: str | Path) -> list[dict]:
         if mr_id in seen:
             raise ValueError(f"duplicate MR id {mr_id}")
         seen.add(mr_id)
+        if not isinstance(mr_id, str) or not MR_ID.match(mr_id):
+            raise ValueError(f"{mr_id}: id must look like MR-01")
+        for f in TEXT_FIELDS:
+            if not isinstance(s[f], str) or not s[f].strip():
+                raise ValueError(f"{mr_id}: field '{f}' must be a non-empty string")
+        for f in LIST_FIELDS:
+            if not isinstance(s[f], list) or not s[f] or not all(isinstance(x, str) and x.strip() for x in s[f]):
+                raise ValueError(f"{mr_id}: field '{f}' must be a non-empty list of non-empty strings")
+        if "all_failures" in s and not isinstance(s["all_failures"], bool):
+            raise ValueError(f"{mr_id}: field 'all_failures' must be a boolean")
         if s["relation"] not in RELATIONS:
             raise ValueError(f"{mr_id}: unknown relation '{s['relation']}' (known: {sorted(RELATIONS)})")
         if s["status"] not in STATUSES:
@@ -82,5 +100,8 @@ def load_catalog(path: str | Path) -> dict[str, MetamorphicRelation]:
 def active_mrs(catalog: dict[str, MetamorphicRelation], mr_ids: list[str] | None = None) -> list[MetamorphicRelation]:
     """MRs a run executes: those named explicitly, else every non-candidate (candidates need an explicit --mr)."""
     if mr_ids:
+        unknown = sorted(set(mr_ids) - set(catalog))
+        if unknown:
+            raise UnknownMRError(f"unknown MR id(s) {unknown}; catalog has {sorted(catalog)}")
         return [m for m in catalog.values() if m.id in mr_ids]
     return [m for m in catalog.values() if m.spec.get("status") != "candidate"]

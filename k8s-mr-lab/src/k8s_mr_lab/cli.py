@@ -10,7 +10,7 @@ from pathlib import Path
 from . import mr_tools
 from . import report as rep
 from .bundles import BundleError, load_bundle
-from .registry import PolicyMapping, active_mrs, load_catalog
+from .registry import PolicyMapping, UnknownMRError, active_mrs, load_catalog
 from .runner import Runner
 from .scanners import SCANNERS, load_scanner_config, make_scanner
 from .triage import load_known_issues, triage_run
@@ -131,7 +131,7 @@ def cmd_report(a) -> int:
 
 def cmd_mr(a) -> int:
     if a.mr_cmd == "scaffold":
-        return mr_tools.cmd_scaffold(a)
+        return mr_tools.cmd_scaffold(a, a.catalog)
     mapping = PolicyMapping.load(a.mapping)
     if a.mr_cmd == "list":
         return mr_tools.cmd_list(load_catalog(a.catalog), mapping)
@@ -195,7 +195,7 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--patterns", default="mrs/patterns.yaml")
     msub = m.add_subparsers(dest="mr_cmd", required=True)
     msub.add_parser("list", help="catalog overview")
-    mv = msub.add_parser("validate", help="schema + traceability + execute every MR on the seeds (no scanner needed)")
+    mv = msub.add_parser("validate", help="STRUCTURAL gate: schema, traceability, MR contract on valid seeds (no scanner; not a semantic proof)")
     mv.add_argument("--seeds", nargs="+", default=["seeds/synthetic", "seeds/historical", "seeds/candidate"])
     mt = msub.add_parser("trace", help="Property -> Pattern -> MR -> control traceability matrix")
     mt.add_argument("--out")
@@ -207,7 +207,11 @@ def main(argv: list[str] | None = None) -> int:
     m.set_defaults(fn=cmd_mr)
 
     a = p.parse_args(argv)
-    return a.fn(a)
+    try:
+        return a.fn(a)
+    except UnknownMRError as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":

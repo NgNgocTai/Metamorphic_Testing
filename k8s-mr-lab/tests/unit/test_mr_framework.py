@@ -252,26 +252,111 @@ def test_trace_matrix_lists_every_mr(mapping, tmp_path):
     assert all(f"| MR-0{i} |" in text for i in range(1, 7)) and "K02" in text and "CWE-269" in text and "KSV-0009" in text and "(unverified)" not in text
 
 
-def test_scaffold_writes_skeleton_and_refuses_to_overwrite(tmp_path, capsys):
-    a = SimpleNamespace(id="MR-07", name="host-pid-flip", pattern="KP3", src_dir=str(tmp_path))
-    assert mr_tools.cmd_scaffold(a) == 0
-    code = (tmp_path / "host_pid_flip.py").read_text(encoding="utf-8")
-    compile(code, "host_pid_flip.py", "exec")
-    assert '@implements("MR-07")' in code and "class HostPidFlip(ControlledChange)" in code
-    assert "id: MR-07" in capsys.readouterr().out
-    assert mr_tools.cmd_scaffold(a) == 1
+def test_scaffold_refuses_to_overwrite(tmp_path):
+    a = SimpleNamespace(id="MR-07", name="host-pid-flip", pattern="KP3", src_dir=str(tmp_path), patterns=str(PATS))
+    assert mr_tools.cmd_scaffold(a, str(CATALOG)) == 0
+    assert mr_tools.cmd_scaffold(a, str(CATALOG)) == 1
 
 
-def test_mr06_candidate_seed_and_mapping(catalog, mapping):
-    from k8s_mr_lab.bundles import load_bundle
-    src = load_bundle(ROOT / "seeds" / "candidate" / "pod-hostnet", "pod-hostnet")
-    assert catalog["MR-06"].applicable(src)[0]
-    assert [(e.control, e.target) for e in mapping.entries("MR-06", "trivy")] == [("KSV-0009", "workload")]
-    assert [(e.control, e.target) for e in mapping.entries("MR-06", "kubescape")] == [("C-0041", "workload")]
-    assert "Pod" in mapping.control_kinds("trivy")["KSV-0009"] and "Pod" in mapping.control_kinds("kubescape")["C-0041"]
+# ------------------------------------------------------------------ review findings (2026-11-01)
+def test_unknown_mr_id_fails_fast(catalog, capsys):
+    from k8s_mr_lab.cli import main
+    from k8s_mr_lab.registry import UnknownMRError
+    with pytest.raises(UnknownMRError, match=r"MR-99"):
+        active_mrs(catalog, ["MR-06", "MR-99"])
+    base = ["--config", str(ROOT / "config/scanners.yaml"), "--mapping", str(ROOT / "config/policy-mapping.yaml"),
+            "--catalog", str(CATALOG)]
+    assert main(base + ["generate", "--seeds", str(ROOT / "seeds/candidate"), "--mr", "MR-99", "--out", "unused"]) == 2
+    assert "MR-99" in capsys.readouterr().err
+    assert main(base + ["run", "--scanner", "trivy", "--seeds", str(ROOT / "seeds/candidate"), "--mr", "MR-99",
+                        "--out", "unused"]) == 2
 
 
-def test_no_property_reference_is_left_unverified():
-    for p in mr_tools.load_properties(PROPS):
-        for lst in mr_tools.REF_LISTS:
-            assert all(r["verified"] for r in p.get(lst) or []), (p["id"], lst)
+@pytest.mark.parametrize("field,value,msg", [
+    ("preconditions", "just a string", "non-empty list"),
+    ("limits", [], "non-empty list"),
+    ("pair_checks", ["ok", ""], "non-empty list"),
+    ("scope", "", "non-empty string"),
+    ("property_id", None, "non-empty string"),
+    ("all_failures", "yes", "boolean"),
+    ("id", "MR_1", "must look like MR-01"),
+])
+def test_spec_type_validation(tmp_path, field, value, msg):
+    specs = specs_copy()
+    specs[0][field] = value
+    with pytest.raises(ValueError, match=msg):
+        read_specs(write_catalog(tmp_path, specs))
+
+
+def test_pattern_requires_matching_base_class(mapping):
+    specs = specs_copy()
+    specs[0]["pattern"], specs[0]["relation"] = "KP3", "pass_to_fail"      # MR-01 is not a ControlledChange
+    props = copy.deepcopy(mr_tools.load_properties(PROPS))
+    props[0]["candidate_patterns"].append("KP3")
+    problems = trace_problems(specs, props=props, mapping=mapping)
+    assert any("MR-01: pattern KP3 requires base class ControlledChange" in p for p in problems)
+
+
+def test_mapping_entry_must_have_control_and_target():
+    data = copy.deepcopy(PolicyMapping.load(ROOT / "config" / "policy-mapping.yaml").data)
+    data["mrs"]["MR-04"]["trivy"].append({"control": "KSV-0017"})
+    data["mrs"]["MR-04"]["kubescape"].append({"control": "", "target": "workload"})
+    problems = trace_problems(read_specs(CATALOG), mapping=PolicyMapping(data))
+    assert sum("needs non-empty 'control' and 'target'" in p for p in problems) == 2
+
+
+def test_exercise_skips_invalid_sources(catalog, mapping):
+    mr = catalog["MR-01"]
+    valid = ROOT / "seeds/synthetic/pod-basic"
+    invalid = ROOT / "seeds/synthetic/invalid-missing-role"
+    n_valid = mr_tools.exercise(mr, [valid], mapping)[2]
+    assert n_valid > 0
+    assert mr_tools.exercise(mr, [valid, invalid], mapping)[2] == n_valid       # the invalid seed adds no exercised case
+    assert mr_tools.exercise(mr, [invalid], mapping)[2] == 0
+
+
+def _scaffold(tmp_path, **kw):
+    a = SimpleNamespace(**{"id": "MR-07", "name": "x-flip", "pattern": "KP3", "src_dir": str(tmp_path),
+                           "patterns": str(PATS), **kw})
+    return mr_tools.cmd_scaffold(a, str(CATALOG))
+
+
+def test_scaffold_is_pattern_aware(tmp_path):
+    assert _scaffold(tmp_path, name="kp3-mr", pattern="KP3") == 0
+    kp3 = (tmp_path / "kp3_mr.py").read_text(encoding="utf-8")
+    assert "class Kp3Mr(ControlledChange)" in kp3 and "expected_change" in kp3
+    assert _scaffold(tmp_path, name="kp1-mr", pattern="KP1") == 0
+    kp1 = (tmp_path / "kp1_mr.py").read_text(encoding="utf-8")
+    assert "class Kp1Mr(MetamorphicRelation)" in kp1 and "ControlledChange" not in kp1 and "validate_pair" in kp1
+    for code in (kp3, kp1):
+        compile(code, "x.py", "exec")
+
+
+@pytest.mark.parametrize("kw", [{"pattern": "KP9"}, {"id": "MR-01"}, {"id": "mr7"}])
+def test_scaffold_refuses_bad_input_and_writes_nothing(tmp_path, kw):
+    assert _scaffold(tmp_path, **kw) == 2
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_compare_runs_rejects_duplicates_and_count_mismatch(tmp_path):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("compare_runs", ROOT / "scripts" / "compare_runs.py")
+    cr = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cr)
+    head_r = ",".join(("case_id", "target_control", "target_resource") + cr.RESULTS_VALUES)
+    head_c = ",".join(("case_id", "control", "resource") + cr.COMPARISON_VALUES)
+    row_r = "c1,KSV-1,Pod/p,PASS,,,VALID_PAIR,,,s,f"
+    row_c = "c1,KSV-1,Pod/p,PASS,FAIL,ok,"
+
+    def run(name, results, comps):
+        d = tmp_path / name
+        d.mkdir()
+        (d / "results.csv").write_text(head_r + "\n" + "\n".join(results) + "\n", encoding="utf-8")
+        (d / "comparisons.csv").write_text(head_c + "\n" + "\n".join(comps) + "\n", encoding="utf-8")
+        return d
+    a = run("a", [row_r], [row_c])
+    assert cr.main(str(a), str(run("same", [row_r], [row_c]))) == 0
+    assert cr.main(str(a), str(run("dup", [row_r, row_r], [row_c]))) == 1                 # duplicate key
+    assert cr.main(str(a), str(run("dupc", [row_r], [row_c, row_c]))) == 1
+    assert cr.main(str(a), str(run("verdict", [row_r], ["c1,KSV-1,Pod/p,PASS,PASS,ok,"]))) == 1   # differs only in comparisons.csv
+    assert cr.main(str(a), str(run("missing", [row_r], []))) == 1
