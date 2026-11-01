@@ -1,6 +1,6 @@
 # Thêm một MR mới
 
-Tiền đề: đọc `MR_DERIVATION_METHODOLOGY.md` §3. Mọi lệnh chạy từ thư mục `k8s-mr-lab/`; **không cần scanner** cho
+Tiền đề: đọc `MR_DERIVATION_METHODOLOGY.md` và `SECURITY_PROPERTY_DERIVATION_GUIDE.md` (bảng 14 bước, ví dụ MR-07 làm thật). Mọi lệnh chạy từ thư mục `k8s-mr-lab/`; **không cần scanner** cho
 bước 1–6.
 
 ```bash
@@ -12,7 +12,7 @@ k8s-mr-lab mr scaffold MR-07 host-pid-flip --pattern KP3   # khung code theo pat
 
 1. **Property.** Thêm (hoặc chọn) mục trong `mrs/security_properties.yaml`. Mỗi tham chiếu phải có `verified: true|false`.
    Không điền số mục CIS/CWE chưa kiểm.
-2. **Pattern.** Chọn trong `mrs/patterns.yaml`. KP3 (đổi đúng 1 trường) chỉ cần viết 4 hàm:
+2. **Pattern + template.** Chọn trong `mrs/patterns.yaml` và khai báo `template: {preconditions: [...], followup: [...]}` trong catalog (từ vựng `P-*`/`G-*` ở `patterns.yaml: template_elements`; verdict, scope, output được suy ra từ `relation`/`all_failures`). Chạy `mr patterns` xem MR mới rơi vào nhóm nào. KP3 (đổi đúng 1 trường) chỉ cần viết 4 hàm:
    `candidates` (precondition), `candidate_params`, `transform`, `expected_change` (+ `targets`). Validator cặp, quy tắc
    "đúng 1 thay đổi", so sánh chặt kiểu đã có trong `ControlledChange`. Với KP1/KP2 hoặc MR có ngữ nghĩa phức tạp,
    kế thừa `MetamorphicRelation` và tự cài `validate_pair` (xem MR-01/02/03). Không cố nhét vào YAML.
@@ -36,3 +36,6 @@ k8s-mr-lab mr scaffold MR-07 host-pid-flip --pattern KP3   # khung code theo pat
 
 Số chỗ phải sửa: file transform mới + `catalog.yaml` + (`security_properties.yaml` nếu property mới) + test, và
 `policy-mapping.yaml` khi mapping được xác minh.
+
+Xem MR đã có: `k8s-mr-lab mr explain MR-xx` (và `--case <thư mục case>` để đọc một lượt chạy từ evidence). Khi cần hồ sơ đầy đủ như
+một case study, theo mẫu `docs/case_studies/MR02_SEMANTIC_CASE_STUDY.md`.

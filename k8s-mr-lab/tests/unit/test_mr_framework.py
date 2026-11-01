@@ -451,3 +451,18 @@ def test_explain_rejects_a_case_of_another_mr_and_unknown_ids(capsys):
     rc, out = _explain(capsys, "MR-42")
     assert rc == 2 and "MR-42" in out.err
 
+
+
+# ------------------------------------------------------------------ documentation must not point at things that do not exist
+def test_docs_reference_existing_files_and_cli_commands():
+    import re
+    from k8s_mr_lab.cli import main
+    docs = ROOT / "docs"
+    text = "\n".join(p.read_text(encoding="utf-8") for p in [ROOT / "README.md", *docs.glob("*.md"), *docs.glob("case_studies/*.md")])
+    missing = sorted({m for m in re.findall(r"`(docs/[A-Za-z0-9_./-]+\.(?:md|json|csv))`", text)
+                      if not (ROOT / m).exists() and "<" not in m and "*" not in m})
+    assert missing == [], missing
+    for cmd in ("list", "validate", "trace", "patterns", "explain", "scaffold"):
+        assert f"mr {cmd}" in text, cmd
+    with pytest.raises(SystemExit):
+        main(["mr", "no-such-subcommand"])

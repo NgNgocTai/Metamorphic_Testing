@@ -20,11 +20,11 @@ and refuses a binary that is not the pinned version (`SCAN_ERROR`). Both scanner
 ```bash
 # inside Ubuntu (WSL); the venv holds PyYAML + pytest only
 python3 -m venv ~/mrlab-venv && ~/mrlab-venv/bin/pip install -e '.[dev]'
-cd /mnt/d/Code/KLTN/Metarmophic_testing/k8s-mr-lab
+cd k8s-mr-lab                                  # the directory containing pyproject.toml
 PY=~/mrlab-venv/bin/python
 
 $PY -m k8s_mr_lab versions                                   # check the pins
-$PY -m pytest -q                                              # 83 tests; 3 integration ones use the real binaries and skip if absent
+$PY -m pytest -q                                              # unit tests; the 3 integration ones use the real binaries and skip if absent (counts: docs/RESEARCH_BASELINE_AUDIT.md)
 $PY -m k8s_mr_lab generate --seeds seeds/synthetic seeds/historical --out runs/generated
 $PY -m k8s_mr_lab run --scanner trivy     --seeds seeds/synthetic seeds/historical --out runs/trivy
 $PY -m k8s_mr_lab run --scanner kubescape --seeds seeds/synthetic seeds/historical --out runs/kubescape   # ~3 min
@@ -41,7 +41,7 @@ Independent run on third-party manifests (Kalm-Benchmark) with the catalog froze
 (writes `runs/heldout/freeze.json` + staging), then `bash scripts/heldout_run.sh` (both scanners, triage, report, freeze re-check, ~20 min).
 Research questions: RQ1 Applicability, RQ2 Effectiveness, RQ3 Efficiency & Practicality (no random baseline in scope).
 
-## The 5 MRs (`mrs/catalog.yaml`)
+## The MRs (`mrs/catalog.yaml`): 5 frozen PoC MRs + 2 candidates (MR-06, MR-07; opt-in with `--mr`, never in default runs)
 
 | MR | Transformation | Relation | Scope |
 |---|---|---|---|
@@ -82,8 +82,33 @@ Reading order for `docs/`:
 3. `HUONG_DAN_TU_KIEM_TRA.md` — step-by-step to redo the checks yourself.
 4. Reference: `SCANNER_VERSIONS.md` (pins and verified CLI/rule facts), `known_issues.yaml`, `evidence/`.
 
-## Building MRs (branch `research/mr-patterns`)
+## Building and understanding MRs
 
-Security property → MR pattern → MR spec → executable MR. Start with `docs/HOW_TO_ADD_AN_MR.md`;
-method: `docs/MR_DERIVATION_METHODOLOGY.md`; audit: `docs/MR_ARCHITECTURE_AUDIT.md`; results: `docs/MR_REFACTOR_REPORT.md`.
-`k8s-mr-lab mr list | validate | trace | scaffold` (no scanner needed).
+Method: security requirement -> security property (`mrs/security_properties.yaml`, every reference carries `verified`) ->
+MR pattern (`mrs/patterns.yaml`) -> MR spec (`mrs/catalog.yaml`, single source of metadata) -> executable MR (`transforms/*.py`,
+`@implements`) -> evaluation. OWASP/CWE select the domain; they never prove an MR valid.
+
+```bash
+k8s-mr-lab mr list                          # catalog, status, pattern, mapped scanners
+k8s-mr-lab mr explain MR-02                 # property, pattern, template, controls, preconditions, limits, code and tests
+k8s-mr-lab mr explain MR-02 --case <case dir>   # a saved case from its evidence (read-only; never recomputes a verdict)
+k8s-mr-lab mr patterns                      # MR x template-element matrix (the MST-wi Table 4 method)
+k8s-mr-lab mr trace                         # property -> pattern -> MR -> control matrix
+k8s-mr-lab mr validate                      # STRUCTURAL gate, no scanner needed (not a semantic proof)
+k8s-mr-lab mr scaffold MR-08 my-mr --pattern KP3
+```
+
+| Read | For |
+|---|---|
+| `docs/RESEARCH_BASELINE_AUDIT.md` | what was re-verified, what exists, what does not |
+| `docs/CODE_WALKTHROUGH.md` | seed -> assessment, function by function |
+| `docs/MR_DERIVATION_METHODOLOGY.md`, `docs/SECURITY_PROPERTY_DERIVATION_GUIDE.md` | how to derive an MR |
+| `docs/WEB_MST_TO_K8S_METHOD_MAPPING.md` | what is taken from MST-wi, what is ours |
+| `docs/case_studies/MR02_SEMANTIC_CASE_STUDY.md` | a complete worked MR (proof, counterexamples, real evidence) |
+| `docs/HOW_TO_ADD_AN_MR.md`, `docs/MR_SEMANTIC_REVIEW_CHECKLIST.md` | adding and reviewing an MR |
+| `docs/MR_PATTERN_TAXONOMY_V2.md`, `docs/MR_CANDIDATE_EVALUATION.md` | patterns and candidate MRs |
+| `docs/EVALUATION_PROTOCOL_V2.md`, `docs/KNOWN_DEFECT_EVALUATION_PLAN.md` | evaluation design (RQ1-RQ3), mutation, replication package |
+
+Evidence is under `docs/evidence/*/` with `manifest.json` (sha256) and `case_index.json`; read `comparisons.csv`, not only
+`results.csv` (whose verdict columns are filled only for VIOLATION rows). Tools: `scripts/compare_runs.py`,
+`scripts/snapshot_mr_behavior.py`, `scripts/package_run_evidence.py`, `scripts/fault_variant_kubescape.py`.
