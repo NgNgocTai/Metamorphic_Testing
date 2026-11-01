@@ -41,6 +41,9 @@ class MetamorphicRelation:
     relation = "equal"            # a key of checker.RELATIONS (equal | pass_to_fail | fail_to_pass | custom)
     all_failures = False          # also compare every FAIL (control, resource) seen in either report
     spec: dict = {}
+    # (evidence key, regex): what a static look at a violating rule's source should contain for this MR's property to be considered
+    # by the check at all. Triage aid for the human adjudicator, never an oracle. None = no such probe.
+    rule_probe: tuple[str, str] | None = None
 
     def bind(self, spec: dict) -> None:
         self.spec = spec

@@ -7,6 +7,10 @@ mrs:
     status: mvp
     pattern: KP1
     property_id: SP-SYN-MAPPING-ORDER
+    origin: sanity          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: []
+    touches: ["*"]
+    targets: [ALL_OF_KIND]
     template: {preconditions: [], followup: [G-REWRITE]}
     all_failures: true   # also compare every FAIL seen in either report
     property: scanner verdicts do not depend on mapping-key order
@@ -31,6 +35,10 @@ mrs:
     status: mvp
     pattern: KP2
     property_id: SP-RBAC-NS-ROLE-RESOLUTION
+    origin: empirical          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: [{id: R06, coverage: full}]
+    touches: [Role]
+    targets: [bound_role, subject_sa, workload, rolebinding]
     template: {preconditions: [P-REF], followup: [G-ADD]}
     property: effective permissions of the ServiceAccount bound by a namespaced RoleBinding
     relation: equal
@@ -53,6 +61,10 @@ mrs:
     status: mvp
     pattern: KP1
     property_id: SP-RBAC-ADDITIVE-RULES
+    origin: semantic          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: []
+    touches: [Role, ClusterRole]
+    targets: [bound_role, subject_sa, workload]
     template: {preconditions: [P-STRUCT], followup: [G-REWRITE]}
     property: effective permissions of a Role
     relation: equal
@@ -74,6 +86,10 @@ mrs:
     status: mvp_conditional
     pattern: KP3
     property_id: SP-POD-PRIVILEGED
+    origin: retrospective          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: [{id: R01, coverage: full}]
+    touches: [workload]
+    targets: [workload]
     template: {preconditions: [P-STRUCT], followup: [G-MODIFY]}
     property: container runs privileged
     relation: pass_to_fail
@@ -94,6 +110,10 @@ mrs:
     status: mvp_conditional
     pattern: KP3
     property_id: SP-RBAC-SECRETS-API-GROUP
+    origin: empirical          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: []
+    touches: [Role]
+    targets: [role_direct, bound_role, subject_sa, workload]
     template: {preconditions: [P-STRUCT, P-CLOSED], followup: [G-MODIFY]}
     property: read access to core-group Secrets
     relation: fail_to_pass
@@ -115,6 +135,10 @@ mrs:
     status: candidate        # mapped and run on one DEV seed only; promoting it would add MR-06 rows to every default run, so it stays opt-in (--mr MR-06)
     pattern: KP3
     property_id: SP-POD-HOST-NAMESPACES
+    origin: retrospective          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: [{id: R02, coverage: partial}]
+    touches: [workload]
+    targets: [workload]
     template: {preconditions: [P-STRUCT], followup: [G-MODIFY]}
     property: pod shares the node network namespace (spec.hostNetwork)
     relation: pass_to_fail
@@ -137,6 +161,10 @@ mrs:
     status: candidate        # designed after reading C-0267/C-0272 rego (subject.kind == "ServiceAccount"): guided, not blind
     pattern: KP1
     property_id: SP-RBAC-SA-SUBJECT-IDENTITY
+    origin: empirical          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: []
+    touches: [RoleBinding]
+    targets: [bound_role, subject_sa, workload, rolebinding]
     template: {preconditions: [P-STRUCT, P-REF], followup: [G-REWRITE]}
     property: effective permissions of the ServiceAccount named by a RoleBinding subject
     relation: equal
@@ -153,3 +181,59 @@ mrs:
       - "relies on the documented username of service accounts; it does not cover tokens issued for other identities"
       - "the subject namespace must be explicit: defaulting of a missing namespace is not modelled"
       - "evidence so far: DEV seeds only (synthetic + historical), no held-out evaluation"
+
+  - id: MR-08
+    name: sa-subject-namespace-shift
+    category: R1
+    status: candidate        # designed from the mutation gap analysis (docs/MUTATION_GAP_ANALYSIS.md); no independent evidence yet
+    pattern: KP3
+    property_id: SP-RBAC-SA-SUBJECT-NAMESPACE
+    origin: empirical          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: []
+    touches: [RoleBinding, ServiceAccount]
+    targets: [workload]
+    template: {preconditions: [P-STRUCT, P-REF, P-CLOSED], followup: [G-MODIFY, G-ADD]}
+    property: a ServiceAccount subject names (namespace, name); a binding for S1:N grants nothing to S2:N
+    relation: fail_to_pass
+    scope: workload-level controls only (Kubescape C-0267, C-0272) on the workload that runs as the ServiceAccount; Role-level controls are NOT compared because the Role is still granted to the moved subject
+    preconditions:
+      - RoleBinding points at a Role in its own namespace and has exactly one subject, a ServiceAccount with an explicit namespace that exists in the bundle
+      - a workload runs as that ServiceAccount
+      - no other binding grants anything to that ServiceAccount (ServiceAccount subject, the equivalent User, or the groups system:serviceaccounts, system:serviceaccounts:<ns>, system:authenticated)
+      - the source verdict of the compared control is FAIL (evidenced)
+    transformation: change that subject's namespace to a fresh namespace and add ServiceAccount <fresh>/<name>
+    pair_checks:
+      - exactly one changed field (the subject namespace) and exactly one added object (the ServiceAccount in the fresh namespace)
+      - the workloads that use the original ServiceAccount are unchanged
+    counterexample: another binding, a Group subject or the equivalent User subject still grants the role to the original ServiceAccount, so the permission survives and the relation would be wrong; precondition rejects each
+    limits:
+      - "relies on an inference from the documented identity of a service account (namespace is part of it); no verbatim sentence states that a binding for S1:N grants nothing to S2:N"
+      - "closed-bundle premise; a live cluster may add other paths"
+      - "Trivy has no workload-level RBAC control, so the MR is not mapped for Trivy"
+      - "evidence: development seeds only"
+
+  - id: MR-09
+    name: secrets-read-verb-substitution
+    category: R3
+    status: candidate        # derived from requirement R08 before any run; DEV evidence only
+    pattern: KP4
+    property_id: SP-RBAC-SECRETS-READ-VERBS
+    origin: prospective          # prospective | retrospective | empirical | semantic | sanity (docs/architecture/UNIFIED_FRAMEWORK.md)
+    requirements: [{id: R08, coverage: full}]
+    touches: [Role]
+    targets: [role_direct, bound_role]
+    template: {preconditions: [P-STRUCT], followup: [G-MODIFY]}
+    property: a Secrets rule exposes the same contents whichever non-empty subset of get, list, watch it names
+    relation: equal
+    scope: Trivy KSV-0113 and Kubescape C-0015 on the modified Role only
+    preconditions:
+      - the Role has exactly one rule that reaches Secrets, with apiGroups [""], resources ["secrets"] and no resourceNames
+      - its verbs are a non-empty subset of get, list, watch
+    transformation: replace that rule's verbs by one other read verb
+    pair_checks:
+      - exactly the verbs of the target rule changed, to one read verb; nothing else differs
+    counterexample: a rule with resourceNames, several resources, a non-core apiGroup, or a verb outside get/list/watch (create, delete, "*") is not eligible; list/watch with resourceNames behave differently from get
+    limits:
+      - "equivalence is of Secret exposure, not of API semantics; a control that distinguishes verbs is out of scope"
+      - "both mapped controls read get, list and watch in their rego (KSV-0113 readVerbs, C-0015 verbs); C-0015's description only says list/get"
+      - "evidence: development seeds only"

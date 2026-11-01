@@ -9,6 +9,7 @@ from __future__ import annotations
 import inspect
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import yaml
 
@@ -68,6 +69,97 @@ def check_template(specs: list[dict], elements: dict[str, dict[str, str]]) -> li
     return bad
 
 
+WORKLOAD_GROUP = "workload"          # `touches` may name a kind or this group (= the kinds of the mapping target `workload`)
+SCANNERS = ("trivy", "kubescape")
+
+
+def _expand(kinds: list[str], mapping: PolicyMapping) -> set[str]:
+    out: set[str] = set()
+    for k in kinds:
+        out |= set(mapping.target_kinds(WORKLOAD_GROUP) or []) if k == WORKLOAD_GROUP else {k}
+    return out
+
+
+def check_mapping(specs: list[dict], mapping: PolicyMapping) -> list[str]:
+    """Static validation of MR -> control -> scope, against the catalog and the control registry. The same rules apply to every MR.
+
+    * no orphan: every mapped MR / control / target exists; every registry control is mapped; every (MR, scanner) is either mapped
+      or listed under `unsupported` with a reason (never both, never neither)
+    * target strategy: a target is in the vocabulary AND declared by the MR in the catalog; ALL_OF_KIND only for a rewrite of every object
+    * role: `property` must be able to observe the change (control registry `reads` / `scope` x the MR's `touches`);
+      `control` (negative control) must NOT be able to, otherwise it is a property comparison mislabelled"""
+    bad: list[str] = []
+    by_id = {s["id"]: s for s in specs}
+    vocab = mapping.data.get("targets") or {}
+    for t, d in vocab.items():
+        if not (isinstance(d.get("kinds"), list) and d["kinds"]):
+            bad.append(f"mapping: target '{t}' needs a non-empty 'kinds' list")
+    mrs = mapping.data.get("mrs") or {}
+    unsupported = mapping.data.get("unsupported") or {}
+    for m in list(mrs) + list(unsupported):
+        if m not in by_id:
+            bad.append(f"mapping lists unknown MR {m}")
+    registry = mapping.registry_controls()
+    used: dict[str, set[str]] = {sc: set() for sc in SCANNERS}
+    for mr_id, s in by_id.items():
+        declared, touches = set(s["targets"]), s["touches"]
+        for t in declared - set(vocab) - {ALL_OF_KIND}:
+            bad.append(f"{mr_id}: catalog target '{t}' is not in the mapping target vocabulary {sorted(vocab)}")
+        if (touches == ["*"]) != (declared == {ALL_OF_KIND}):
+            bad.append(f"{mr_id}: touches ['*'] and targets [ALL_OF_KIND] go together (a rewrite of every object has no narrower scope)")
+        changed = None if touches == ["*"] else _expand(touches, mapping)
+        for sc in SCANNERS:
+            raw = ((mrs.get(mr_id) or {}).get(sc)) or []
+            reason = (unsupported.get(mr_id) or {}).get(sc)
+            if raw and reason:
+                bad.append(f"{mr_id}/{sc}: mapped AND listed under unsupported")
+            if not raw and not (isinstance(reason, str) and reason.strip()):
+                bad.append(f"{mr_id}/{sc}: neither mapped nor listed under unsupported with a reason (silent gap)")
+            roles: dict[str, str] = {}
+            for e in raw:
+                if not all(isinstance(e.get(k), str) and e[k].strip() for k in ("control", "target", "reason")):
+                    bad.append(f"mapping {mr_id}/{sc}: entry needs non-empty control, target and reason: {e}")
+                    continue
+                c, t, role = e["control"], e["target"], e.get("role", "property")
+                tag = f"{mr_id}/{sc}/{c}->{t}"
+                if role not in ("property", "control"):
+                    bad.append(f"{tag}: role must be property or control")
+                if roles.setdefault(c, role) != role:
+                    bad.append(f"{tag}: control is mapped with two different roles in the same MR/scanner")
+                meta = registry.get(sc, {}).get(c)
+                if meta is None:
+                    bad.append(f"{tag}: control is not in control-registry.yaml (regenerate it)")
+                    continue
+                used[sc].add(c)
+                if t != ALL_OF_KIND and t not in vocab:
+                    bad.append(f"{tag}: unknown target (vocabulary: {sorted(vocab)})")
+                    continue
+                if t not in declared:
+                    bad.append(f"{tag}: target is not declared by the MR in the catalog (targets: {sorted(declared)})")
+                if t == ALL_OF_KIND:
+                    if changed is not None:
+                        bad.append(f"{tag}: ALL_OF_KIND is only for an MR whose touches is ['*']")
+                    continue
+                if not set(vocab[t]["kinds"]) & set(meta["reports_on"]):
+                    bad.append(f"{tag}: control never reports on {vocab[t]['kinds']} (reports_on {meta['reports_on']}); dead entry")
+                    continue
+                if changed is None:
+                    can_observe = True
+                elif meta["scope"] == "judged_object":
+                    can_observe = bool(changed & set(vocab[t]["kinds"]) & set(meta["reports_on"]))
+                else:
+                    can_observe = bool(changed & set(meta["reads"]))
+                if role == "property" and not can_observe:
+                    bad.append(f"{tag}: role property but the control cannot observe what the MR touches {touches}; "
+                               f"use role control (negative control) or remove it")
+                if role == "control" and can_observe:
+                    bad.append(f"{tag}: role control but the control can observe what the MR touches {touches}; it is a property comparison")
+    for sc in SCANNERS:
+        for c in sorted(set(registry.get(sc) or {}) - used[sc]):
+            bad.append(f"control-registry: {sc}/{c} is not used by any mapping entry (orphan; regenerate the registry)")
+    return bad
+
+
 def check_traceability(specs: list[dict], properties: list[dict], patterns: list[dict], mapping: PolicyMapping) -> list[str]:
     """Cross-file consistency of Property -> Pattern -> MR -> control mapping. Returns problems (empty = consistent)."""
     bad: list[str] = []
@@ -85,6 +177,10 @@ def check_traceability(specs: list[dict], properties: list[dict], patterns: list
             for ref in p.get(lst) or []:
                 if not isinstance(ref.get("verified"), bool):
                     bad.append(f"property {p.get('id')}: {lst} entry without boolean 'verified': {ref}")
+                elif not ref["verified"] and not ref.get("basis"):
+                    bad.append(f"property {p.get('id')}: unverified {lst} entry must say why in 'basis': {ref}")
+                elif lst == "cis_nsa" and ref["verified"]:
+                    pass            # allowed only once the standard's own document was consulted (none yet; see security_properties.yaml)
         for pid in p.get("candidate_patterns") or []:
             if pid not in {x["id"] for x in patterns}:
                 bad.append(f"property {p.get('id')}: unknown pattern {pid}")
@@ -113,19 +209,7 @@ def check_traceability(specs: list[dict], properties: list[dict], patterns: list
         cls = IMPLEMENTATIONS.get(s["id"])
         if want and cls and want not in {k.__name__ for k in cls.__mro__}:
             bad.append(f"{s['id']}: pattern {s['pattern']} requires base class {want}, implementation is {cls.__name__}")
-    for m, per_scanner in (mapping.data.get("mrs") or {}).items():
-        if m not in ids:
-            bad.append(f"policy-mapping lists unknown MR {m}")
-        for scanner, entries in (per_scanner or {}).items():
-            for e in entries or []:
-                if not all(isinstance(e.get(k), str) and e[k].strip() for k in ("control", "target")):
-                    bad.append(f"policy-mapping {m}/{scanner}: entry needs non-empty 'control' and 'target': {e}")
-    for scanner in ("trivy", "kubescape"):
-        known = mapping.control_kinds(scanner)
-        for m in ids:
-            for e in ((mapping.data.get("mrs") or {}).get(m) or {}).get(scanner) or []:
-                if isinstance(e.get("control"), str) and e["control"] not in known:
-                    bad.append(f"{m}/{scanner}: mapped control {e['control']} is not defined under controls")
+    bad += check_mapping(specs, mapping)
     return bad
 
 
@@ -159,13 +243,15 @@ def exercise(mr: MetamorphicRelation, seeds: list[Path], mapping: PolicyMapping)
             status, why = mr.validate_pair(src, fu, params)
             if status != "VALID_PAIR":
                 errors.append(f"{tag}: generated pair is {status} ({why})")
-            produced |= set(mr.targets(src, params))
+            got = set(mr.targets(src, params))
+            if got - set(mr.spec["targets"]):
+                errors.append(f"{tag}: targets() produced {sorted(got - set(mr.spec['targets']))}, not declared in the catalog")
+            produced |= got
     if cases == 0:
         warnings.append(f"{mr.id}: applicable on no seed, so only unit tests exercise it")
-    for scanner in ("trivy", "kubescape"):
-        for e in mapping.entries(mr.id, scanner):
-            if cases and e.target != ALL_OF_KIND and e.target not in produced:
-                warnings.append(f"{mr.id}/{scanner}: target '{e.target}' never produced by targets() on these seeds")
+    if cases:
+        for t in sorted(set(mr.spec["targets"]) - {ALL_OF_KIND} - produced):
+            warnings.append(f"{mr.id}: declared target '{t}' never produced by targets() on these seeds")
     return errors, warnings, cases
 
 
@@ -306,11 +392,15 @@ def cmd_explain(a, catalog: dict[str, MetamorphicRelation], mapping: PolicyMappi
            "  (selects the domain; does not prove the MR)",
            f"MR pattern         {s['pattern']} {pat.get('name', NA)}; template elements: {', '.join(sorted(template_row(s)))}",
            f"Relation           {s['relation']}" + ("  (+ every FAIL seen in either report)" if s.get("all_failures") else ""),
-           f"Comparison scope   {s['scope']}"]
-    for scanner in ("trivy", "kubescape"):
+           f"Comparison scope   {s['scope']}",
+           f"Origin             {s['origin']}; requirements: {', '.join(r['id'] + ' (' + r['coverage'] + ')' for r in s['requirements']) or '-'}",
+           f"Touches / targets  {', '.join(s['touches'])} / {', '.join(s['targets'])}"]
+    for scanner in SCANNERS:
         entries = mapping.entries(mr.id, scanner)
-        txt = ", ".join(f"{e.control} ({mapping.control_meta(scanner, e.control).get('title', '?')}) on {e.target}" for e in entries)
-        out.append(f"  {scanner:<16} {txt or 'not mapped: never scanned with this scanner'}")
+        txt = ", ".join(f"{e.control} ({mapping.control_meta(scanner, e.control).get('title', '?')}) on {e.target}"
+                        + (" [negative control]" if e.role == "control" else "") for e in entries)
+        why = (mapping.data.get("unsupported") or {}).get(mr.id, {}).get(scanner)
+        out.append(f"  {scanner:<16} {txt or ('not mapped: ' + why if why else 'not mapped')}")
     out += ["Preconditions"] + [f"  - {x}" for x in s["preconditions"]]
     out += [f"Transformation     {s['transformation']}", "Pair checks (structural, not an oracle)"] + [f"  - {x}" for x in s["pair_checks"]]
     out += [f"Semantic justif.   {prop.get('rationale', NA)}",
@@ -364,6 +454,176 @@ def cmd_explain(a, catalog: dict[str, MetamorphicRelation], mapping: PolicyMappi
         out += ["", "Reading notes: an MR PASS means the relation held, not that the scanner verdict is PASS; [inferred_pass] means",
                 "'no FAIL attributed', not proof of evaluation; a VIOLATION is a candidate for triage, not a confirmed defect."]
     print("\n".join(out))
+    return 0
+
+
+PACKET_QUESTIONS = [
+    ("Q1", "Property có đúng là điều tài liệu Kubernetes nói không? Trích dẫn khớp nguyên văn (kể cả khi tác giả đã đánh `verified`)?"),
+    ("Q2", "Phép biến đổi có thật sự bảo toàn (KP1/KP2) hoặc đổi đúng một chiều (KP3) thuộc tính đó? Tìm phản ví dụ mà tác giả chưa nghĩ tới."),
+    ("Q3", "Precondition có đủ chặt để mọi cặp sinh ra đều có nghĩa? Nêu một đầu vào thỏa precondition nhưng làm MR sai (nếu có)."),
+    ("Q4", "Mỗi control được ánh xạ có thật sự cam kết kiểm đúng property này ở đúng phiên bản? Đọc rego/metadata chứ không chỉ tiêu đề control."),
+    ("Q5", "Scope so sánh có loại trừ đúng những gì được phép đổi (ví dụ finding hợp lệ trên object vừa thêm)?"),
+    ("Q6", "Các phản ví dụ có bị từ chối bởi precondition/validator (xem test)? Phản ví dụ nào chỉ con người chặn được?"),
+    ("Q7", "Với mỗi scanner: so sánh có mang thông tin không (xem `mr informative`)? Có control nào bất biến theo cấu trúc?"),
+    ("Q8", "Giả định `closed bundle` và giới hạn đã nêu có chấp nhận được cho kết luận đang được rút ra?"),
+]
+
+
+def cmd_review_packet(a, catalog: dict[str, MetamorphicRelation], mapping: PolicyMapping) -> int:
+    """Write a self-contained review packet for an independent reviewer. It never records an approval: the decision is left blank."""
+    import contextlib
+    import io
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        rc = cmd_explain(SimpleNamespace(id=a.id, case=None, properties=a.properties, patterns=a.patterns, catalog=a.catalog), catalog, mapping)
+    if rc:
+        return rc
+    spec = catalog[a.id].spec
+    prop = {p["id"]: p for p in load_properties(a.properties)}[spec["property_id"]]
+    lines = [f"# Review packet {a.id} `{spec['name']}`", "",
+             "**Trạng thái: `PENDING_INDEPENDENT_REVIEW`**. Tác giả đã tự review (`" + prop["review_status"] + "`); đó **không** phải review độc lập.",
+             "Người review độc lập phải là người khác tác giả, và điền mục 5. File này không ghi nhận bất kỳ quyết định nào.", "",
+             "## 1. Hồ sơ MR (sinh tự động từ catalog, property, pattern, mapping)", "", "```text", buf.getvalue().rstrip(), "```", "",
+             "## 2. Phát biểu property đầy đủ", "", f"> {prop['statement']}", "",
+             "Trích dẫn nguồn: " + "; ".join(f"[{r['source']}]({r.get('url') or ''}) \"{r['claim']}\" (`verified: {r['verified']}`)" for r in prop["k8s_spec"]),
+             "", f"Điều kiện giả định: {prop.get('scope_assumptions')}", f"Không tương đương đã biết: {prop.get('known_non_equivalences')}", "",
+             "## 3. Bằng chứng để xem", "", f"* Case study / evidence: xem `docs/case_studies/` và `docs/evidence/` (dùng `k8s-mr-lab mr explain {a.id} --case <thư mục>`).",
+             f"* Mức mang thông tin của từng so sánh: `k8s-mr-lab mr informative --run <thư mục evidence>`.",
+             "* Chạy lại phần cấu trúc: `k8s-mr-lab mr validate` và `pytest tests/unit -q`.", "",
+             "## 4. Câu hỏi cho người review", "", "| # | Câu hỏi | Trả lời / bằng chứng |", "|---|---|---|"]
+    lines += [f"| {q} | {t} | |" for q, t in PACKET_QUESTIONS]
+    lines += ["", "## 5. Quyết định (người review điền)", "",
+              "| Trường | Giá trị |", "|---|---|", "| Người review | |", "| Quan hệ với tác giả | (phải là người khác) |", "| Ngày | |",
+              "| Quyết định | ACCEPT / ACCEPT_WITH_CHANGES / REJECT |", "| Lý do | |", "| Phản đối còn lại | |", "| Đã đọc rego/mã control đúng phiên bản pin? | có / không |", "",
+              "Sau khi điền, cập nhật `review_status` của property thành `independently_reviewed` **chỉ** khi quyết định là ACCEPT và người review ghi rõ đã trả lời Q1-Q8."]
+    text = "\n".join(lines) + "\n"
+    if a.out:
+        Path(a.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.out).write_text(text, encoding="utf-8")
+    print(text)
+    return 0
+
+
+UNCOVERED = ("DERIVABLE_NOT_IMPLEMENTED", "NOT_FEASIBLE")      # the only status a requirement file may state; the rest is derived
+OWASP_GROUPS = tuple(f"K{n:02d}" for n in range(1, 11))
+
+
+def load_requirements(path: str | Path) -> dict:
+    return yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+
+
+def requirement_links(specs: list[dict]) -> dict[str, list[dict]]:
+    """requirement id -> [{mr, coverage, origin}] read from the catalog (the one place that links an MR to a requirement)."""
+    out: dict[str, list[dict]] = {}
+    for s in specs:
+        for r in s["requirements"]:
+            out.setdefault(r["id"], []).append({"mr": s["id"], "coverage": r["coverage"], "origin": s["origin"]})
+    return out
+
+
+def requirement_status(links: list[dict], declared: str | None) -> str:
+    """COVERED (>=1 MR with full coverage) | PARTIAL | the declared uncovered status."""
+    if any(x["coverage"] == "full" for x in links):
+        return "COVERED"
+    return "PARTIAL" if links else (declared or "UNDECLARED")
+
+
+def check_requirements(data: dict, specs: list[dict], mapping: PolicyMapping) -> list[str]:
+    """Consistency of requirements.yaml with the catalog; a requirement is not 'covered' unless a real MR backs it."""
+    bad: list[str] = []
+    seen: set[str] = set()
+    reasons = set(data.get("reason_codes") or {})
+    links = requirement_links(specs)
+    for rid in sorted(set(links) - {r.get("id") for r in data["requirements"]}):
+        bad.append(f"catalog references unknown requirement {rid} ({', '.join(x['mr'] for x in links[rid])})")
+    for r in data["requirements"]:
+        rid = r.get("id", "?")
+        if rid in seen:
+            bad.append(f"duplicate requirement id {rid}")
+        seen.add(rid)
+        for f in ("group", "title", "source", "quote", "owasp", "cwe", "controls"):
+            if not r.get(f):
+                bad.append(f"{rid}: missing {f}")
+        if r.get("owasp", {}).get("id") not in OWASP_GROUPS:
+            bad.append(f"{rid}: owasp id must be one of {OWASP_GROUPS}")
+        if r.get("owasp", {}).get("id") != r.get("group"):
+            bad.append(f"{rid}: group differs from owasp id")
+        if not str(r.get("cwe", {}).get("id", "")).startswith("CWE-") or not r.get("cwe", {}).get("basis"):
+            bad.append(f"{rid}: cwe needs an id CWE-n and a basis (judgement)")
+        if not (r.get("source", {}).get("url") or "").startswith("https://"):
+            bad.append(f"{rid}: source needs an https url")
+        for f in ("status", "mr_ids", "origin"):
+            if f in r:
+                bad.append(f"{rid}: '{f}' is derived from the catalog (MR requirements/origin); do not state it here")
+        mine = links.get(rid, [])
+        un = r.get("uncovered")
+        if mine and un:
+            bad.append(f"{rid}: has MR(s) {[x['mr'] for x in mine]} so it must not declare 'uncovered: {un}'")
+        if not mine and un not in UNCOVERED:
+            bad.append(f"{rid}: no MR in the catalog, so it needs 'uncovered' in {list(UNCOVERED)}")
+        if un == "NOT_FEASIBLE" and r.get("reason") not in reasons:
+            bad.append(f"{rid}: NOT_FEASIBLE needs a reason in {sorted(reasons)}")
+        if un == "DERIVABLE_NOT_IMPLEMENTED" and not r.get("sketch"):
+            bad.append(f"{rid}: DERIVABLE_NOT_IMPLEMENTED needs a sketch")
+        listed = set((r.get("controls") or {}).get("trivy") or []) | set((r.get("controls") or {}).get("kubescape") or [])
+        if not set(r.get("contract_read") or []) <= listed:
+            bad.append(f"{rid}: contract_read must be a subset of controls")
+        for x in mine:                         # the controls an MR is mapped to for this requirement must have been listed
+            for sc in SCANNERS:
+                for e in mapping.entries(x["mr"], sc):
+                    if e.role == "property" and e.control not in (r["controls"].get(sc) or []) and r["id"] not in ("R06",):
+                        bad.append(f"{rid}: {x['mr']} is mapped to {sc}/{e.control}, not listed under the requirement")
+    return bad
+
+
+def cmd_requirements(a, catalog_path: str, mapping: PolicyMapping) -> int:
+    data = load_requirements(a.requirements)
+    specs = read_specs(catalog_path)
+    ids = {s["id"] for s in specs}
+    problems = check_requirements(data, specs, mapping)
+    links = requirement_links(specs)
+    reqs = data["requirements"]
+    print(f"{'req':<4} {'grp':<4} {'status':<26} {'MR (coverage, origin)':<34} title")
+    stat = {}
+    for r in reqs:
+        mine = links.get(r["id"], [])
+        stat[r["id"]] = requirement_status(mine, r.get("uncovered"))
+        txt = ", ".join(f"{x['mr']} ({x['coverage']}, {x['origin']})" for x in mine) or "-"
+        print(f"{r['id']:<4} {r['group']:<4} {stat[r['id']]:<26} {txt:<34} {r['title']}")
+    n = len(reqs)
+    cnt = lambda st: sum(v == st for v in stat.values())
+    nf = [r for r in reqs if stat[r["id"]] == "NOT_FEASIBLE"]
+    print(f"\nN = {n} requirements (K01: {sum(r['group'] == 'K01' for r in reqs)}, K02: {sum(r['group'] == 'K02' for r in reqs)})")
+    print(f"with a full MR: {cnt('COVERED')}/{n} | with a partial MR only: {cnt('PARTIAL')}/{n} | derivable, not implemented: "
+          f"{cnt('DERIVABLE_NOT_IMPLEMENTED')}/{n} | not feasible: {len(nf)}/{n} ({', '.join(sorted({r['reason'] for r in nf}))})")
+    orphans = sorted(i for i in ids if not any(x["mr"] == i for v in links.values() for x in v))
+    print(f"MRs NOT attached to any of these requirements (origin sanity/empirical/semantic, or the requirement is not in this list): {', '.join(orphans)}")
+    print("'covered' here means an MR exists and passes the STRUCTURAL gate; none is independently reviewed and none has independent evaluation.")
+    for p in problems:
+        print("ERROR:", p)
+    return 1 if problems else 0
+
+
+def cmd_informative(a, mapping: PolicyMapping) -> int:
+    """Classify every comparison of saved runs by whether its control could observe the change (reporting only)."""
+    from . import informative as inf
+    rows: list[dict] = []
+    for run in a.run:
+        rows += inf.analyze_run(run, mapping)
+    summary = inf.summarize(rows)
+    print(f"{'scanner/MR':<22} {'INFORMATIVE':>11} {'WEAK':>6} {'CONTROL':>8} {'UNINFORMATIVE':>14} {'INCONCLUSIVE':>13} {'total':>6}  informative_rate")
+    for grp in ("by_mr", "all"):
+        for key, v in summary[grp].items():
+            print(f"{key:<22} {v['INFORMATIVE']:>11} {v['WEAK']:>6} {v['CONTROL']:>8} {v['UNINFORMATIVE']:>14} {v['INCONCLUSIVE']:>13} {v['total']:>6}  {v['informative_rate']}")
+        print()
+    if summary["unexpected_violations"]:
+        print("UNEXPECTED_VIOLATION (a control flipped though nothing it can read changed):", summary["unexpected_violations"])
+    if a.out:
+        out = Path(a.out)
+        out.mkdir(parents=True, exist_ok=True)
+        inf.write_csv(rows, out / "informative_comparisons.csv")
+        (out / "informative_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+        print(f"-> {out}")
     return 0
 
 
@@ -459,7 +719,13 @@ SCAFFOLD_YAML = '''# --- mrs/catalog.yaml (append) ---
     pair_checks: [TODO]
     counterexample: TODO      # an input the precondition or pair check must reject
     limits: [TODO]
-# --- config/policy-mapping.yaml: add `{mr_id}:` under `mrs:` once controls are verified ---
+    template: {{preconditions: [], followup: [TODO]}}   # element ids from mrs/patterns.yaml
+    origin: TODO              # prospective | retrospective | empirical | semantic | sanity
+    requirements: []          # [{{id: R0x, coverage: full|partial}}]; REQUIRED (non-empty) for prospective / retrospective
+    touches: [TODO]           # kinds the transformation changes (or 'workload'); ['*'] for a rewrite of every object
+    targets: [TODO]           # target selectors targets() can return (vocabulary: config/policy-mapping.yaml)
+# --- config/policy-mapping.yaml: under `mrs:` add `{mr_id}:` entries {{control, target, reason}} per scanner, or
+#     list the scanner under `unsupported:` with the reason. `mr validate` rejects a silent gap. ---
 '''
 
 

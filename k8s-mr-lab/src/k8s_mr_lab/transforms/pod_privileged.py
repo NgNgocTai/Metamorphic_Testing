@@ -14,6 +14,7 @@ def _path(workload: dict, index: int) -> str:
 
 @implements("MR-04")
 class PrivilegedFlip(ControlledChange):
+    rule_probe = ("privileged", r"privileged")
     no_candidates_reason = "no_container_with_explicit_privileged_false"
 
     def candidates(self, source: ConfigBundle) -> list[tuple[dict, int]]:

@@ -53,3 +53,11 @@ patterns:
     base_class: ControlledChange
     shared_code: transforms.patterns.ControlledChange + validation.expect_single_change
     proof_obligation: the field alone decides the property (no other path in the bundle grants it) and the control claims to detect it
+  - id: KP4
+    name: property-preserving-substitution
+    intent: replace one value by another that the cited requirement says is equivalent FOR THE PROPERTY (not for the API); in-scope verdicts must stay equal
+    allowed_relations: [equal]
+    pair_validation: the change is confined to the substituted field of the one target object, and the new value is inside the equivalence set the requirement names
+    base_class: MetamorphicRelation
+    shared_code: none (single instance, MR-09); hypothesis until a second MR (e.g. hostPID/hostIPC substitution does not qualify) shows the same structure
+    proof_obligation: the requirement text states the equivalence for the property, and every mapped control's contract is about that property rather than about the field value

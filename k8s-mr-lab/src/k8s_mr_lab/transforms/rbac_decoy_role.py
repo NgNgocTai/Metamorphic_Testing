@@ -24,6 +24,7 @@ def _fresh_namespace(source: ConfigBundle, base: str) -> str:
 
 @implements("MR-02")
 class DecoySameNameRole(MetamorphicRelation):
+    rule_probe = ("role_namespace_compared", r"role(\.metadata)?\.namespace|roleRef\.namespace")
 
     def _rolebindings(self, source: ConfigBundle) -> list[dict]:
         return [rb for rb in local_role_bindings(source)

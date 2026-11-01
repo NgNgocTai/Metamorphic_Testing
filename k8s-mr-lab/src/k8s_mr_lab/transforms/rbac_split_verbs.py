@@ -13,6 +13,7 @@ from .patterns import PerCandidateMR
 
 @implements("MR-03")
 class SplitRuleVerbs(PerCandidateMR):
+    rule_probe = ("verbs", r"verbs")
     no_candidates_reason = "no_rule_with_two_or_more_distinct_verbs"
 
     def candidates(self, source: ConfigBundle) -> list[tuple[dict, int]]:

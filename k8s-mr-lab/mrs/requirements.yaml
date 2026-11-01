@@ -1,0 +1,129 @@
+# Requirement catalog: the CONCRETE security requirements the MRs are derived from (the analogue of the OWASP testing activities / CWE
+# list in MST-wi). Fixed from official text BEFORE looking at scanner results for the new MR.
+#
+# Sources (4 only): OWASP Kubernetes Top 10 2025 (risk group), MITRE CWE (weakness class), Kubernetes official docs (the requirement and its
+# semantics), the pinned Trivy / Kubescape control (what the scanner claims to check). CIS, NSA/CISA, ATT&CK: out of scope for the PoC.
+#
+# quote:   verbatim from the cited page (fetched 2026-11-01).
+# cwe:     weakness class of the MISCONFIGURATION the requirement forbids (never a label for a scanner defect). `basis: judgement` = our
+#          choice of class; the ID/title itself was checked at cwe.mitre.org.
+# controls: ids read from the pinned policy. `contract_read` lists those whose description/rego was actually read (the others: only title
+#          and kinds were read, so their coverage of the requirement is NOT yet established).
+# MR <-> requirement link: stated ONLY in mrs/catalog.yaml (`requirements: [{id, coverage}]` and `origin` of each MR). The status of a
+#          requirement (COVERED / PARTIAL) is derived from it by `mr requirements`; this file states only `uncovered:` for a requirement no MR
+#          covers: DERIVABLE_NOT_IMPLEMENTED (needs `sketch`) | NOT_FEASIBLE (needs `reason`).
+#          Catalog `origin: retrospective` = the MR was written earlier from intuition / observed scanner behaviour and only LABELLED with the
+#          requirement afterwards; that is NOT evidence that it was derived from OWASP. `prospective` = derived from the requirement first.
+version: 1
+reason_codes:
+  NO_CONTROL_CONTRACT: no mapped scanner control claims to check this property
+  RELATION_NOT_SUPPORTED: the property needs a relation the checker does not have (e.g. monotone improvement)
+  CONTRACT_NOT_READ: a control exists but its list/contract was not read, so the expected relation cannot be stated yet
+requirements:
+  - id: R01
+    group: K01
+    title: privileged containers are disallowed
+    source: {doc: Kubernetes Pod Security Standards (Baseline, Privileged Containers), url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"}
+    quote: "Privileged Pods disable most security mechanisms and must be disallowed."
+    owasp: {id: K01, title: Insecure Workload Configurations}
+    cwe: {id: CWE-250, title: Execution with Unnecessary Privileges, basis: judgement}
+    controls: {trivy: [KSV-0017], kubescape: [C-0057]}
+    contract_read: [KSV-0017, C-0057]
+  - id: R02
+    group: K01
+    title: host namespaces are not shared
+    source: {doc: Kubernetes Pod Security Standards (Baseline, Host Namespaces), url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"}
+    quote: "Sharing the host namespaces must be disallowed."
+    owasp: {id: K01, title: Insecure Workload Configurations}
+    cwe: {id: CWE-668, title: Exposure of Resource to Wrong Sphere, basis: judgement}
+    controls: {trivy: [KSV-0009, KSV-0010, KSV-0008], kubescape: [C-0041]}
+    contract_read: [KSV-0009, C-0041]
+    note: MR-06 covers hostNetwork only; hostPID and hostIPC are separate fields of the same requirement and have no MR.
+  - id: R03
+    group: K01
+    title: hostPath volumes are forbidden
+    source: {doc: Kubernetes Pod Security Standards (Baseline, HostPath Volumes), url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"}
+    quote: "HostPath volumes must be forbidden."
+    owasp: {id: K01, title: Insecure Workload Configurations}
+    cwe: {id: CWE-668, title: Exposure of Resource to Wrong Sphere, basis: judgement}
+    controls: {trivy: [KSV-0023], kubescape: [C-0048]}
+    contract_read: []
+    uncovered: DERIVABLE_NOT_IMPLEMENTED
+    sketch: add one spec.volumes[*].hostPath to a workload without one; pass_to_fail on both controls (controlled change)
+  - id: R04
+    group: K01
+    title: hostPorts are disallowed or restricted
+    source: {doc: Kubernetes Pod Security Standards (Baseline, Host Ports), url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"}
+    quote: "HostPorts should be disallowed entirely (recommended) or restricted to a known list"
+    owasp: {id: K01, title: Insecure Workload Configurations}
+    cwe: {id: CWE-668, title: Exposure of Resource to Wrong Sphere, basis: judgement}
+    controls: {trivy: [KSV-0024], kubescape: [C-0044]}
+    contract_read: []
+    uncovered: DERIVABLE_NOT_IMPLEMENTED
+    sketch: set a non-zero hostPort on one container port; allowed values are undefined, 0 or a known list, so the "known list" case must be excluded
+  - id: R05
+    group: K01
+    title: added capabilities stay within the allowed list
+    source: {doc: Kubernetes Pod Security Standards (Baseline, Capabilities), url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"}
+    quote: "Adding additional capabilities beyond those listed below must be disallowed."
+    owasp: {id: K01, title: Insecure Workload Configurations}
+    cwe: {id: CWE-250, title: Execution with Unnecessary Privileges, basis: judgement}
+    controls: {trivy: [KSV-0022, KSV-0005], kubescape: [C-0046]}
+    contract_read: []
+    uncovered: NOT_FEASIBLE
+    reason: CONTRACT_NOT_READ
+    note: the Baseline allows a fixed list; each scanner uses its own list of "insecure" capabilities. Which capability flips which control is unknown until those lists are read.
+  - id: R06
+    group: K02
+    title: a RoleBinding grants a Role from its own namespace
+    source: {doc: Kubernetes docs, Using RBAC Authorization, url: "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"}
+    quote: "A RoleBinding may reference any Role in the same namespace."
+    owasp: {id: K02, title: Overly Permissive Authorization Configurations}
+    cwe: {id: CWE-269, title: Improper Privilege Management, basis: judgement}
+    controls: {trivy: [], kubescape: [C-0267, C-0272, C-0015, C-0007, C-0035]}
+    contract_read: [C-0267, C-0272, C-0015, C-0035]
+    note: Trivy checks judge one Role document, so they cannot observe it (docs/INFORMATIVE_COMPARISON_ANALYSIS.md).
+  - id: R07
+    group: K02
+    title: avoid wildcard permissions
+    source: {doc: Kubernetes docs, RBAC Good Practices (Least privilege), url: "https://kubernetes.io/docs/concepts/security/rbac-good-practices/"}
+    quote: "Avoid providing wildcard permissions when possible, especially to all resources."
+    owasp: {id: K02, title: Overly Permissive Authorization Configurations}
+    cwe: {id: CWE-732, title: Incorrect Permission Assignment for Critical Resource, basis: judgement}
+    controls: {trivy: [KSV-0044, KSV-0045, KSV-0046, KSV-0112], kubescape: [C-0035]}
+    contract_read: [C-0035]
+    uncovered: DERIVABLE_NOT_IMPLEMENTED
+    sketch: replace the verbs of one rule by ["*"]; pass_to_fail on the wildcard-verb checks; kinds and verb coverage of each Trivy check must be read first
+  - id: R08
+    group: K02
+    title: get, list and watch on Secrets all reveal Secret contents
+    source: {doc: Kubernetes docs, RBAC Good Practices (Listing secrets), url: "https://kubernetes.io/docs/concepts/security/rbac-good-practices/"}
+    quote: "It is also important to note that `list` and `watch` access also effectively allow for users to reveal the Secret contents."
+    owasp: {id: K02, title: Overly Permissive Authorization Configurations}
+    cwe: {id: CWE-200, title: Exposure of Sensitive Information to an Unauthorized Actor, basis: judgement}
+    controls: {trivy: [KSV-0113], kubescape: [C-0015]}
+    contract_read: [KSV-0113, C-0015]
+    note: derived from the quote and the two control contracts BEFORE any scanner run (docs/MR_DERIVATION_WALKTHROUGH_MR09.md). MR-05 touches the other half of R08 (API group) and was written earlier from an observed scanner behaviour.
+  - id: R09
+    group: K02
+    title: assign permissions at namespace level
+    source: {doc: Kubernetes docs, RBAC Good Practices (Least privilege), url: "https://kubernetes.io/docs/concepts/security/rbac-good-practices/"}
+    quote: "Assign permissions at the namespace level where possible. Use RoleBindings as opposed to ClusterRoleBindings to give users rights only within a specific namespace."
+    owasp: {id: K02, title: Overly Permissive Authorization Configurations}
+    cwe: {id: CWE-269, title: Improper Privilege Management, basis: judgement}
+    controls: {trivy: [], kubescape: []}
+    contract_read: []
+    uncovered: NOT_FEASIBLE
+    reason: RELATION_NOT_SUPPORTED
+    note: a preference ("where possible") about scope. The natural MR is "narrowing the scope may only improve the verdict", a monotone relation the checker does not have, and no mapped control claims to measure scope.
+  - id: R10
+    group: K02
+    title: no one is bound to system:masters
+    source: {doc: Kubernetes docs, RBAC Good Practices (Least privilege), url: "https://kubernetes.io/docs/concepts/security/rbac-good-practices/"}
+    quote: "Avoid adding users to the `system:masters` group."
+    owasp: {id: K02, title: Overly Permissive Authorization Configurations}
+    cwe: {id: CWE-269, title: Improper Privilege Management, basis: judgement}
+    controls: {trivy: [KSV-0123], kubescape: [C-0246]}
+    contract_read: []
+    uncovered: DERIVABLE_NOT_IMPLEMENTED
+    sketch: add a Group subject system:masters to one binding; pass_to_fail on the binding-level check. Trivy's check judges the binding itself, so it would be observable (unlike MR-02/07).

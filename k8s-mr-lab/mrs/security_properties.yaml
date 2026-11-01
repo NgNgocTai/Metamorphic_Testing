@@ -7,9 +7,16 @@
 # review_status: draft | author_reviewed | independently_reviewed (the last needs a second person; none is yet).
 # Controls are NOT repeated here: they come from config/policy-mapping.yaml (`k8s-mr-lab mr trace` joins them).
 # OWASP Kubernetes Top 10 titles verified 2026-11-01 at https://kubernetes-top10.owasp.org/ (2025 edition).
-# cis_nsa: only entries read from an artifact are filled, with `basis` saying which. The only CIS label found for a mapped control is
-# Kubescape's (cis-v1.12.0 framework file); the CIS document itself was NOT consulted and numbering differs between benchmark versions.
-# NSA/CISA and ATT&CK are not filled (not checked).
+# Meaning of `verified` on a reference (it is ONE of four different things, kept apart on purpose):
+#   source_verified              `verified: true` = the primary source of that very reference was consulted and the cited ID/title/quote
+#                                matches. This is all `verified` means. It does not say the reference proves anything about an MR.
+#   standard_requirement_verified  a cis_nsa entry may be `verified: true` only if the standard's own document was consulted. None is yet.
+#   control_mapping_verified     recorded in config/policy-mapping.yaml (controls read from the pinned policy) and per MR in
+#                                docs/MR_CANDIDATE_EVALUATION.md; not a flag here.
+#   semantic_review_status       `review_status` of the property (author_reviewed | independently_reviewed).
+# A reference with `verified: false` must carry `basis` saying what was and was not checked (enforced by tests).
+# cis_nsa: the only CIS label found for a mapped control comes from Kubescape's cis-v1.12.0 framework artifact. That is a scanner
+# vendor's label, NOT the CIS document, so it is recorded as `verified: false` with its basis. NSA/CISA and ATT&CK are not filled.
 # 2026-11-01: CWE-250, CWE-269 titles checked at cwe.mitre.org; YAML 1.2.2 sec. 3.2.1.1 / 3.2.2.1 and the K8s RBAC examples quoted below.
 properties:
   - id: SP-SYN-MAPPING-ORDER
@@ -117,7 +124,7 @@ properties:
     owasp_k8s_2025: [{id: K01, title: Insecure Workload Configurations, verified: true}]
     cwe: []
     cis_nsa:
-      - {id: "CIS 5.2.5 Minimize the admission of containers wishing to share the host network namespace", basis: "label in Kubescape cis-v1.12.0 framework artifact (C-0041); CIS document not consulted", verified: true}
+      - {id: "CIS 5.2.5 Minimize the admission of containers wishing to share the host network namespace", basis: "label in the Kubescape cis-v1.12.0 framework artifact (C-0041); the CIS Kubernetes Benchmark document itself was not consulted and the number differs between benchmark versions", verified: false}
     k8s_spec:
       - source: Kubernetes docs, Pod Security Standards (Baseline, Host Namespaces)
         url: https://kubernetes.io/docs/concepts/security/pod-security-standards/
@@ -150,3 +157,50 @@ properties:
     known_non_equivalences: [a Group subject covers every ServiceAccount of a namespace; a token for a different identity is out of scope]
     candidate_patterns: [KP1]
     rationale: candidate MR-07; the equivalence follows from the two quoted rules (User subjects match the authenticated username); motivated by reading the pinned C-0267/C-0272 rego, which joins only subject.kind == "ServiceAccount", so it is guided, not blind
+  - id: SP-RBAC-SA-SUBJECT-NAMESPACE
+    name: the namespace is part of a ServiceAccount subject's identity
+    domain: RBAC
+    security_meaning: "If a scanner matches subjects by name only, a binding for one ServiceAccount is wrongly attributed to a same-named ServiceAccount elsewhere (false alarm), or the reverse."
+    k8s_objects: [RoleBinding, ServiceAccount, Role, workload]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
+    statement: A RoleBinding subject {kind ServiceAccount, name N, namespace S1} grants the bound Role to ServiceAccount N in namespace S1 only; ServiceAccount N in another namespace S2 is a different identity and receives nothing from that binding.
+    owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
+    cwe: [{id: CWE-269, title: Improper Privilege Management, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, Authenticating (service account tokens)
+        url: https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+        claim: 'Service accounts authenticate with the username system:serviceaccount:(NAMESPACE):(SERVICEACCOUNT), and are assigned to the groups system:serviceaccounts and system:serviceaccounts:(NAMESPACE).'
+        verified: true
+      - source: Kubernetes docs, Using RBAC Authorization (Referring to subjects)
+        url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+        claim: 'the subjects example for a service account lists kind ServiceAccount together with name and namespace (default service account in kube-system).'
+        verified: true
+      - source: inference from the two quotes above
+        url: ""
+        claim: "namespace is part of the identity, hence a binding for S1:N does not grant S2:N (no verbatim sentence states this)"
+        verified: false
+        basis: "consequence derived by the authors from the username format; not quoted from a primary source"
+    scope_assumptions: [closed bundle; one subject per binding; no other binding, equivalent User or SA group reaches the ServiceAccount]
+    known_non_equivalences: [Role-level controls keep their verdict because the Role is still granted to the moved subject]
+    candidate_patterns: [KP3]
+    rationale: derived from the mutation gap analysis (a mutant that ignores the subject namespace survived because no input could activate it); needs independent review
+  - id: SP-RBAC-SECRETS-READ-VERBS
+    name: get, list and watch on Secrets each expose Secret contents
+    domain: RBAC
+    security_meaning: "A scanner that treats only some of the read verbs as exposing Secrets under-reports; one that treats them differently makes the verdict depend on how the same exposure is spelled."
+    k8s_objects: [Role]
+    review_status: author_reviewed   # one reviewer; a second, independent review is still required
+    statement: A Role rule on core-group Secrets whose verbs are a non-empty subset of {get, list, watch} grants the same exposure of Secret contents whichever subset it names.
+    owasp_k8s_2025: [{id: K02, title: Overly Permissive Authorization Configurations, verified: true}]
+    cwe: [{id: CWE-200, title: Exposure of Sensitive Information to an Unauthorized Actor, verified: true}]
+    cis_nsa: []
+    k8s_spec:
+      - source: Kubernetes docs, RBAC Good Practices (Listing secrets)
+        url: https://kubernetes.io/docs/concepts/security/rbac-good-practices/
+        claim: 'It is also important to note that `list` and `watch` access also effectively allow for users to reveal the Secret contents.'
+        verified: true
+    scope_assumptions: [core API group only; no resourceNames; the rule is the only way the Role reaches Secrets]
+    known_non_equivalences: [get, list and watch differ for the API (one object vs many vs a stream); a control that counts or distinguishes verbs is out of scope; resourceNames change list/watch behaviour]
+    candidate_patterns: [KP4]
+    rationale: derived from requirement R08 and the contracts of KSV-0113 and C-0015 before any scanner run (docs/MR_DERIVATION_WALKTHROUGH_MR09.md)

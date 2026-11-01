@@ -19,6 +19,7 @@ def _is_sole_core_secrets_read(role: dict) -> bool:
 
 @implements("MR-05")
 class ApiGroupSwitch(ControlledChange):
+    rule_probe = ("apiGroups", r"apiGroups")
     no_candidates_reason = "no_role_whose_only_rule_reads_core_secrets"
 
     def candidates(self, source: ConfigBundle) -> list[dict]:
