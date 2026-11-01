@@ -150,3 +150,23 @@ def permission_tuples(role: dict) -> set[tuple]:
 def workloads_of_service_accounts(bundle: ConfigBundle, sas: list[ResKey]) -> list[ResKey]:
     """Workloads that run as any of the given ServiceAccount keys."""
     return [w for (_, _, ns, name) in sas for w in workloads_using_sa(bundle, ns, name)]
+
+
+def other_bindings_naming_sa(bundle: ConfigBundle, binding_key: ResKey, ns: str, name: str) -> list[ResKey]:
+    """Bindings OTHER than `binding_key` that grant something to ServiceAccount ns:name: by ServiceAccount subject, by the equivalent
+    User `system:serviceaccount:ns:name`, or through the groups every service account belongs to. Any hit means a role may reach the
+    ServiceAccount by another path (so a one-binding change cannot be shown to remove it)."""
+    user = f"system:serviceaccount:{ns}:{name}"
+    groups = {"system:serviceaccounts", f"system:serviceaccounts:{ns}", "system:authenticated"}
+    out: list[ResKey] = []
+    for b in bundle.of_kind("RoleBinding", "ClusterRoleBinding"):
+        if obj_key(b) == binding_key:
+            continue
+        bns = obj_key(b)[2]
+        for s in b.get("subjects") or []:
+            hit = ((s.get("kind") == "ServiceAccount" and s.get("name") == name and (s.get("namespace") or bns) == ns)
+                   or (s.get("kind") == "User" and s.get("name") == user)
+                   or (s.get("kind") == "Group" and s.get("name") in groups))
+            if hit and obj_key(b) not in out:
+                out.append(obj_key(b))
+    return out

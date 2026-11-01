@@ -20,6 +20,9 @@ import shutil
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sanitize_evidence as se  # noqa: E402
+
 RUN_FILES = ("results.json", "results.csv", "comparisons.csv", "environment.lock.json", "triage.json")
 
 
@@ -33,6 +36,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("out_dir")
     ap.add_argument("--mr", action="append", default=[])
     ap.add_argument("--result", action="append", default=[])
+    ap.add_argument("--sanitize", action="store_true",
+                    help="replace machine-specific paths (see sanitize_evidence.RULES) BEFORE hashing; the manifest then also lists original_sha256")
     a = ap.parse_args(argv)
     run, out = Path(a.run_dir), Path(a.out_dir)
     results = json.loads((run / "results.json").read_text(encoding="utf-8"))
@@ -62,10 +67,24 @@ def main(argv: list[str] | None = None) -> int:
                 return 1
         shutil.copytree(src, out / "cases" / cid, dirs_exist_ok=True)
         index[cid] = f"cases/{cid}"
+    originals: dict[str, str] = {}
+    if a.sanitize:
+        for f in sorted(p for p in out.rglob("*") if p.is_file() and p.suffix.lower() in se.TEXT_SUFFIXES):
+            raw = f.read_bytes()
+            try:
+                text, counts = se.sanitize_text(raw.decode("utf-8"))
+            except UnicodeDecodeError:
+                continue
+            if counts:
+                originals[f.relative_to(out).as_posix()] = hashlib.sha256(raw).hexdigest()
+                f.write_bytes(text.encode("utf-8"))
     files = sorted(p for p in out.rglob("*") if p.is_file() and p.name not in ("manifest.json", "case_index.json"))
     (out / "case_index.json").write_text(json.dumps(index, indent=2), encoding="utf-8")
     manifest = {"source_run": run.name, "selected_by": {"mr": a.mr, "result": a.result}, "n_cases": len(index),
-                "files": {p.relative_to(out).as_posix(): {"sha256": sha(p), "bytes": p.stat().st_size} for p in files}}
+                "sanitized": a.sanitize,
+                "files": {p.relative_to(out).as_posix(): {"sha256": sha(p), "bytes": p.stat().st_size,
+                                                          **({"original_sha256": originals[p.relative_to(out).as_posix()]} if p.relative_to(out).as_posix() in originals else {})}
+                          for p in files}}
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     print(f"packaged {len(index)} case(s), {len(files)} file(s) -> {out}")
     return 0

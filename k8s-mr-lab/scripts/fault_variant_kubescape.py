@@ -9,6 +9,8 @@ scans whose digests differ). Variants:
   namespace-fix   adds the namespace comparison the pinned rego lacks when joining a RoleBinding to a Role
                   (a hand-written fix hypothesis, NOT the upstream fix): fix-validation of a historical defect
   drop-subject-ns removes the `subjects[j].namespace == sa.metadata.namespace` check: an INJECTED fault (mutant)
+  drop-watch-verb removes "watch" from `verbs := ["get", "list", "watch", "*"]` (C-0015): an INJECTED fault chosen from the text of
+                  requirement R08, not from any observation of the scanner
 """
 from __future__ import annotations
 
@@ -35,6 +37,10 @@ role_in_scope(role, rolebinding) if {
 DROP_LINE = "\trolebinding.subjects[j].namespace == sa.metadata.namespace\n"
 
 
+WATCH_ANCHOR = 'verbs := ["get", "list", "watch", "*"]'
+WATCH_MUTANT = 'verbs := ["get", "list", "*"]'
+
+
 def patch(rule: str, variant: str) -> str:
     if variant == "namespace-fix":
         if rule.count(NS_FIX_ANCHOR) != 1:
@@ -44,6 +50,10 @@ def patch(rule: str, variant: str) -> str:
         if rule.count(DROP_LINE) != 1:
             raise SystemExit("subject namespace line not found exactly once: the pinned rego changed")
         return rule.replace(DROP_LINE, "")
+    if variant == "drop-watch-verb":
+        if rule.count(WATCH_ANCHOR) != 1:
+            raise SystemExit("verb list not found exactly once: the pinned rego changed")
+        return rule.replace(WATCH_ANCHOR, WATCH_MUTANT)
     raise SystemExit(f"unknown variant {variant}")
 
 
@@ -64,7 +74,7 @@ def main(argv=None) -> int:
     ap.add_argument("src")
     ap.add_argument("out")
     ap.add_argument("--control", required=True)
-    ap.add_argument("--variant", required=True, choices=["namespace-fix", "drop-subject-ns"])
+    ap.add_argument("--variant", required=True, choices=["namespace-fix", "drop-subject-ns", "drop-watch-verb"])
     a = ap.parse_args(argv)
     src, out = Path(a.src), Path(a.out)
     if out.exists():
